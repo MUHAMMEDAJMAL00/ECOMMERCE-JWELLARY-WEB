@@ -1,0 +1,805 @@
+//wishlist
+.card-text::-webkit-scrollbar {
+    width: 4px;
+}
+
+.card-text::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+/* styles.scss */
+.slick-arrow {
+    background-color: rgba(102, 6, 6, 0.8);
+    color: rgb(240, 6, 6) !important;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease-in-out;
+}
+
+.slick-arrow:hover {
+    background-color: #222;
+}
+
+.slick-prev {
+    left: -10px;
+    top: 40%;
+}
+
+.slick-next {
+    right: -10px;
+    top: 40%;
+}
+
+
+
+
+.custom-banner {
+    height: 450px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.custom-headings {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 79px;
+    height: 300px;
+
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background-color: #ffffff;
+    // overflow-x: hidden
+    padding: 0px;
+    height: 100%;
+    margin: 0px;
+
+}
+
+.custom-title {
+    font-size: 40px;
+    margin-top: 20px;
+
+
+}
+
+.custom-description {
+    height: 20px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+// categoriesss
+
+
+
+.slider-container {
+    overflow: hidden;
+    height: 25vh;
+    background-color: #ffffff;
+    padding: 30px 70px 20px 76px;
+    width: 100%;
+
+
+
+}
+
+.slidder {
+    margin-top: 5px;
+
+
+}
+
+.slider-title {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 118px;
+    text-align: center;
+
+    margin-top: 5px;
+
+}
+
+.cat1 {
+    height: 92px;
+    width: 92px;
+    border-radius: 100px;
+
+}
+
+.cat2 {
+    padding: 3px;
+    border: 1px solid #ffe6c9;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+
+}
+
+.gold-head {
+    // background-color: #b9dc1f;
+    height: 30vh;
+    text-align: center;
+    display: flex;
+    // gap: 10px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.category-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.gold-title {
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.gold-date {
+    font-size: 17px;
+    font-weight: 600;
+    font-family: "DMSans-SemiBold";
+    // margin-top: 20px;
+}
+
+.goldbox {
+    //    background-color: red;
+    color: #2a5e47;
+    border: 1px solid #131514;
+    display: flex;
+    border-radius: 4px;
+    padding: 10px 0px 10px 0px;
+    justify-content: center;
+    align-items: center;
+    //   font-family: "DMSans-SemiBold";
+    font-size: 15px;
+    font-weight: 900;
+    white-space: nowrap;
+    text-align: center;
+    text-wrap: nowrap;
+    margin-right: 43px;
+
+
+}
+
+.goldbox1 {
+    width: 100%;
+    //   background-color: yellow;
+    padding: 10px 0px 10px 70px;
+
+}
+
+.sections {
+    height: 50vh;
+    background-color: #ffffff;
+    // padding: 0px 66px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    padding: 20px 30px 20px 30px;
+
+
+}
+
+.golds {
+    display: flex;
+    color: #ffffff;
+    // width: 100%;
+
+    padding: 10px 37px 20px 35px;
+}
+
+.section1 {
+    border-radius: 4px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: 300px;
+
+    background-size: cover;
+    width: 100%;
+    // overflow: hidden;
+    // position: relative;
+
+    margin-bottom: 20px;
+
+
+}
+
+.sectiontitle {
+    padding: 30px 0px 30px 20px;
+    font-size: 26px;
+}
+
+
+// ---------slick carousel exclusive
+
+.hero {
+    background-color: #ffffff;
+
+}
+
+.exclusiv1 {
+    margin: 0px 0px 30px 0px;
+    height: 430px;
+
+    background-color: #ffffff;
+
+}
+
+
+.slick-sliders {
+    margin: 0px 66px 0px 66px;
+    background-color: #ffffff;
+
+
+
+}
+
+.exclusivegold {
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    margin-right: 6px;
+    border-radius: 4px;
+
+
+}
+
+.exclusivetitle {
+    font-size: 24px;
+    width: 100%;
+    font-weight: 400;
+}
+
+//   -------------top models
+
+
+
+.toptext {
+    font-size: 33px;
+    font-weight: 500;
+    text-align: center;
+    font-family: "DMSans-SemiBold";
+    text-transform: uppercase;
+    // padding-top: 35px;
+
+}
+
+.main {
+    border: 1px solid #fff2e2;
+    background-color: red;
+
+
+}
+
+// .stocks {
+//     height: 75vh;
+//     // background-color: rgb(255, 255, 255);
+//     background-color: #ffffff;
+//     background-color: red;
+
+// }
+
+.stocks {
+    height: 75vh;
+    // background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
+
+    // background-color: #d43242;
+
+
+}
+
+.stockslider {
+    height: 60vh;
+    background-color: #ffffff;
+    // border: 1px solid #fff2e2;
+    // border-radius: 10px solid black;
+    padding: 20px;
+    margin: 0px 50px 0px 40px;
+    // background-color: #d43242;
+
+
+}
+
+// .stocksliders {
+//     height: 80vh;
+//     // background-color: #ffffff;
+//     border: 1px solid #fff2e2;
+//     // border-radius: 10px solid black;
+//     padding: 20px;
+//     margin: 0px 75px 0px 60px;
+//     // background-color: red; 
+//     background-color: #fdfdfd;
+
+// }
+
+// .stockimage {
+//     height: 380px;
+//     background-size: contain;
+//     background-position: start;
+//     background-repeat: no-repeat;
+//     // margin-right: 10px;
+//     border: 1px solid #fff2e2;
+//     width: 100%;
+
+//     cursor: pointer;
+// }
+
+.stockimages {
+    height: 290px;
+    // background-size: contain;
+    // background-position: start;
+    // background-repeat: no-repeat;
+    margin-right: 10px;
+    border: 1px solid #fff2e2;
+    border-bottom: 1px solid #fff;
+    width: 320px;
+    padding: 10px 10px 0px 10px;
+    cursor: pointer;
+    // background-color: red;
+    background-color: #fdfdfd;
+
+}
+
+// .stockimage:hover {
+//     height: 380px;
+//     // width: 280px;
+//     border: 1px solid #fff2e2;
+
+// }
+
+.stockimages:hover {
+    height: 290px;
+    // width: 330px;
+    padding: 0px;
+
+}
+
+.mainstock {
+
+    margin-right: 10px;
+    padding: 5px;
+    height: 400px;
+    // background-color: #fdfdfd;
+
+
+
+}
+
+.mainstocks {
+
+    margin-right: 25px;
+    // padding: 10px;
+    width: 320px;
+    height: 430px;
+    // border: 1px solid #fff2e2;
+    // background-color: red;
+    // background-color: #fdfdfd;
+    // border: 0.5px solid #fff2e2;
+    // background-color: red;
+    // background-color: red;
+
+}
+
+// .products {
+//     padding: 295px 0px 10px 20px;
+//     width: 100%;
+
+// }
+
+.productss {
+    padding: 0px 0px 0px 0px;
+
+    height: 120px;
+    width: 320px;
+    padding: 10px;
+    background-color: #fdfdfd;
+    // background-color: red;
+    border: 1px solid #fff2e2;
+    border-top: 1px solid #fff;
+}
+
+.stocktitle {
+    font-size: 17px;
+    font-weight: 500;
+    font-family: "DMSans-Medium";
+    white-space: nowrap;
+    margin-top: 10px;
+}
+
+.availablestock {
+    color: #d43242;
+    font-size: 13px;
+
+}
+
+.availablestocks {
+    // margin-top: 5px;
+    color: #d43242;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.stockaed {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "DMSans-Bold";
+}
+
+
+// genders--------------
+
+.genders {
+    height: 66vh;
+
+    padding: 0px 63px 0px 63px;
+}
+
+.genders2 {
+    height: 500px;
+    background-color: #d43242;
+    background-position: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 11px;
+    object-fit: cover;
+    border-radius: 5px;
+
+
+}
+
+.genders1 {
+    height: 500px;
+    border-radius: 5px;
+
+}
+
+.gendertitle {
+    padding: 30px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+
+
+// =------------------logos images
+
+.logoshead {
+    height: 10vh;
+    width: 100%;
+    padding: 9px 50px 0px 50px;
+    margin-bottom: 30px;
+    // background-color: red;
+
+}
+
+.logosimagehead {
+    padding: 5px 15px 0px 15px;
+    // margin-bottom: 50px;
+
+
+
+}
+
+.logoimg {
+    height: 60px;
+    padding-top: 10px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    border-radius: 7px;
+    background-repeat: no-repeat;
+    border: 1px solid #ffe6c9;
+}
+
+
+
+
+@media screen and (min-width:300px) and (max-width:768px) {
+    .slider-container {
+        display: flex;
+        padding-top: 71px;
+        flex-direction: column;
+    }
+
+    .custom-banner {
+        background-size: cover;
+        background-position: 55%;
+
+    }
+
+    .custom-headings {
+        padding: 30px 10px 0px 40px;
+    }
+
+    .custom-description {
+        font-size: 12px;
+        padding: 0px 10px 0px 0px;
+        font-weight: 600;
+    }
+
+    .custom-title {
+        font-size: 32px;
+        padding-right: 10px;
+
+
+    }
+
+    .goldbox {
+        padding: 10px 70px 10px 70px;
+        //   background-color: gray;
+        margin-right: 0px;
+        text-wrap: nowrap;
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+    .gold-head {
+        height: 80vh;
+        width: 100%;
+        padding: 10px 0px 0px 0px;
+
+
+    }
+
+    .goldbox1 {
+        padding: 0px 70px 10px 70px;
+
+    }
+
+    .goldbox1 .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem; // This gives space between boxes in all screen sizes
+    }
+
+    .goldbox {
+        flex: 1 1 150px;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+
+    .golds {
+        padding: 0px 36px 50px 36px;
+        display: flex;
+        // justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+        height: 105vh;
+        flex-direction: column;
+    }
+
+    .sections {
+        height: 50vh;
+        background-color: #ffffff;
+        // padding: 10px 0px 10px 30px;
+        padding: 10px 30px 0px 30px;
+
+    }
+
+    .section1 {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        padding-top: 50px;
+
+    }
+
+    .gold-title {
+        // padding: 0px 0px 0px 30px;
+        // font-size: 12px;
+        text-align: center;
+    }
+
+    .exclusiv1 {
+        height: 400px;
+    }
+
+    .exclusivegold {
+
+        height: 400px;
+    }
+
+    .genders2 {
+        height: 400px;
+    }
+
+    .genders {
+        height: 67vh;
+    }
+
+    .toptext {
+        padding-top: 0px;
+    }
+
+    .stocks {
+        margin-top: 20px;
+        height: 83vh;
+    }
+
+    .slick-sliders {
+        height: 70vh;
+    }
+
+    .logoshead {
+        height: 20vh;
+
+    }
+
+    .logosimagehead {
+        padding: 0px 15px 0px 15px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+@media screen and (min-width:768px) and (max-width:990px) {
+    .custom-banner {
+        height: 400px;
+        background-size: cover;
+        background-position: 75%;
+        background-repeat: no-repeat;
+        width: 100%;
+    }
+
+    .custom-title {
+        font-size: 20px;
+        display: flex;
+    }
+
+    .goldbox {
+        padding: 10px 70px 10px 70px;
+        //   background-color: gray;
+        margin-right: 0px;
+        text-wrap: nowrap;
+
+        font-size: 13px;
+        font-weight: 900;
+        flex: 1;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+
+    }
+
+    .goldbox1 .row {
+        display: flex;
+        padding: 10px 70px 10px 0px;
+
+
+        flex-wrap: wrap;
+        gap: 1rem; // This gives space between boxes in all screen sizes
+    }
+
+    .gold-head {
+        height: 50vh;
+        width: 100%;
+
+
+    }
+
+    .goldbox1 {}
+
+    .exclusivegold {
+
+        height: 400px;
+    }
+
+
+    .toptext {
+        padding-top: 0px;
+    }
+
+    .stocks {
+        height: 88vh;
+    }
+
+    .genders {
+        height: 88vh;
+    }
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+@media screen and (min-width:990px) and (max-width:1300px) {
+
+
+    .goldbox {
+        padding: 10px 70px 10px 70px;
+        //   background-color: gray;
+        margin-right: 0px;
+        font-size: 15px;
+        font-weight: 900;
+        flex: 1 1 150px;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .goldbox1 .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem; // This gives space between boxes in all screen sizes
+    }
+
+
+
+    .gold-head {
+        height: 50vh;
+        width: 100%;
+
+
+    }
+
+    .goldbox1 {
+        padding: 10px 70px 10px 70px;
+
+    }
+
+    .stocks {
+        height: 88vh;
+    }
+
+    .genders {
+        height: 88vh;
+    }
+
+}
