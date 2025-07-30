@@ -1,0 +1,22 @@
+# Ignore node_modules from all subfolders
+**/node_modules/
+
+# IDE/editor config folders
+.vscode/
+.idea/
+
+# Build/output folders
+**/dist/
+**/build/
+
+# Ignore .env files from all folders
+**/.env
+
+# Ignore image folder (moved to root)
+images/
+**/images/
+
+# Ignore generated files
+*.log
+*.srt
+*.pdf
