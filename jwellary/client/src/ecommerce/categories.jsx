@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 
 function Categories() {
   const [data, setdata] = useState([]);
@@ -47,7 +48,7 @@ function Categories() {
       {
         breakpoint: 875,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 6,
           slidesToScroll: 3,
           infinite: true,
           // dots: true
@@ -56,7 +57,7 @@ function Categories() {
       {
         breakpoint: 763,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 6,
           slidesToScroll: 3,
           infinite: true,
           // dots: true
@@ -65,28 +66,28 @@ function Categories() {
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
           slidesToScroll: 3,
           infinite: true,
           // dots: true
         },
       },
       {
-        breakpoint: 495,
+        breakpoint: 500,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4.3,
           slidesToScroll: 3,
           infinite: true,
-          // dots: true
+          dots: false,
         },
       },
       {
         breakpoint: 395,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          // dots: true
+          dots: false,
         },
       },
     ],
@@ -107,7 +108,7 @@ function Categories() {
   };
 
   return (
-    <div className="slider-container ">
+    <div className="slider-container  h-100">
       <Slider {...settings}>
         {data?.map((item, index) => (
           <Link
@@ -127,7 +128,7 @@ function Categories() {
               </div>
 
               <div className="slider-title">
-                <div>{item?.name}</div>
+                <div className="slider-title">{item?.name}</div>
               </div>
             </div>
           </Link>

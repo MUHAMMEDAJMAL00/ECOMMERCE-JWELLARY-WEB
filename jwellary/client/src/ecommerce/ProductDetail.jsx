@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../styles/newstyles.scss";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCartAsync } from "../redux/slices/cartSlice";
+import Footer from "../components/footer";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -15,8 +17,19 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isInCart, setIsInCart] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const user = useSelector((state) => state.auth?.user);
+
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const checkIfInCart = async () => {
     try {
@@ -86,30 +99,37 @@ const ProductDetail = () => {
 
   if (!product) return <div className="text-center py-5">Loading...</div>;
 
+  // Button style based on screen size
+  const buttonStyle = {
+    width: isMobile ? "100%" : "auto",
+    minWidth: isMobile ? "100%" : "150px",
+  };
+
   return (
     <div>
       <Header />
       <div
-        className="d-flex justify-content-center align-items-center"
+        className="d-flex justify-content-center align-items-center mt-3 mainproducthead"
         style={{ backgroundColor: "#fff", height: "100%" }}
       >
-        <div className="container-fluid p-1">
+        <div className="container-fluid p-1 mt-5">
           <div className="mx-start rounded" style={{ backgroundColor: "#fff" }}>
             <div className="row">
               <div className="col-md-5 text-center mb-4">
                 <img
                   src={`http://localhost:3001${product.image}`}
                   alt={product.name}
-                  className="rounded"
+                  className="rounded productimage"
                   style={{
                     objectFit: "cover",
-                    width: "460px",
-                    height: "460px",
+                    width: isMobile ? "100%" : "460px",
+                    height: isMobile ? "300px" : "460px",
+                    maxWidth: "460px",
                   }}
                 />
               </div>
 
-              <div className="col-md-6 d-flex flex-column justify-content-center p-5">
+              <div className="col-md-6 d-flex flex-column justify-content-center p-4">
                 <h2 className="fw-bold mb-2">{product.name}</h2>
                 <p className="mb-4">{product.description}</p>
 
@@ -164,33 +184,39 @@ const ProductDetail = () => {
                   </button>
                 </div>
 
-                {isInCart ? (
-                  <button
-                    className="btn btn-primary btn-lg w-50 mb-2"
-                    onClick={() => navigate("/cartpage")}
-                  >
-                    View Cart
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-warning btn-lg w-50 mb-2"
-                    onClick={cartsubmit}
-                  >
-                    Add to Cart
-                  </button>
-                )}
+                <div className={isMobile ? "d-grid gap-2" : "d-flex gap-2"}>
+                  {isInCart ? (
+                    <button
+                      className="btn btn-warning "
+                      style={buttonStyle}
+                      onClick={() => navigate("/cartpage")}
+                    >
+                      View Cart
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-warning "
+                      style={buttonStyle}
+                      onClick={cartsubmit}
+                    >
+                      Add to Cart
+                    </button>
+                  )}
 
-                <button
-                  className="btn btn-outline-primary btn-lg w-50"
-                  onClick={handleBuyNow}
-                >
-                  Buy Now
-                </button>
+                  <button
+                    className="btn btn-outline-dark"
+                    style={buttonStyle}
+                    onClick={handleBuyNow}
+                  >
+                    Buy Now
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

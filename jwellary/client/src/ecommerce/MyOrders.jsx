@@ -3,11 +3,14 @@ import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/footer";
 import UserSideBar from "../components/UseSideBar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button, Form } from "react-bootstrap";
+import { updateUserInfo } from "../redux/slices/authSlice";
 
 const MyOrders = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(null);
@@ -46,13 +49,8 @@ const MyOrders = () => {
     fetchData();
   }, [user]);
 
-  const handleEditClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const handleEditClick = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -60,11 +58,9 @@ const MyOrders = () => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(
-        `http://localhost:3001/updateUser/${user._id}`,
-        formData
-      );
+      await axios.put(`http://localhost:3001/updateUser/${user._id}`, formData);
       setUserDetails((prev) => ({ ...prev, ...formData }));
+      dispatch(updateUserInfo(formData));
       setShowModal(false);
     } catch (err) {
       console.error("Update failed:", err);
@@ -74,119 +70,159 @@ const MyOrders = () => {
   return (
     <div>
       <Header />
-      <div className="container-fluid px-md-5 py-4">
-        <div
-          className="d-flex"
-          style={{ gap: "70px", alignItems: "flex-start" }}
-        >
-          <div style={{ width: "250px", padding: "0px 0px 0px 20px" }}>
-            <div className="position-sticky" style={{ top: "90px" }}>
+      <div className="container py-4">
+        <div className="row">
+          {/* Sidebar */}
+          <div className="col-lg-3 col-md-4 mb-4">
+            {/* Desktop sticky, mobile normal */}
+            <div
+              className="d-none d-lg-block position-sticky"
+              style={{ top: "90px" }}
+            >
+              <UserSideBar />
+            </div>
+            <div className="d-block d-lg-none">
               <UserSideBar />
             </div>
           </div>
 
-          <div style={{ flex: 1, padding: "0px 100px 0px 0px" }}>
-            <div className="mb-5">
-              <h3 className="mb-4 fw-bold px-2">My Account</h3>
+          {/* Main Content */}
+          <div className="col-lg-9 col-md-8">
+            <div className="mb-4">
+              <h3 className="fw-bold">My Account</h3>
               <hr />
               <div
-                className="text-black  ms-3 text-end fw-bold"
+                className="text-end text-primary fw-bold mb-3"
                 style={{ cursor: "pointer" }}
                 onClick={handleEditClick}
               >
                 Edit
               </div>
-              <div className="rounded p-3">
-                {userDetails && (
-                  <>
-                    <div className="d-flex justify-content-between align-items-start border-bottom py-3">
-                      <div className="w-100">
-                        <div className="fw-semibold">Name</div>
-                        <div className="text-muted">{userDetails.name}</div>
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-start border-bottom py-3">
-                      <div className="w-100">
-                        <div className="fw-semibold">Email</div>
-                        <div className="text-muted">{userDetails.email}</div>
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-start border-bottom py-3">
-                      <div className="w-100">
-                        <div className="fw-semibold">Phone Number</div>
-                        <div className="text-muted">{userDetails.phone}</div>
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-start py-3">
-                      <div className="w-100">
-                        <div className="fw-semibold">Age</div>
-                        <div className="text-muted">
-                          {userDetails.age || "—"}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+
+              {userDetails && (
+                <div className="bg-light rounded p-3 mb-4">
+                  <div className="mb-2">
+                    <strong>Name:</strong>{" "}
+                    <span className="text-muted">{userDetails.name}</span>
+                  </div>
+                  <div className="mb-2">
+                    <strong>Email:</strong>{" "}
+                    <span className="text-muted">{userDetails.email}</span>
+                  </div>
+                  <div className="mb-2">
+                    <strong>Phone Number:</strong>{" "}
+                    <span className="text-muted">{userDetails.phone}</span>
+                  </div>
+                  <div>
+                    <strong>Age:</strong>{" "}
+                    <span className="text-muted">{userDetails.age || "—"}</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="card shadow-sm rounded">
               <div className="card-body">
-                <h4 className="card-title mb-4">My Orders</h4>
+                <h4 className="card-title mb-3">My Orders</h4>
+
                 {loading ? (
                   <p className="text-muted">Loading orders...</p>
                 ) : orders.length === 0 ? (
                   <p className="text-muted">No orders found.</p>
                 ) : (
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-hover align-middle">
-                      <thead className="table-light">
-                        <tr>
-                          <th>#</th>
-                          <th>Product Name</th>
-                          <th className="text-center">Qty</th>
-                          <th>Price (₹)</th>
-                          <th>Total (₹)</th>
-                          <th className="text-center">Status</th>
-                          <th>Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orders.map((order, index) =>
-                          order.items.map((item, i) => (
-                            <tr key={i}>
-                              {i === 0 && (
-                                <td rowSpan={order.items.length}>
-                                  {index + 1}
-                                </td>
-                              )}
-                              <td>{item.name}</td>
-                              <td className="text-center">{item.qty}</td>
-                              <td>₹{item.price}</td>
-                              {i === 0 && (
-                                <>
+                  <>
+                    {/* Desktop Table View */}
+                    <div className="table-responsive d-none d-md-block">
+                      <table className="table table-bordered table-hover">
+                        <thead className="table-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Product Name</th>
+                            <th className="text-center">Qty</th>
+                            <th>Price (₹)</th>
+                            <th>Total (₹)</th>
+                            <th className="text-center">Status</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {orders.map((order, index) =>
+                            order.items.map((item, i) => (
+                              <tr key={i}>
+                                {i === 0 && (
                                   <td rowSpan={order.items.length}>
-                                    ₹{order.totalPrice.toFixed(2)}
+                                    {index + 1}
                                   </td>
-                                  <td
-                                    rowSpan={order.items.length}
-                                    className="text-center"
-                                  >
-                                    <span className="badge bg-success">
-                                      {order.status || "Processing"}
-                                    </span>
-                                  </td>
-                                  <td rowSpan={order.items.length}>
-                                    {new Date(order.createdAt).toLocaleString()}
-                                  </td>
-                                </>
-                              )}
-                            </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
+                                )}
+                                <td>{item.name}</td>
+                                <td className="text-center">{item.qty}</td>
+                                <td>₹{item.price}</td>
+                                {i === 0 && (
+                                  <>
+                                    <td rowSpan={order.items.length}>
+                                      ₹{order.totalPrice.toFixed(2)}
+                                    </td>
+                                    <td
+                                      rowSpan={order.items.length}
+                                      className="text-center"
+                                    >
+                                      <span className="badge bg-success">
+                                        {order.status || "Processing"}
+                                      </span>
+                                    </td>
+                                    <td rowSpan={order.items.length}>
+                                      {new Date(
+                                        order.createdAt
+                                      ).toLocaleString()}
+                                    </td>
+                                  </>
+                                )}
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="d-block d-md-none">
+                      {orders.map((order, index) => (
+                        <div className="card mb-3" key={index}>
+                          <div className="card-body">
+                            <h6 className="fw-bold">Order #{index + 1}</h6>
+                            <hr />
+                            {order.items.map((item, i) => (
+                              <div key={i} className="mb-2">
+                                <div>
+                                  <strong>Product:</strong> {item.name}
+                                </div>
+                                <div>
+                                  <strong>Qty:</strong> {item.qty}
+                                </div>
+                                <div>
+                                  <strong>Price:</strong> ₹{item.price}
+                                </div>
+                              </div>
+                            ))}
+                            <div>
+                              <strong>Total:</strong> ₹
+                              {order.totalPrice.toFixed(2)}
+                            </div>
+                            <div>
+                              <strong>Status:</strong>{" "}
+                              <span className="badge bg-success">
+                                {order.status || "Processing"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Date:</strong>{" "}
+                              {new Date(order.createdAt).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             </div>

@@ -15,6 +15,17 @@ export const addToCartAsync = createAsyncThunk(
     return res.data; // backend should return the cart item
   }
 );
+export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
+  const res = await axios.get(`http://localhost:3001/cart/${userId}`);
+  return res.data;
+});
+export const deleteCartItem = createAsyncThunk(
+  "cart/deleteItem",
+  async (userId) => {
+    const res = await axios.delete(`http://localhost:3001/cart/${cartItemId}`);
+    return res.data;
+  }
+);
 
 const initialState = {
   cartItems: [],
@@ -49,10 +60,19 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(addToCartAsync.fulfilled, (state, action) => {
-      state.cartItems.push(action.payload);
-      state.cartCount = state.cartItems.length;
-    });
+    builder
+      .addCase(addToCartAsync.fulfilled, (state, action) => {
+        state.cartItems.push(action.payload);
+        state.cartCount = state.cartItems.length;
+      })
+      .addCase(fetchCart.fulfilled, (state, action) => {
+        state.cartItems = action.payload;
+        state.cartCount = action.payload.length;
+      })
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.cartItems = action.payload;
+        state.cartCount = action.payload.length;
+      });
   },
 });
 

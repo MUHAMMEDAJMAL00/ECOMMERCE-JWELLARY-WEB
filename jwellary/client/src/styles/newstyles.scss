@@ -7,11 +7,16 @@
     text-align: center;
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 
 .header {
     background-color: rgb(255, 255, 255);
-    height: 10vh;
+    height: auto;
     width: 100%;
     position: fixed;
     top: 0;
@@ -32,10 +37,10 @@
 
     &-deskbox {
         width: 100%;
-        height: 9vh;
+        height: 11vh !important;
         box-sizing: border-box;
-        background-color: hsl(0, 0%, 100%);
-        padding: 5px 8px;
+        // background-color: hsl(0, 88%, 38%);
+        padding: 5px 8px 15px 0px;
         box-sizing: border-box;
         display: flex;
         gap: 8px;
@@ -43,7 +48,7 @@
     }
 
     &-desklogos {
-        height: 61px;
+        height: 60px;
         cursor: pointer;
     }
 
@@ -243,113 +248,136 @@ body {
 
 }
 
-.footer1 {
-    margin-top: 48px;
-}
-
-
-.contentfooter {
-    padding: 0px 23px 0px 0px;
-}
-
-.textfooter {
-    list-style-type: none;
-    padding: 0px 0px 0px 54px;
-
-}
-
-.footerheadtext {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #212529;
-    padding-bottom: 12px;
-}
-
 .footer {
     width: 100%;
-    height: 72vh;
-    padding: 0px 66px;
-    box-sizing: border-box;
     background-color: #d9d9d966;
+    padding: 40px 66px 0px 66px;
+    box-sizing: border-box;
+
+    .footer-top {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        @media screen and (min-width: 950px) {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+    }
+
+    .contentfooter {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        @media screen and (min-width: 950px) {
+            flex-direction: row;
+            gap: 60px;
+        }
+
+        .textfooter {
+            list-style-type: none;
+            padding: 0;
+
+            .footerheadtext {
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                color: #212529;
+                padding-bottom: 12px;
+            }
+
+            .footertext {
+                font-size: 14px;
+                color: #000;
+                margin-bottom: 10px;
+                white-space: nowrap;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .footer5 {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: end !important;
+        // background-color: #000;
+
+        @media screen and (min-width: 950px) {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .footerpay {
+            .footerheadtext {
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+            .payicon {
+                display: flex;
+                gap: 25px;
+            }
+        }
+
+        .footer6 {
+            width: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center !important;
+
+            .footer7 {
+                padding: 10px;
+                // background-color: #000;
+
+
+                .footerlucky {
+                    height: 70px;
+                    width: auto;
+                }
+            }
+
+            .footersocialmedia {
+                display: flex;
+                gap: 40px;
+                padding-left: 0;
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .line {
+        margin: 30px 0;
+        border-top: 1px solid gray;
+    }
+
+    .lastfooter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 30px 0;
+
+        @media screen and (min-width: 950px) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .lastfirst,
+        .lastsecond {
+            font-size: 12px;
+            color: #000;
+        }
+    }
 }
-
-
-
-
-.footertext {
-    font-size: 14px;
-    color: #000;
-    margin: 0px 0px 10px;
-    text-wrap: nowrap;
-    cursor: pointer;
-
-
-}
-
-
-.footerpay {
-    margin-top: 48px;
-    padding: 0px 0px 0px 8px;
-}
-
-.payicon {
-    display: flex;
-    gap: 38px;
-}
-
-
-.footerlucky {
-    height: 70px;
-    margin: 48px 0px 0px -3px;
-}
-
-
-.footersocialmedia {
-    margin: 17px 10px 0px -1px;
-    display: flex;
-    gap: 60px;
-}
-
-.lastfooter {
-    display: flex;
-    text-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    padding: 56px 49px 38px 67px;
-}
-
-.lastfirst {
-    font-size: 14px;
-    font-family: "DMSans-Serif";
-    font-weight: 600;
-}
-
-.lastsecond {
-    font-size: 14px;
-    font-family: "DMSans-Regular";
-    font-weight: 400;
-    padding: 0px 0px 0px 0px;
-    text-align: end;
-
-
-}
-
-.line {
-    width: 100vw;
-    color: gray;
-    position: absolute;
-    left: 0%;
-    right: 0px;
-
-
-}
-
-.line1 {
-    // margin-bottom: 56px;
-    margin-top: 5px;
-}
-
 
 
 
@@ -587,21 +615,52 @@ body {
 
 
 
-@media screen and (min-width:1500px) and (max-width:3070px) {
+// @media screen and (min-width:1500px) and (max-width:3070px) {
 
-    .footer {
+//     .footer {
+//         width: 100%;
+//         height: 100%;
+//         padding: 30px 66px;
+//         box-sizing: border-box;
+//         // background-color: rgba(217, 217, 217, 0.4);
+//     }
+
+
+// }
+
+// @media screen and (min-width:1700px) and (max-width:2560px) {}
+
+
+@media screen and (min-width:1450px) and (max-width:2560px) {
+
+
+    .header {
         width: 100%;
-        height: 100%;
         padding: 0px 66px;
-        box-sizing: border-box;
-        // background-color: rgba(217, 217, 217, 0.4);
+        // background-color: red;
+
     }
 
-}
+    .parentheader {
+        width: 100%;
+        padding: 0px 0px 0px 0px;
+        margin-left: 0px;
+    }
 
 
+    .header-deskbox {
+        height: 10vh;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 5px 0px 10px 0px;
+    }
 
-@media screen and (min-width:1450px) and (max-width:1600px) {
+
+    .firstdisplayimage {
+        display: none;
+    }
+
     .header-categories {
         padding: 0px 0px 15px 66px;
     }
@@ -610,9 +669,10 @@ body {
         display: none;
     }
 
-    .header {
-        padding: 0px 0px 0px 60px;
+    .header-sell {
+        margin-left: 280px;
     }
+
 
     .header-cartimage {
         margin-left: 40px;
@@ -623,14 +683,105 @@ body {
     }
 
 
+    .stocks {
+        background-color: #f9f9f9;
+
+        .toptext {
+            font-size: 28.8px; // 1.8rem
+            font-weight: bold;
+            // margin-bottom: 16px; // 1rem
+            text-align: center;
+        }
+
+        .stockslider {
+
+            width: 100% !important;
+
+            .mainstocks {
+                padding: 12.8px; // 0.8rem
+                border-radius: 10px;
+                background-color: #fff;
+                // background-color: red;
+                transition: transform 0.2s ease-in-out;
+                position: relative;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                img.stockimages {
+                    width: 100%;
+                    height: auto;
+
+                    max-height: 400px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+
+
+                .productss {
+                    padding-top: 9.6px; // 0.6rem
+                    width: auto;
+
+
+                    .stocktitle {
+                        font-size: 16px; // 1rem
+                        font-weight: 600;
+                    }
+
+                    .stockaed {
+                        font-size: 15.2px; // 0.95rem
+                        color: #000000;
+                    }
+
+                    .availablestock,
+                    .availablestocks {
+                        font-size: 12.8px; // 0.8rem
+                        color: #a70202;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .productss {
+                        .stocktitle {
+                            font-size: 15.2px; // 0.95rem
+                        }
+
+                        .stockaed {
+                            font-size: 13.6px; // 0.85rem
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //---------------------------
+    //gold bars
 
 }
 
-@media screen and (min-width:990px) and (max-width:1450px) {
+
+
+
+
+
+
+
+
+
+@media screen and (min-width:950px) and (max-width:1450px) {
 
     .header {
-        padding: 0px 45px;
+        padding: 0px 70px;
+        width: 100%;
+        // background-color: rgb(220, 4, 4);
 
+    }
+
+    .parentheader {
+        width: auto;
     }
 
     .header-searchbox {
@@ -725,33 +876,394 @@ body {
         margin-left: 10px;
     }
 
+    //----------------------------------------------
+
+
+    //------------------------------
+    .golds {
+        margin: 10px 60px 20px 60px !important; // Horizontal margin same as .stocks, .genders
+        padding: 10px 0px 10px 0px !important;
+        height: auto !important;
+        // background-color: #000;
+    }
+
+    .sections {
+        width: 100%;
+        height: 400px !important;
+    }
+
+    .section1 {
+        width: 100%;
+        height: 100% !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+        display: flex;
+    }
+
+    .sectiontitle {
+
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+
+    //----------------------------------------------
+    //------------------------------------banner
+    .custom-headings {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 300px;
+
+        margin: 0px 30px 30px 0px !important;
+        padding-left: 0px;
+
+    }
+
+    .custom-title {
+        font-size: 40px !important;
+        margin-top: 10px !important;
+
+
+    }
+
+    .custom-description {
+        height: 20px !important;
+        font-size: 20px !important;
+        font-weight: 400 !important;
+    }
+
+    .custom-banner {
+
+        .slick-dots {
+            bottom: -25px !important; // move up/down (increase value to move lower)
+            left: 50;
+            width: 100%;
+            text-align: center;
+
+        }
+    }
+
+
+
+    //----------------------------------------------
+
+    .stocks {
+        // background-color: #d63b3b !important;
+        height: auto !important;
+        margin: 0px 60px 30px 60px !important;
+
+        .toptext {
+            font-size: 28.8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .text-end {
+            position: absolute;
+            right: 30px !important;
+            top: 5px !important;
+            cursor: pointer;
+            width: 20px !important;
+            // zIndex: 2
+        }
+
+        .stockslider {
+            // background-color: #080707 !important;
+            height: auto;
+            padding: 0px 0px 0px 0px;
+
+            .mainstocks {
+                height: 100%;
+                padding: 12.8px;
+                border-radius: 10px;
+                background-color: #fff;
+                transition: transform 0.2s ease-in-out;
+                position: relative;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                img.stockimages {
+                    width: 100%;
+                    height: auto;
+                    max-height: 400px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+                .productss {
+                    padding-top: 9.6px;
+                    width: auto;
+
+                    .stocktitle {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    .stockaed {
+                        font-size: 15.2px;
+                        color: #000000;
+                    }
+
+                    .availablestock,
+                    .availablestocks {
+                        font-size: 12.8px;
+                        color: #a70202;
+                    }
+                }
+            }
+
+            .slick-dots {
+                bottom: -20px !important;
+                left: 0px;
+
+                li button:before {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    // genders--------------
+
+    .gendersmain {
+        margin: 0px 60px !important; // outer spacing same as stocks
+    }
+
+    .genders {
+        width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+        margin-right: 10px;
+        padding: 0px !important; // Let content decide height
+    }
+
+    .genders1 {
+        height: 100%;
+    }
+
+    .genders2 {
+        height: 400px; // Match `.mainstocks` height
+        background-position: center;
+        // width: 300px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        border-radius: 10px;
+        display: flex;
+        margin-right: 10px; // spacing between slides like in stocks
+        // align-items: flex-end;
+    }
+
+    .gendertitle {
+        padding: 20px;
+        font-size: 20px;
+        font-weight: 800;
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.4); // optional overlay for better text readability
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        width: 100%;
+    }
+
+    //----------------------------------------------//goldbar
+    // ---------------- Gold Bar
+    .exclusiv1 {
+        height: 400px;
+        width: 100%;
+    }
+
+    .slick-sliders {
+        margin: 0px 60px !important;
+    }
+
+    .exclusivegold {
+        height: 400px;
+        padding: 16px;
+        margin-right: 12px;
+
+        .exclusivetitle {
+            font-size: 15.5px !important;
+        }
+
+        .exclusivedesc {
+            font-size: 13.5px;
+        }
+    }
+
+
+    //----------------------------------------------
+    //------------------------------------logos
+    .mainlogo {
+        margin: 0px 60px 30px 60px !important;
+        height: auto !important;
+    }
+
+    .logoshead {
+        height: auto !important;
+
+        width: 100% !important;
+        padding: 0px 0px 0px 0px !important;
+
+    }
+
+
+
+    .logoimg {
+        height: 60px;
+        padding-top: 10px;
+        width: 100%;
+        background-size: contain;
+        background-position: center;
+        border-radius: 7px;
+        background-repeat: no-repeat;
+        border: 1px solid #ffe6c9;
+    }
+
+    //----------------------------------------------
+    //----------------------------------------------
+
+    .gold-head {
+        height: auto !important;
+    }
+
+    .goldbox {
+        //    background-color: red;
+        color: #2a5e47;
+        border: 1px solid #131514;
+        display: flex;
+        border-radius: 4px;
+        padding: 10px 0px 10px 0px;
+        justify-content: center;
+        align-items: center;
+        //   font-family: "DMSans-SemiBold";
+        font-size: 15px;
+        font-weight: 900;
+        white-space: nowrap;
+        text-align: center;
+        text-wrap: nowrap;
+        margin-right: 43px;
+
+    }
+
+
+
+    //----------------------------------------------
+    //----------------------------------------------
+    //----------------------------------------------
+    //----------------------------------------------
+    //----------------------------------------------
+
+    //----------------------------------------------
     .firstdisplayimage {
         display: none;
     }
 
 
+    // ---------------- Footer
     .footer {
-        width: 100%;
+        padding: 70px 40px 20px 66px;
         height: 100%;
-        padding: 0px 66px;
-        box-sizing: border-box;
-        background-color: rgba(217, 217, 217, 0.4);
+        // background-color: #000;
+        flex-wrap: wrap;
+
+        .contentfooter {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 0px;
+        }
+
+        .textfooter {
+            width: 30%;
+            min-width: 200px;
+        }
+
+        .footer5 {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: end;
+            align-items: end !important;
+            // background-color: #000;
+        }
+
+        .footer6 {
+            width: 50%;
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: end !important;
+        }
+
+        .footer7 {
+            width: 100%;
+
+        }
+
+        .footerlucky {
+            width: 100px;
+            // background-color: #000;
+            height: 50px;
+        }
+
+        .footersocialmedia {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lastfooter {
+            display: flex;
+            justify-content: space-between;
+            // flex-wrap: wrap;
+            height: 2vh;
+            padding-top: 20px;
+
+            .lastfirst,
+            .lastsecond {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            @media screen and (min-width: 768px) {
+
+                .lastfirst,
+                .lastsecond {
+                    width: 100%;
+                    margin-bottom: 0;
+                }
+
+                .lastsecond {
+                    // text-align: right;
+                }
+            }
+        }
     }
 
-    .footertext {
-        font-size: 12px;
-        // width: 100%;
-        // text-wrap: nowrap;
+    .total {
+        font-size: 30px !important;
     }
 
-    .contentfooter {
-        padding: 0px 0px 0px 0px;
+    .total1 {
+        font-size: 20px !important;
+        text-wrap: nowrap;
+        padding-left: 10px;
     }
 
-    .lastfooter {
-        padding: 30px 49px 10px 67px;
-    }
-
+    // .checkoutmain {
+    //     margin: 50px 30px 0px 30px !important;
+    // }
 }
 
 
@@ -763,29 +1275,61 @@ body {
 
 
 
+@media screen and (min-width: 768px) and (max-width: 950px) {
+    //==============checkout
 
-@media screen and (min-width:768px) and (max-width:990px) {
+
+
+    .checkoutmain {
+        margin-top: 100px !important;
+    }
+
+    //==============
+    //==============
+    //==============cart
+
+
+    .total {
+        font-size: 25px !important;
+    }
+
+    .total1 {
+        font-size: 20px !important;
+        text-wrap: nowrap;
+        padding-left: 10px;
+    }
+
+    //-----------------------------------
+
+    .custom-headings {
+        font-size: 10px;
+    }
+
     .header-digital {
         display: none;
     }
 
-    .header-rate {
-        display: none;
+    .header-desklogo {
+        width: 50%;
+        padding-top: 10px;
+        display: flex;
+        gap: 10px;
     }
 
-    .header-categories {
+    .header-rate,
+    .header-categories,
+    .displayimage {
         display: none;
     }
 
     .header {
         display: flex;
-        padding: 0px 30px;
+        padding: 0px 10px;
         height: 11vh;
-        // width: 100%;
     }
 
     .header-desklogos {
-        height: 51px;
+        height: 41px;
     }
 
     .header-deskbox {
@@ -793,35 +1337,21 @@ body {
         gap: 26px;
         display: flex;
         height: 10vh;
-        // justify-content: space-between;
     }
 
     .header-cartimage {
         margin-left: 0px;
         gap: 20px;
-        // width: 100%;
-
     }
 
-    // .header-searchbar{
-    // width: 100%;
-
-    // }
     .header-searchbox {
         width: 100%;
-
-
-        margin-left: 150px;
-        margin-right: 10px;
+        margin-left: 0px;
     }
 
-    .displayimage {
-        display: none;
+    .sectiontitle {
+        font-size: 21px !important;
     }
-
-    // .firstdisplayimage {
-    //     display: none;
-    // }
 
     .custom-headings {
         padding: 50px 20px 0px 0px;
@@ -831,67 +1361,1133 @@ body {
         width: 470px;
     }
 
-    .footer {
+
+
+
+    //----------------------rate
+
+    .gold-head {
+        height: auto !important;
+        // background-color: #000;
+        padding: 0px;
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 20px 0px 60px 30px !important;
+
+
+    }
+
+    .goldbox1 {
+        // background-color: #2a5e47;
+        width: 100% !important;
+        padding: 0px 66px 0px 5px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between !important;
+
+
+    }
+
+    .goldbox {
+
+        color: #2a5e47;
+        // background-color: #000;
+        border: 1px solid #131514;
+        display: flex;
+        border-radius: 4px;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 900;
+        white-space: nowrap;
+        text-align: center;
+        margin-right: 59px !important;
+
+    }
+
+    .gold-title {
+        font-size: 35px !important;
+        padding-bottom: 20px;
+        width: 100%;
+        padding-right: 60px;
+        // background-color: #000;
+        font-weight: 600;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .gold-date {
+        font-size: 20px !important;
+        // width: 100%;
+        padding-right: 60px;
+        padding-bottom: 20px;
+
+        // background-color: #000;
+        font-weight: 600;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+
+    // ---------------- Gold Bar
+    .exclusiv1 {
+        height: 400px;
+        width: 100%;
+    }
+
+    .slick-sliders {
+        margin: 0px 30px !important;
+    }
+
+    .exclusivegold {
+        height: 400px;
+        padding: 16px;
+        margin-right: 12px;
+
+        .exclusivetitle {
+            font-size: 15.5px !important;
+        }
+
+        .exclusivedesc {
+            font-size: 13.5px;
+        }
+    }
+
+    //------------------------------------
+    .slider-container {
+        overflow: hidden;
+        height: 25vh;
+        background-color: #ffffff !important;
+        padding: 40px 28px 30px 28px !important;
+
+        // ✅ Add margin exactly like others:
+        // margin: 0px 30px !important;
+        width: 100%;
+    }
+
+    .slidder {
+        width: 50% !important;
+        margin-right: 0px 30px !important;
+
+    }
+
+
+    //------------------------------------banner
+    .custom-headings {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 300px;
+
+        margin: 0px 30px 30px 0px !important;
+        padding-left: 0px;
+    }
+
+    .custom-title {
+        font-size: 35px !important;
+        margin-top: 10px !important;
+
+
+    }
+
+    .custom-description {
+        height: 20px !important;
+        font-size: 18px !important;
+        font-weight: 400 !important;
+    }
+
+
+    //------------------------------------logos
+    .mainlogo {
+        margin: 0px 30px 30px 30px !important;
+        height: auto !important;
+
+        .slick-dots {
+            bottom: -35px;
+        }
+    }
+
+    .logoshead {
+        height: 11vh !important;
+
+        width: 100% !important;
+        padding: 10px 0px 0px 0px !important;
+
+    }
+
+
+
+    .logoimg {
+        height: 60px;
+        padding-top: 10px;
+        width: 100%;
+        background-size: contain;
+        background-position: center;
+        border-radius: 7px;
+        background-repeat: no-repeat;
+        border: 1px solid #ffe6c9;
+    }
+
+
+    //------------------------------------
+    //------------------------------------
+    //------------------------------------
+    .gendersmain {
+        margin: 0px 30px !important; // outer spacing same as stocks
+    }
+
+    .genders {
+        width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+        margin-right: 10px;
+        padding: 0px !important; // Let content decide height
+    }
+
+    .genders1 {
         height: 100%;
     }
 
-    .lastfooter {
+    .genders2 {
+        height: 400px; // Match `.mainstocks` height
+        background-position: center;
+        // width: 300px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        border-radius: 10px;
+        display: flex;
+        margin-right: 10px; // spacing between slides like in stocks
+        // align-items: flex-end;
+    }
+
+    .gendertitle {
+        padding: 20px;
+        font-size: 20px;
+        font-weight: 800;
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.4); // optional overlay for better text readability
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         width: 100%;
-        padding: 50px 50px 40px 0px;
     }
 
-    .lastsecond {
-        text-align: start;
-        padding-left: 12px;
+
+    // ---------------- Stocks, Top Products, Trending
+    .stocks {
+        // background-color: #d63b3b !important;
+        height: auto !important;
+        margin: 0px 30px 35px 30px !important;
+
+        .toptext {
+            font-size: 28.8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .text-end {
+            position: absolute;
+            right: 30px !important;
+            top: 5px !important;
+            cursor: pointer;
+            width: 20px !important;
+            zIndex: 2
+        }
+
+        .stockslider {
+            // background-color: #080707 !important;
+            height: auto;
+            padding: 0px 3px 0px 0px;
+
+            .mainstocks {
+                height: 100%;
+                padding: 12.8px;
+                border-radius: 10px;
+                background-color: #fff;
+                transition: transform 0.2s ease-in-out;
+                position: relative;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                img.stockimages {
+                    width: 100%;
+                    height: auto;
+                    max-height: 400px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+                .productss {
+                    padding-top: 9.6px;
+                    width: auto;
+
+                    .stocktitle {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    .stockaed {
+                        font-size: 15.2px;
+                        color: #000000;
+                    }
+
+                    .availablestock,
+                    .availablestocks {
+                        font-size: 12.8px;
+                        color: #a70202;
+                    }
+                }
+            }
+
+            .slick-dots {
+                bottom: -20px !important;
+                left: 0px;
+
+                li button:before {
+                    color: #000;
+                }
+            }
+        }
     }
 
-    // .stocks {
-
-    //     height: 75vh;
-    // }
 
 
 
+
+
+
+
+
+    //------------------------------
+    .golds {
+        margin: 0px 30px !important; // Horizontal margin same as .stocks, .genders
+        padding: 0px !important;
+    }
+
+    .sections {
+        width: 100%;
+        height: 400px !important;
+        margin-bottom: 20px;
+    }
+
+    .section1 {
+        width: 100%;
+        height: 100% !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+        display: flex;
+    }
+
+    .sectiontitle {
+
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+
+    //------------------------------
+    //------------------------------
+
+    // ---------------- Footer
+    .footer {
+        padding: 50px 66px 0px 66px;
+        height: 100%;
+
+        .contentfooter {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 30px;
+            // flex-wrap: wrap;
+        }
+
+        .textfooter {
+            width: 30%;
+            min-width: 200px;
+        }
+
+        .footer5 {
+            display: flex;
+            flex-direction: row;
+            // background-color: #000;
+            margin-right: 66px;
+            text-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer6 {
+            width: 50%;
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: start !important;
+        }
+
+        .footer7 {
+            width: 50%;
+        }
+
+        .footerlucky {
+            width: 100px;
+            height: 50px;
+        }
+
+        .footersocialmedia {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lastfooter {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: auto;
+            padding-top: 20px;
+
+            .lastfirst,
+            .lastsecond {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            @media screen and (min-width: 768px) {
+
+                .lastfirst,
+                .lastsecond {
+                    width: 100%;
+                    margin-bottom: 0;
+                }
+
+                .lastsecond {
+                    // text-align: right;
+                }
+            }
+        }
+    }
+
+
+    .wishlist-container {
+        height: auto !important;
+        margin: 80px 0px 30px 0px;
+    }
+
+    //--------------------------------------------
+
+    .cartpagemain {
+        padding: 40px 15px 10px 15px !important;
+        margin-top: 40px !important;
+        height: auto !important;
+    }
+
+    .checkoutmain {
+        padding: 60px 30px 0px 30px !important;
+    }
 
 }
 
 
 
 // ------------------------------------------------------------
-@media screen and (min-width:1700px) and (max-width:2560px) {
-    .header-deskbox {
-        height: 10vh;
+@media screen and (min-width:250px) and (max-width:470px) {
+    .cartpagemain {
+        padding: 40px 30px 10px 30px !important;
+        margin-top: 70px !important;
+        height: auto !important;
+    }
+
+    .cart2 {
         display: flex;
-        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-        justify-content: space-between;
-        padding: 5px 0px 10px 0px;
     }
 
+    .cart3 {
+        margin: 0px 0px 0px 30% !important;
 
-    .firstdisplayimage {
-        display: none;
+
+
     }
 
+    .cartt {
+        size: 30px;
+    }
+
+    .carttxt {
+        font-size: 15px !important;
+        text-wrap: nowrap;
+
+    }
+
+    .cartrmv {
+        padding: 9px !important;
+        font-size: 10px !important;
+        // text-wrap: nowrap;
+        width: 50%;
+
+
+    }
+
+    .carttxtrmv {
+        display: flex;
+        gap: 10px;
+    }
+
+    .total {
+        font-size: 20px !important;
+    }
+
+    .total1 {
+        font-size: 20px !important;
+        padding-left: 10px;
+    }
 }
 
 
 
 
 @media screen and (min-width:300px) and (max-width:768px) {
+
+
+
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+    .checkoutmain {
+        margin-top: 100px !important;
+        width: 100% !important;
+        // background-color: #000;
+        padding: 0px 0px 0px 30px !important;
+    }
+
+    .address {
+        padding: 20px 10px 10px 10px !important;
+        border-radius: 10px !important;
+        font-size: 10px !important;
+        font-weight: 600px !important;
+    }
+
+    .delivery {
+        font-size: 11px;
+        // text-align: center;
+        padding-top: 20px;
+    }
+
+    .checkoutsummary {
+        padding-right: 10px !important;
+    }
+
+    .aedsize {
+        font-size: 20px !important;
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    .mainaed {
+        font-size: 25px !important;
+        // padding-left: 30px;
+        text-wrap: nowrap;
+    }
+
+    .fonttext {
+        font-size: 20px !important;
+        // font-weight: 600;
+    }
+
+    .totalorder {
+        display: flex;
+        gap: 10px;
+        padding: 0px !important;
+    }
+
+    //-------------------------------------------------
+    .wishlist-container {
+        height: auto !important;
+        margin: 80px 0px 30px 0px;
+    }
+
+    .cardwish {
+        width: 300px !important;
+        width: 100% !important;
+        height: auto !important;
+        // border-color: red !important;
+        // 
+    }
+
+    ///----------------------cartpage
+    .cartpagemain {
+        padding: 40px 30px 10px 30px !important;
+        margin-top: 70px !important;
+        height: auto !important;
+    }
+
+    /// 
+    /// 
+    /// 
+    // .cartpagemain {
+    //     padding: 40px 15px 10px 15px !important;
+    //     margin-top: 60px !important;
+    //     height: auto !important;
+    // }
+
+    // .cart2 {
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
+    //     width: auto !important;
+    // }
+
+    // .cart3 {
+    //     display: flex;
+    //     // flex-direction: ;
+    //     // justify-content: center;
+    //     align-items: center;
+    //     width: auto !important;
+
+    // }
+
+    // .cartimg {
+    //     size: 20px;
+    // }
+
+    // .carttxt {
+    //     font-size: 15px !important;
+    //     text-wrap: nowrap;
+
+    // }
+
+    // .cartrmv {
+    //     padding: 10px !important;
+    //     font-size: 12px !important;
+    //     margin: 0px !important;
+    // }
+
+    // .carttxtrmv {
+    //     display: flex !important;
+    //     justify-content: center !important;
+    //     align-items: center !important;
+    //     gap: 40px !important;
+    // }
+
+    // .cartsummary {
+    //     display: flex !important;
+    //     flex-direction: column;
+    //     align-items: center;
+    //     justify-content: space-between !important;
+    //     // background-color: #000 !important;
+    // }
+
+    //---------------------------------
+    .header-digital {
+        display: none;
+    }
+
+    .header-desklogo {
+        width: 50%;
+        padding-top: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1px;
+
+    }
+
+    .header-rate,
+    .header-categories,
+    .displayimage {
+        display: none;
+    }
+
     .header {
-        height: 10vh;
         width: 100%;
-        padding: 0px 20px 3px 20px;
+        display: flex;
+        padding: 0px 0px;
+        height: 11vh;
+    }
+
+    .header-desklogos {
+        height: 41px;
+        width: 100px;
+        // background-color: #234536;
+    }
+
+    .header-deskbox {
+        padding: 0px 0px 20px 30px;
+        gap: 26px;
+        display: flex;
+        justify-content: center;
+        height: 10vh;
+    }
+
+    .header-cartimage {
+        margin-left: 0px;
+        gap: 20px;
+    }
+
+    .header-searchbox {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    .sectiontitle {
+        font-size: 21px !important;
+    }
+
+
+    .firstdisplayimage {
+        width: 40px;
+        height: 40px
+    }
+
+    //------------------------------------banner
+    .custom-headings {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        height: auto !important;
+
+        // background-color: #000;
+        margin: 0px 0px 20px 0px !important;
+        padding: 70px 50px 20px 20px !important;
+        text-align: start;
+    }
+
+    .custom-title {
+        font-size: 25px !important;
+        margin-top: 10px !important;
+
+
+    }
+
+    .custom-description {
+        height: 100% !important;
+        width: 100%;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+
+    }
+
+    .custom-banner {
+        height: auto;
+        width: 100%;
+        background-size: cover;
+        background-position: 70%;
+        background-repeat: no-repeat;
+        display: flex;
+        margin-top: 25px;
+        flex-direction: column;
+
+        .slick-dots {
+            bottom: -55px !important;
+            left: 0px;
+
+            li button:before {
+                color: #000;
+            }
+        }
+    }
+
+    .mainbanner {
+        background-color: #a70202;
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: auto !important;
+        text-align: start;
+    }
+
+    //-------------------------categories
+    .slider-container {
+        overflow: hidden;
+        height: auto !important;
+        // background-color: #ce1a1a !important;
+        padding: 0px 15px 0px 15px !important;
+        gap: 20px;
+        margin: 0px 0px 0px 0px !important;
+        width: 100% !important;
+
+        .slick-slider {
+            // background-color: #000 !important;
+            // margin-top: 20px;
+            height: auto !important;
+            margin: 100px 0px !important;
+        }
+    }
+
+
+    .slidder {
+        width: 100% !important;
+        margin: 0px 15px !important;
+    }
+
+    .cat1 {
+        height: 70px !important;
+        width: 70px !important;
+        border-radius: 50px !important;
+
+    }
+
+    .cat2 {
+        padding: 5px 5px 5px 5px !important;
+        border: 1px solid #ffe6c9 !important;
+        border-radius: 70px !important;
+        width: 80px !important;
+        height: 100% !important;
+
+
+    }
+
+    .slider-title {
+        font-size: 10px !important;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 5px;
+        margin-left: 0px;
+        // background-color: red;
+        // padding-left: 10px !important;
+        text-align: center !important;
+        white-space: wrap !important; // ❗ Prevent line break
+        text-overflow: ellipsis"" !important; // ❗ Add "..." if text is too long
+        width: 80px !important;
+        // background-color: red !important;
+
+    }
+
+
+    //------------------------------------------------price gold
+
+    .gold-head {
+        height: 100% !important;
+        // background-color: #000;
+        margin: 0px 0px 0px 0px !important;
+
+    }
+
+    .goldbox {
+        // background-color: red;
+
+        color: #2a5e47;
+        // border: 1px solid #131514;
+        display: flex;
+        border-radius: 4px;
+        padding: 10px 0px 10px 0px;
+        justify-content: center;
+        align-items: center;
+        //   font-family: "DMSans-SemiBold";
+        font-size: 15px;
+        font-weight: 900;
+        white-space: nowrap;
+        text-align: center;
+        text-wrap: nowrap;
+        margin: 0px !important;
+        // width: 200px;
+    }
+
+
+    .goldbox1 {
+
+        padding: 10px 0px 20px 0px !important;
+        align-items: center;
+        font-family: "DMSans-SemiBold";
+        margin-bottom: 20px;
+
+
+
+    }
+
+    .gold2 {
+        gap: 30px;
+        // margin: 0px 60px 0px 60px !important;
+        padding: 0px 15px 0px 15px;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    //------------------------------------------------gold ad
+    .golds {
+        margin: 0px 15px !important; // Horizontal margin same as .stocks, .genders
+        padding: 0px !important;
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
+    }
+
+    .sections {
+        width: 100%;
+        height: 300px !important;
+        margin-bottom: 20px;
+    }
+
+    .section1 {
+        width: 100%;
+        height: 100% !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+        display: flex;
+
+    }
+
+    .sectiontitle {
+
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    //------------------------------------------------
+    // ---------------- Gold Bar
+    .exclusiv1 {
+        height: 300px !important;
+        width: 100%;
+    }
+
+    .slick-sliders {
+        margin: 0px 15px !important;
+    }
+
+    .exclusivegold {
+        height: 300px !important;
+        padding: 16px;
+        margin-right: 12px;
+
+        .exclusivetitle {
+            font-size: 15.5px !important;
+        }
+
+        .exclusivedesc {
+            font-size: 13.5px;
+        }
+    }
+
+    //------------------------------------------------
+    // ---------------- Stocks, Top Products, Trending
+    .stocks {
+        // background-color: #d63b3b !important;
+        height: auto !important;
+        margin: 0px 15px 30px 15px !important;
+
+        .text-end {
+            position: absolute;
+            right: 20px !important;
+            top: 5px !important;
+            cursor: pointer;
+            width: 20px !important;
+            zIndex: 2
+        }
+
+        .toptext {
+            font-size: 23.8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .stockslider {
+            // background-color: #080707 !important;
+            height: auto;
+            padding: 0px 3px 0px 0px;
+
+            .mainstocks {
+                height: 100%;
+                padding: 5.8px;
+                border-radius: 10px;
+                background-color: #fff;
+                transition: transform 0.2s ease-in-out;
+                position: relative;
+
+                &:hover {
+                    transform: translateY(-5px);
+                }
+
+                img.stockimages {
+                    width: 100%;
+                    height: auto;
+                    max-height: 400px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+                .productss {
+                    padding-top: 9.6px;
+                    width: auto;
+
+                    .stocktitle {
+                        font-size: 10px;
+                        font-weight: 600;
+                    }
+
+                    .stockaed {
+                        font-size: 13.2px;
+                        color: #000000;
+                    }
+
+                    .availablestock,
+                    .availablestocks {
+                        font-size: 10.8px;
+                        color: #a70202;
+                    }
+                }
+            }
+
+            .slick-dots {
+                bottom: -20px !important;
+                left: 0px;
+
+                li button:before {
+                    color: #000;
+                }
+            }
+        }
+    }
+
+    //------------------------------------------------
+    //------------------------------------
+    .gendersmain {
+        margin: 0px 15px 20px 15px !important; // outer spacing same as stocks
+        height: 350px;
+    }
+
+    .genders {
+        width: 100%;
+        height: auto;
+        display: flex;
+        gap: 10px;
+        margin-right: 10px;
+        padding: 0px !important; // Let content decide height
+    }
+
+    .genders1 {
+        height: 100%;
+    }
+
+    .genders2 {
+        height: 350px !important; // Match `.mainstocks` height
+        background-position: center;
+        // width: 300px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        border-radius: 10px;
+        display: flex;
+        margin-right: 10px; // spacing between slides like in stocks
+        // align-items: flex-end;
+    }
+
+    .gendertitle {
+        padding: 10px 10px 10px 10px !important;
+        font-size: 15px !important;
+        font-weight: 800;
+        text-align: center;
+        color: #ffffff;
+        // background-color: rgba(0, 0, 0, 0.4); // optional overlay for better text readability
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        width: 100%;
+    }
+
+    //------------------------------------------------
+    //------------------------------------logos
+    .mainlogo {
+        margin: 0px 15px 30px 15px !important;
+        height: auto !important;
+    }
+
+    .logoshead {
+        height: auto !important;
+
+        width: 100% !important;
+        padding: 0px 0px 0px 0px !important;
+
+    }
+
+
+
+    .logoimg {
+        height: 60px;
+        padding-top: 10px;
+        width: 100%;
+        background-size: contain;
+        background-position: center;
+        border-radius: 7px;
+        background-repeat: no-repeat;
+        border: 1px solid #ffe6c9;
+    }
+
+    //------------------------------------------------
+    .productimage {
+        width: 340px !important;
+        height: 340px !important;
+        padding: 30px 50px 0px 0px;
+    }
+
+    .productbuttons {
+        display: flex;
+        width: 20px;
+        background-color: #000;
+    }
+
+    .mainproducthead {
+        margin-top: 100px !important;
+        // src/styles/newstyles.scss
+
+        .btn-responsive {
+            width: 50%;
+            font-size: 1.2rem;
+            padding: 0.5rem 1.2rem;
+
+            @media (max-width: 767.98px) {
+                width: 100% !important;
+                font-size: 1rem;
+                padding: 0.45rem 1rem;
+            }
+
+
+        }
+
+
+    }
+
+
+    //------------------------------------------------
+    //------------------------------------------------
+    .header {
+        height: auto;
+        width: 100%;
+        padding: 0px 15px 3px 15px;
+    }
+
+    .header-desklogo {
+        width: auto;
     }
 
     .header-deskbox {
         height: 10vh;
         display: flex;
         width: 100%;
-
+        align-items: center;
         justify-content: space-between;
-        padding: 5px 0px 10px 0px;
+        padding: 0px 0px 10px 0px !important;
     }
 
     .header-digital {
@@ -930,21 +2526,13 @@ body {
         margin-top: 13px;
     }
 
-    .header-desklogos {
-        // margin-left: 15px;
-        height: 45px;
-        margin-top: 2px;
-        width: 140px;
-        position: fixed;
-    }
 
-    .desklogo {
-        padding-left: 0px;
-    }
+
+
 
     .footer {
         height: 100%;
-        padding: 0px 10px;
+        padding: 20px 15px;
     }
 
     .lastfooter {
@@ -983,5 +2571,25 @@ body {
         margin: 0px 0px 0px 0px;
 
     }
+
+    .footer5 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: start !important;
+        align-items: start !important;
+        // background-color: #000;
+    }
+
+    .footer6 {
+        width: 100% !important;
+        padding: 0px 0px 0px 0px !important;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: start !important;
+    }
+
 
 }

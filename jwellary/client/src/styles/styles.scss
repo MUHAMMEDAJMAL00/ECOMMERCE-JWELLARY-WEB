@@ -3,6 +3,12 @@
     width: 4px;
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .card-text::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 10px;
@@ -99,6 +105,7 @@ body {
 
 
 
+
 }
 
 .slidder {
@@ -137,10 +144,9 @@ body {
 
 .gold-head {
     // background-color: #b9dc1f;
-    height: 30vh;
+    height: 40vh;
     text-align: center;
     display: flex;
-    // gap: 10px;
     width: 100%;
     flex-direction: column;
     justify-content: space-evenly;
@@ -167,7 +173,7 @@ body {
 }
 
 .goldbox {
-    //    background-color: red;
+    // background-color: red;
     color: #2a5e47;
     border: 1px solid #131514;
     display: flex;
@@ -183,7 +189,6 @@ body {
     text-wrap: nowrap;
     margin-right: 43px;
 
-
 }
 
 .goldbox1 {
@@ -196,14 +201,14 @@ body {
 .sections {
     height: 50vh;
     background-color: #ffffff;
-    // padding: 0px 66px;
+    // margin-right: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    // gap: 30px;
 
-    padding: 20px 30px 20px 30px;
+    // padding: 20px 30px 20px 30px;
 
 
 }
@@ -212,8 +217,9 @@ body {
     display: flex;
     color: #ffffff;
     // width: 100%;
+    gap: 20px;
+    padding: 10px 66px 10px 66px;
 
-    padding: 10px 37px 20px 35px;
 }
 
 .section1 {
@@ -247,7 +253,7 @@ body {
 
 .exclusiv1 {
     margin: 0px 0px 30px 0px;
-    height: 430px;
+    height: 500px;
 
     background-color: #ffffff;
 
@@ -267,17 +273,21 @@ body {
     background-position: center;
     height: 500px;
     padding: 20px;
-    background-color: rgb(255, 255, 255);
-    margin-right: 6px;
+    background-color: rgba(255, 255, 255, 0.884);
+    margin-right: 20px;
     border-radius: 4px;
 
 
 }
 
 .exclusivetitle {
-    font-size: 24px;
+    font-size: 26px;
     width: 100%;
     font-weight: 400;
+}
+
+.exclusivedesc {
+    font-size: 15px;
 }
 
 //   -------------top models
@@ -301,18 +311,12 @@ body {
 
 }
 
-// .stocks {
-//     height: 75vh;
-//     // background-color: rgb(255, 255, 255);
-//     background-color: #ffffff;
-//     background-color: red;
-
-// }
+//-----------------------------------------
 
 .stocks {
-    height: 75vh;
-    // background-color: rgb(255, 255, 255);
-    background-color: #ffffff;
+    height: 70vh;
+    background-color: rgb(255, 255, 255);
+    // background-color: #e40808;
 
     // background-color: #d43242;
 
@@ -320,40 +324,17 @@ body {
 }
 
 .stockslider {
-    height: 60vh;
+    height: 65vh;
     background-color: #ffffff;
     // border: 1px solid #fff2e2;
     // border-radius: 10px solid black;
-    padding: 20px;
-    margin: 0px 50px 0px 40px;
-    // background-color: #d43242;
+    // margin: 0px 50px 0px 40px;
+    padding: 10px 66px 0px 66px;
 
 
 }
 
-// .stocksliders {
-//     height: 80vh;
-//     // background-color: #ffffff;
-//     border: 1px solid #fff2e2;
-//     // border-radius: 10px solid black;
-//     padding: 20px;
-//     margin: 0px 75px 0px 60px;
-//     // background-color: red; 
-//     background-color: #fdfdfd;
 
-// }
-
-// .stockimage {
-//     height: 380px;
-//     background-size: contain;
-//     background-position: start;
-//     background-repeat: no-repeat;
-//     // margin-right: 10px;
-//     border: 1px solid #fff2e2;
-//     width: 100%;
-
-//     cursor: pointer;
-// }
 
 .stockimages {
     height: 290px;
@@ -371,12 +352,6 @@ body {
 
 }
 
-// .stockimage:hover {
-//     height: 380px;
-//     // width: 280px;
-//     border: 1px solid #fff2e2;
-
-// }
 
 .stockimages:hover {
     height: 290px;
@@ -384,6 +359,23 @@ body {
     padding: 0px;
 
 }
+
+/* scoped slick-dots for Trending component */
+.stockslider {
+    .slick-dots {
+        bottom: 10px !important;
+        left: 50px;
+
+        li button:before {
+            color: #000;
+        }
+
+        li.slick-active button:before {
+            // color: #e40808;
+        }
+    }
+}
+
 
 .mainstock {
 
@@ -401,7 +393,7 @@ body {
     margin-right: 25px;
     // padding: 10px;
     width: 320px;
-    height: 430px;
+    height: 425px;
     // border: 1px solid #fff2e2;
     // background-color: red;
     // background-color: #fdfdfd;
@@ -426,6 +418,7 @@ body {
     background-color: #fdfdfd;
     // background-color: red;
     border: 1px solid #fff2e2;
+    border-radius: 4px;
     border-top: 1px solid #fff;
 }
 
@@ -466,6 +459,7 @@ body {
 }
 
 .genders2 {
+
     height: 500px;
     background-color: #d43242;
     background-position: 50%;
@@ -521,285 +515,4 @@ body {
     border-radius: 7px;
     background-repeat: no-repeat;
     border: 1px solid #ffe6c9;
-}
-
-
-
-
-@media screen and (min-width:300px) and (max-width:768px) {
-    .slider-container {
-        display: flex;
-        padding-top: 71px;
-        flex-direction: column;
-    }
-
-    .custom-banner {
-        background-size: cover;
-        background-position: 55%;
-
-    }
-
-    .custom-headings {
-        padding: 30px 10px 0px 40px;
-    }
-
-    .custom-description {
-        font-size: 12px;
-        padding: 0px 10px 0px 0px;
-        font-weight: 600;
-    }
-
-    .custom-title {
-        font-size: 32px;
-        padding-right: 10px;
-
-
-    }
-
-    .goldbox {
-        padding: 10px 70px 10px 70px;
-        //   background-color: gray;
-        margin-right: 0px;
-        text-wrap: nowrap;
-        font-size: 15px;
-        font-weight: 900;
-    }
-
-    .gold-head {
-        height: 80vh;
-        width: 100%;
-        padding: 10px 0px 0px 0px;
-
-
-    }
-
-    .goldbox1 {
-        padding: 0px 70px 10px 70px;
-
-    }
-
-    .goldbox1 .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem; // This gives space between boxes in all screen sizes
-    }
-
-    .goldbox {
-        flex: 1 1 150px;
-        background: #f9f9f9;
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-
-    .golds {
-        padding: 0px 36px 50px 36px;
-        display: flex;
-        // justify-content: space-between;
-        gap: 20px;
-        margin-bottom: 20px;
-        height: 105vh;
-        flex-direction: column;
-    }
-
-    .sections {
-        height: 50vh;
-        background-color: #ffffff;
-        // padding: 10px 0px 10px 30px;
-        padding: 10px 30px 0px 30px;
-
-    }
-
-    .section1 {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 10px;
-        padding-top: 50px;
-
-    }
-
-    .gold-title {
-        // padding: 0px 0px 0px 30px;
-        // font-size: 12px;
-        text-align: center;
-    }
-
-    .exclusiv1 {
-        height: 400px;
-    }
-
-    .exclusivegold {
-
-        height: 400px;
-    }
-
-    .genders2 {
-        height: 400px;
-    }
-
-    .genders {
-        height: 67vh;
-    }
-
-    .toptext {
-        padding-top: 0px;
-    }
-
-    .stocks {
-        margin-top: 20px;
-        height: 83vh;
-    }
-
-    .slick-sliders {
-        height: 70vh;
-    }
-
-    .logoshead {
-        height: 20vh;
-
-    }
-
-    .logosimagehead {
-        padding: 0px 15px 0px 15px;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-@media screen and (min-width:768px) and (max-width:990px) {
-    .custom-banner {
-        height: 400px;
-        background-size: cover;
-        background-position: 75%;
-        background-repeat: no-repeat;
-        width: 100%;
-    }
-
-    .custom-title {
-        font-size: 20px;
-        display: flex;
-    }
-
-    .goldbox {
-        padding: 10px 70px 10px 70px;
-        //   background-color: gray;
-        margin-right: 0px;
-        text-wrap: nowrap;
-
-        font-size: 13px;
-        font-weight: 900;
-        flex: 1;
-        background: #f9f9f9;
-        padding: 10px;
-        border-radius: 5px;
-
-    }
-
-    .goldbox1 .row {
-        display: flex;
-        padding: 10px 70px 10px 0px;
-
-
-        flex-wrap: wrap;
-        gap: 1rem; // This gives space between boxes in all screen sizes
-    }
-
-    .gold-head {
-        height: 50vh;
-        width: 100%;
-
-
-    }
-
-    .goldbox1 {}
-
-    .exclusivegold {
-
-        height: 400px;
-    }
-
-
-    .toptext {
-        padding-top: 0px;
-    }
-
-    .stocks {
-        height: 88vh;
-    }
-
-    .genders {
-        height: 88vh;
-    }
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-@media screen and (min-width:990px) and (max-width:1300px) {
-
-
-    .goldbox {
-        padding: 10px 70px 10px 70px;
-        //   background-color: gray;
-        margin-right: 0px;
-        font-size: 15px;
-        font-weight: 900;
-        flex: 1 1 150px;
-        background: #f9f9f9;
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .goldbox1 .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem; // This gives space between boxes in all screen sizes
-    }
-
-
-
-    .gold-head {
-        height: 50vh;
-        width: 100%;
-
-
-    }
-
-    .goldbox1 {
-        padding: 10px 70px 10px 70px;
-
-    }
-
-    .stocks {
-        height: 88vh;
-    }
-
-    .genders {
-        height: 88vh;
-    }
-
 }

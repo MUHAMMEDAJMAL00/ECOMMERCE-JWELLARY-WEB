@@ -39,8 +39,18 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
     },
+    // ✅ New reducer to update user info (e.g., after editing profile)
+    updateUserInfo: (state, action) => {
+      state.user = {
+        ...state.user,
+        ...action.payload, // merge updated fields
+      };
+
+      // Update localStorage with new user data
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateUserInfo } = authSlice.actions;
 export default authSlice.reducer;

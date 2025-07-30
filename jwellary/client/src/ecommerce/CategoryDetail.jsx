@@ -4,9 +4,10 @@ import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/footer";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { useNavigate } from "react-router-dom"; // if needed
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
 const CategoryProducts = () => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
@@ -14,7 +15,20 @@ const CategoryProducts = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOrder, setSortOrder] = useState("");
-  const navigate = useNavigate(); // use this inside your component
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
+  const navigate = useNavigate();
+
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     axios
       .get(
@@ -25,21 +39,18 @@ const CategoryProducts = () => {
         setTotalPages(res.data.totalPages);
       });
     axios
-      .get("http://localhost:3001/category") // make sure this endpoint is correct
+      .get("http://localhost:3001/category")
       .then((res) => setCategories(res.data))
       .catch((err) => console.log(err));
   }, [categoryId, page, sortOrder]);
-  // console.log("this is ", categories);
 
-  //-----------------------------------
   const user = useSelector((state) => state.auth.user);
+
   const addtoWhishlist = async (product) => {
     try {
       if (!user?._id) return alert("Please log in first.");
 
-      // 1. Fetch existing wishlist for the user
       const res = await axios.get(`http://localhost:3001/wishlist/${user._id}`);
-
       const alreadyInWishlist = res.data.some(
         (item) => item.productId._id === product._id
       );
@@ -49,12 +60,11 @@ const CategoryProducts = () => {
         return;
       }
 
-      // 2. If not, add to wishlist
       await axios.post("http://localhost:3001/wishlist", {
         userId: user._id,
         productId: product._id,
         price: product.price,
-        aed: product.aed, // if applicable
+        aed: product.aed,
       });
 
       toast.success("Successfully added to wishlist!");
@@ -69,20 +79,56 @@ const CategoryProducts = () => {
       <div style={{ height: "65px" }}>
         <Header />
       </div>
+
       <div
-        className="container-fluid border shadow "
+        className="container-fluid border shadow"
         style={{ backgroundColor: "#fff" }}
       >
         <div className="row">
+          {/* Mobile Menu Toggle Button - Only show below 800px */}
+          {isMobile && (
+            <div className="p-3">
+              <button
+                className="btn btn-outline-secondary border p-2 shadow"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Toggle categories"
+              >
+                <i className="fas fa-bars"></i> Categories
+              </button>
+            </div>
+          )}
+
+          {/* Categories Sidebar */}
           <div
-            className="py-3 "
+            className={`py-3 ${
+              isMobile ? (sidebarOpen ? "d-block" : "d-none") : ""
+            }`}
             style={{
               height: "100vh",
               overflowY: "auto",
-              width: "20%",
-              padding: "0px 10px 0px 80px",
+              width: isMobile ? "100%" : "20%",
+              padding: isMobile ? "10px" : "0px 10px 0px 80px",
+              position: isMobile ? "fixed" : "relative",
+              top: isMobile ? "65px" : "auto",
+              left: isMobile ? "0" : "auto",
+              zIndex: isMobile ? "1050" : "auto",
+              backgroundColor: "#fff",
+              boxShadow: isMobile ? "0 2px 10px rgba(0,0,0,0.1)" : "none",
             }}
           >
+            {/* Close button for mobile */}
+            {isMobile && (
+              <div className="d-flex justify-content-between align-items-center mb-3 ">
+                <h5 className="mb-0 ">Categories</h5>
+                <button
+                  className="btn btn-sm btn-outline-secondary"
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
             {categories.map((item, index) => {
               const isActive = item._id === categoryId;
               return (
@@ -90,10 +136,11 @@ const CategoryProducts = () => {
                   key={item._id}
                   to={`/categorydetail/${item._id}`}
                   className="text-decoration-none text-dark"
+                  onClick={() => isMobile && setSidebarOpen(false)} // Close sidebar on mobile after selection
                 >
                   <div
-                    className={`mb-2 d-flex align-items-center  ${
-                      isActive ? "bg-info  text-white rounded " : ""
+                    className={`mb-2 d-flex align-items-center ${
+                      isActive ? "bg-info text-white rounded" : ""
                     }`}
                     style={{ cursor: "pointer" }}
                   >
@@ -106,10 +153,11 @@ const CategoryProducts = () => {
                         objectFit: "cover",
                         borderRadius: "50%",
                         border: "1px solid #ddd",
+                        flexShrink: 0,
                       }}
                     />
                     <div
-                      className="ms-2 "
+                      className="ms-2"
                       style={{
                         fontWeight: "500",
                         fontSize: "14px",
@@ -124,8 +172,23 @@ const CategoryProducts = () => {
             })}
           </div>
 
-          {/* Products */}
-          <div className="col-md-9 py-3">
+          {/* Overlay for mobile sidebar */}
+          {isMobile && sidebarOpen && (
+            <div
+              className="position-fixed w-100 h-100"
+              style={{
+                top: "65px",
+                left: "0",
+                backgroundColor: "rgba(0,0,0,0.5)",
+                zIndex: "1040",
+              }}
+              onClick={() => setSidebarOpen(false)}
+            ></div>
+          )}
+
+          {/* Products Section */}
+          <div className={isMobile ? "py-3" : "col-md-9 py-3"}>
+            {/* Sort Dropdown */}
             <div className="mb-3 d-flex justify-content-end">
               <select
                 className="form-select w-auto"
@@ -138,6 +201,7 @@ const CategoryProducts = () => {
               </select>
             </div>
 
+            {/* Products Grid */}
             <div
               className="row justify-content-center"
               style={{
@@ -150,15 +214,19 @@ const CategoryProducts = () => {
                 products.map((p) => (
                   <div
                     key={p._id}
-                    className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                    className={
+                      isMobile
+                        ? "col-6 col-sm-6 mb-4"
+                        : "col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                    }
                   >
                     <div
-                      className="card h-100 p-2 shadow-sm border-0"
+                      className="card h-100 p-2 shadow-sm border"
                       style={{ backgroundColor: "#fff" }}
                     >
                       <div className="text-end">
                         <IoMdHeartEmpty
-                          size={25}
+                          size={isMobile ? 20 : 25}
                           onClick={() => addtoWhishlist(p)}
                           style={{ cursor: "pointer" }}
                         />
@@ -172,20 +240,43 @@ const CategoryProducts = () => {
                           alt={p.name}
                           className="card-img-top"
                           style={{
-                            height: "220px",
+                            height: isMobile ? "100px" : "200px",
                             objectFit: "cover",
                           }}
                         />
-                        <div className="card-body ">
-                          <h5 className="card-title mt-3">{p.name}</h5>
-
-                          <p className="fw-bold text-black mb-1">₹{p.price}</p>
-                          <p className="fw-semibold text-danger mb-1">
+                        <div className="card-body">
+                          <h5
+                            className="card-title mt-3"
+                            style={
+                              isMobile
+                                ? {
+                                    fontSize: "13px",
+                                    lineHeight: "1.2",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: "2",
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                  }
+                                : {}
+                            }
+                          >
+                            {p.name}
+                          </h5>
+                          <p
+                            className="fw-bold text-black mb-1"
+                            style={isMobile ? { fontSize: "14px" } : {}}
+                          >
+                            ₹{p.price}
+                          </p>
+                          <p
+                            className="fw-semibold text-danger mb-1"
+                            style={isMobile ? { fontSize: "12px" } : {}}
+                          >
                             {p.stocks}
                           </p>
                           <div
-                            style={{ fontSize: "14px" }}
-                            className=" text-danger"
+                            style={{ fontSize: isMobile ? "12px" : "14px" }}
+                            className="text-danger"
                           >
                             {p.stock}
                           </div>
@@ -200,6 +291,8 @@ const CategoryProducts = () => {
                 </div>
               )}
             </div>
+
+            {/* Pagination */}
             <div className="d-flex justify-content-center mt-4">
               <nav>
                 <ul className="pagination">
@@ -208,14 +301,16 @@ const CategoryProducts = () => {
                       className="page-link"
                       onClick={() => setPage(page - 1)}
                     >
-                      Previous
+                      {isMobile ? "‹" : "Previous"}
                     </button>
                   </li>
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                     (pg) => (
                       <li
                         key={pg}
-                        className={`page-item ${pg === page ? "active" : ""}`}
+                        className={`page-item ${pg === page ? "active" : ""} ${
+                          isMobile && Math.abs(pg - page) > 2 ? "d-none" : ""
+                        }`}
                       >
                         <button
                           className="page-link"
@@ -235,7 +330,7 @@ const CategoryProducts = () => {
                       className="page-link"
                       onClick={() => setPage(page + 1)}
                     >
-                      Next
+                      {isMobile ? "›" : "Next"}
                     </button>
                   </li>
                 </ul>

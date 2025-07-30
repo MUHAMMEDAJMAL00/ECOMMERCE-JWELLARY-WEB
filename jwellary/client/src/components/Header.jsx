@@ -108,9 +108,9 @@ const Header = () => {
   );
 
   return (
-    <div className="parentheader shadow-sm">
+    <div className="parentheader  shadow-sm">
       {/* Header Bar */}
-      <div className="header">
+      <div className="header  ">
         <div className="header-deskbox" style={{ gap: "8px" }}>
           <div className="header-desklogo">
             <HiOutlineViewList size={40} className="firstdisplayimage" />

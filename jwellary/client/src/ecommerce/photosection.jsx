@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../styles/newstyles.scss";
 import "../styles/styles.scss";
 import axios from "axios";
 

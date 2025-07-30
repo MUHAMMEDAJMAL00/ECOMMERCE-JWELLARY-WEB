@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import mint from "../assets/images/mint.png";
 import states from "../assets/images/states.png";
@@ -19,7 +20,8 @@ const Logos = () => {
     slidesToShow: 4,
     slidesToScroll: 4,
     dots: true,
-    // autoplay: true,
+    autoplay: true,
+
     responsive: [
       {
         breakpoint: 1100,
@@ -31,22 +33,23 @@ const Logos = () => {
       {
         breakpoint: 1070,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 6,
           slidesToScroll: 4,
         },
       },
       {
         breakpoint: 700,
         settings: {
-          slidesToShow: 2.2,
+          slidesToShow: 4,
           slidesToScroll: 4,
         },
       },
       {
-        breakpoint: 450,
+        breakpoint: 500,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 4,
+          dots: false,
         },
       },
       {
@@ -102,16 +105,18 @@ const Logos = () => {
   ];
 
   return (
-    <Slider {...settings} className="logoshead ">
-      {data.map((item, index) => (
-        <div className="logosimagehead " key={index}>
-          <div
-            className="logoimg "
-            style={{ backgroundImage: `url(${item.image})` }}
-          ></div>
-        </div>
-      ))}
-    </Slider>
+    <div className="mainlogo">
+      <Slider {...settings} className="logoshead ">
+        {data.map((item, index) => (
+          <div className="logosimagehead " key={index}>
+            <div
+              className="logoimg "
+              style={{ backgroundImage: `url(${item.image})` }}
+            ></div>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 

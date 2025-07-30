@@ -10,6 +10,7 @@ import { setAddress } from "../redux/slices/addressSlice";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineEdit } from "react-icons/md";
 import { toast } from "react-toastify";
+import "../styles/newstyles.scss";
 //--------------------------------
 
 import { useLocation } from "react-router-dom";
@@ -100,6 +101,8 @@ const CheckoutPage = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  //-------------------------------------------------------------------
   const placeOrder = async () => {
     const selectedAddress = savedAddresses.find(
       (addr) => addr._id === selectedAddressId
@@ -108,7 +111,43 @@ const CheckoutPage = () => {
       return alert("Please select a delivery address.");
     }
 
-    // 🟩 Razorpay flow if Pay Online
+    // Prepare items array consistently for both flows
+    let items = [];
+    if (buyNowItem) {
+      items = [
+        {
+          name: buyNowItem.name,
+          productId: buyNowItem.productId,
+          qty: buyNowItem.qty,
+          price: buyNowItem.price,
+        },
+      ];
+    } else if (cartItems && cartItems.length > 0) {
+      items = cartItems.map((item) => ({
+        name: item.productId.name,
+        productId: item.productId._id,
+        qty: item.quantity,
+        price: item.productId.price,
+      }));
+    } else {
+      return alert(
+        "No items to order. Please add items to your cart or use Buy Now."
+      );
+    }
+
+    const orderData = {
+      user: user._id,
+      address: {
+        ...selectedAddress,
+        email: user.email,
+        paymentMethod: formData.paymentMethod,
+      },
+      totalPrice,
+      paymentMethod: formData.paymentMethod,
+      items,
+    };
+
+    // 🟩 Razorpay flow for Pay Online
     if (formData.paymentMethod === "Pay Online") {
       try {
         // ✅ 1. Create Razorpay order from backend
@@ -127,44 +166,25 @@ const CheckoutPage = () => {
           description: "Order Payment",
           order_id: razorpayOrderId,
           handler: async function (response) {
-            // ✅ 3. Payment success – Place the actual order now
             try {
-              const orderData = {
-                user: user._id,
-                address: {
-                  ...selectedAddress,
-                  paymentMethod: formData.paymentMethod,
-                },
-                totalPrice,
-                paymentMethod: formData.paymentMethod,
-                razorpayPaymentId: response.razorpay_payment_id,
-                items: buyNowItem
-                  ? [
-                      {
-                        name: buyNowItem.name,
-                        productId: buyNowItem.productId,
-                        qty: buyNowItem.qty,
-                        price: buyNowItem.price,
-                      },
-                    ]
-                  : cartItems.map((item) => ({
-                      name: item.productId.name,
-                      productId: item.productId._id,
-                      qty: item.quantity,
-                      price: item.price,
-                    })),
-              };
+              // ✅ 3. Add Razorpay payment ID to orderData
+              orderData.razorpayPaymentId = response.razorpay_payment_id;
 
+              // ✅ 4. Place the order
               const finalOrder = await axios.post(
                 "http://localhost:3001/orders",
                 orderData
               );
+
+              // Debug: Log the order response to verify items
+              console.log("Order Response:", finalOrder.data);
+
               dispatch(setOrder(finalOrder.data));
               await axios.delete(`http://localhost:3001/cart/user/${user._id}`);
               dispatch(clearCart());
               localStorage.removeItem("cartItems");
               toast.success("Order placed successfully!");
-              navigate("/success");
+              navigate("/success", { state: { order: finalOrder.data } });
             } catch (err) {
               console.error("Order placement failed:", err);
               alert("Failed to save order after payment");
@@ -187,44 +207,31 @@ const CheckoutPage = () => {
         alert("Payment failed. Try again.");
       }
 
-      return; // Important: Prevent normal order placement after Razorpay
+      return; // Prevent further execution
     }
 
     // 🟥 COD or other non-online payment
     try {
-      const orderData = {
-        user: user._id,
-        address: {
-          ...selectedAddress,
-          paymentMethod: formData.paymentMethod,
-        },
-        totalPrice,
-        paymentMethod: formData.paymentMethod,
-        items: cartItems.map((item) => ({
-          name: item.productId.name,
-          productId: item.productId._id,
-          qty: item.quantity,
-          price: item.productId.price,
-        })),
-      };
-
       const response = await axios.post(
         "http://localhost:3001/orders",
         orderData
       );
       const placedOrder = response.data;
+
+      // Debug: Log the order response to verify items
+      console.log("Order Response (COD):", placedOrder);
+
       dispatch(setOrder(placedOrder));
       await axios.delete(`http://localhost:3001/cart/user/${user._id}`);
       dispatch(clearCart());
       localStorage.removeItem("cartItems");
       toast.success("Order placed successfully!");
-      navigate("/success");
+      navigate("/success", { state: { order: placedOrder } });
     } catch (err) {
       console.error("Order placement failed:", err);
       alert("Failed to place order");
     }
   };
-
   const updateTotal = (items) => {
     const totalAmt = items.reduce(
       (acc, item) => acc + parseFloat(item.price || 0),
@@ -542,20 +549,23 @@ const CheckoutPage = () => {
         </div>
       )}
 
-      <div style={{ padding: "0px 95px 0px 90px" }} className="my-4">
+      <div
+        style={{ padding: "0px 95px 0px 90px" }}
+        className="my-4 checkoutmain"
+      >
         <div className="row">
           {/* LEFT: Address & Payment */}
           <div className="col-md-7 pe-5">
             {/* Header & "Add New Address" button */}
             <div className="d-flex justify-content-between">
-              <h4 className="fw-bold">📍 DELIVERY ADDRESS</h4>
+              <h4 className="fw-bold delivery">📍 DELIVERY ADDRESS</h4>
               <h4
                 style={{
                   fontSize: "18px",
                   borderRadius: "100px",
                   cursor: "pointer",
                 }}
-                className="fw-semibold shadow bg-light text-center px-4 py-2"
+                className="fw-semibold shadow bg-light text-center px-4 py-2 address"
                 onClick={handleAddNewAddress}
               >
                 {showAddressForm ? "Show Saved Addresses" : "Add New Address"}
@@ -577,17 +587,6 @@ const CheckoutPage = () => {
                       }`}
                       onClick={() => handleAddressSelect(address)}
                     >
-                      {/* MAP GOES HERE */}
-                      {/* {!viewOnly && (
-                        <MapComponent
-                          onLocationSelect={(coords) => {
-                            setFormData((prev) => ({
-                              ...prev,
-                              location: `Lat: ${coords.lat}, Lng: ${coords.lng}`,
-                            }));
-                          }}
-                        />
-                      )} */}
                       {/* Edit and Delete icons */}
                       <div className="position-absolute top-0 end-0 p-2">
                         <MdOutlineEdit
@@ -915,7 +914,7 @@ const CheckoutPage = () => {
           </div>
 
           {/* RIGHT: Order Summary */}
-          <div className="col-md-5 pe-5">
+          <div className="col-md-5 mt-3 pe-5">
             <div
               className="fw-bold d-flex justify-content-between align-items-center ms-2"
               style={{ fontSize: "20px" }}
@@ -927,7 +926,7 @@ const CheckoutPage = () => {
               </div>
             </div>
             <hr />
-            <div className="">
+            <div className="checkoutsummary">
               {buyNowItem ? (
                 <div className="d-flex align-items-center justify-content-between border-bottom py-3">
                   <div className="d-flex align-items-center">
@@ -998,7 +997,10 @@ const CheckoutPage = () => {
                         <p className="text-danger">Product info missing</p>
                       )}
                     </div>
-                    <div style={{ fontSize: "21px" }} className=" fw-bold  ">
+                    <div
+                      style={{ fontSize: "21px" }}
+                      className=" fw-bold aedsize "
+                    >
                       <span
                         style={{ fontSize: "15px" }}
                         className="text-secondary fw-small p-2"
@@ -1014,38 +1016,38 @@ const CheckoutPage = () => {
 
             <div className="p-4 ">
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
                   Total Product Price
                 </span>
-                <span className="fw-bold" style={{ fontSize: "25px" }}>
+                <span className="fw-bold " style={{ fontSize: "25px" }}>
                   AED {totalPrice}
                 </span>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
                   Discount
                 </span>
-                <span className="fw-bold">AED 0.00</span>
+                <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
                   Tax
                 </span>
-                <span className="fw-bold">AED 0.00</span>
+                <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <div className="d-flex justify-content-between mb-3">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
                   Delivery Charges
                 </span>
-                <span className="fw-bold">AED 0.00</span>
+                <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <hr />
-              <div className="d-flex justify-content-between fw-bold fs-5 align-items-center p-3 pb-3">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+              <div className="d-flex justify-content-between fw-bold fs-5 align-items-center p-3 pb-3 totalorder">
+                <span className="fw-sm " style={{ fontSize: "19px" }}>
                   Total:
                 </span>
                 <span
-                  className="text-black fw-bold"
+                  className="text-black fw-bold mainaed"
                   style={{ fontSize: "35px" }}
                 >
                   AED {totalPrice}

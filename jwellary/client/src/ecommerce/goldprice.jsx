@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -37,36 +38,36 @@ const Goldprice = () => {
         {new Date().toISOString().split("T")[0]} - RATE IN AED PER GM
       </div>
 
-      <div className="goldbox1 ">
-        <div className="row g-2 ">
-          <div className=" goldbox col-12 col-sm-6 col-md-3 col-lg-3 col-xl-2 ">
+      <div className="goldbox1  ">
+        <div className="row g-1 gold2 ">
+          <div className=" goldbox  col-12 col-sm-5 col-md-3 col-lg-3 col-xl-2 ">
             Gold 24 Karat -{" "}
             <span style={{ color: "rgb(184, 130, 31)", fontSize: "20px" }}>
               {" "}
               {price.gold24}
             </span>
           </div>
-          <div className=" goldbox col-12 col-sm-6 col-md-3 col-lg-3 col-xl-2 ">
+          <div className=" goldbox  col-12 col-sm-5 col-md-3 col-lg-3 col-xl-2 ">
             {" "}
             Gold 22 Karat-{" "}
             <span style={{ color: "rgb(184, 130, 31)", fontSize: "20px" }}>
               {price.gold22}
             </span>{" "}
           </div>
-          <div className=" goldbox col-12 col-sm-6 col-md-3 col-lg-3 col-xl-2 ">
+          <div className=" goldbox col-12 col-sm-5 col-md-3 col-lg-3 col-xl-2 ">
             {" "}
             Gold 21 Karat -{" "}
             <span style={{ color: "rgb(184, 130, 31)", fontSize: "20px" }}>
               {price.gold21}
             </span>
           </div>
-          <div className=" goldbox col-12 col-sm-6 col-md-6 col-lg-3 col-xl-2 ">
+          <div className=" goldbox col-12 col-sm-5 col-md-11 col-lg-3 col-xl-2 ">
             Gold 18 Karat -{" "}
             <span style={{ color: "rgb(184, 130, 31)", fontSize: "20px" }}>
               {price.gold18}
             </span>
           </div>
-          <div className=" goldbox col-12 col-sm-12 col-md-6 col-lg-12 col-xl-2  ">
+          <div className=" goldbox col-12 col-sm-5 col-md-11 col-lg-3 col-xl-2  ">
             {" "}
             Silver -{" "}
             <span style={{ color: "rgb(184, 130, 31)", fontSize: "20px" }}>

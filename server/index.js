@@ -1,4 +1,7 @@
+const fs = require("fs");
+require("dotenv").config();
 const express = require("express");
+
 const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/employee");
@@ -20,7 +23,8 @@ const newProduct = require("./models/Product");
 const locationRoutes = require("./Routes/location");
 const SECRET = "yourSecretKey";
 const Razorpay = require("razorpay"); //payment
-
+const sendEmail = require("../server/Utilis/sendEmail");
+const generateInvoicePDF = require("../server/Utilis/invoiceGenerator");
 const app = express();
 app.use(express.json());
 // app.use(cors());
@@ -975,6 +979,9 @@ app.put("/address/:id", async (req, res) => {
 // -------------------------------------------------
 
 // -------------------------------------------------
+
+// const Order = require("../models/Order");
+
 app.post("/orders", async (req, res) => {
   try {
     const { user, items, address, totalPrice, paymentMethod } = req.body;
@@ -983,19 +990,52 @@ app.post("/orders", async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const newOrders = new Order({
+    const newOrder = new Order({
       user,
       items,
       address: {
         ...address,
-        paymentMethod, // include payment method inside address as per your schema
+        paymentMethod,
       },
       totalPrice,
     });
-    const savedOrder = await newOrders.save();
+
+    const savedOrder = await newOrder.save();
+
+    // ✅ Generate PDF Invoice
+    const pdfPath = await generateInvoicePDF(savedOrder);
+
+    // ✅ Send email with PDF attachment
+    if (address.email) {
+      const emailHtml = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+          <h2>Thank You for Your Order</h2>
+          <p>Your order has been placed successfully.</p>
+          <p><strong>Order ID:</strong> ${savedOrder._id}</p>
+          <p><strong>Total:</strong> ₹${totalPrice}</p>
+          <p><strong>Payment:</strong> ${paymentMethod}</p>
+        </div>
+      `;
+
+      await sendEmail(
+        address.email,
+        "Order Confirmation with Invoice",
+        emailHtml,
+        pdfPath
+      );
+      if (!fs.existsSync(pdfPath)) {
+        console.error("❌ PDF file not found:", pdfPath);
+        return res.status(500).json({ message: "Invoice PDF not found." });
+      }
+      // Optional: Delete PDF after sending
+      fs.unlink(pdfPath, (err) => {
+        if (err) console.error("Error deleting invoice PDF:", err);
+      });
+    }
+
     res.status(201).json(savedOrder);
   } catch (err) {
-    console.error("Error placing order:", err);
+    console.error("Order placement error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -1029,6 +1069,39 @@ app.get("/orders/:userId", async (req, res) => {
   }
 });
 
+// -------------------------------------------------
+// Update order status by ID
+app.put("/orders/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status
+    const validStatuses = ["Processing", "Shipped", "Delivered", "Cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    // Find and update the order
+    const updatedOrder = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json(updatedOrder);
+  } catch (error) {
+    console.error("Error updating status:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// -------------------------------------------------
+// -------------------------------------------------
 // -------------------------------------------------
 // -------------------------------------------------
 app.listen(3001, () => {

@@ -2,6 +2,7 @@ import React from "react";
 
 import Slider from "react-slick";
 import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -58,27 +59,29 @@ const Banner = () => {
   // ];
 
   return (
-    <Slider {...settings} className="custom-banner">
-      {data?.map((item, index) => (
-        <div key={index}>
-          <div
-            className="custom-banner"
-            style={{
-              backgroundImage: `url(${item?.image})`,
-            }}
-          >
-            <div className="custom-headings">
-              <div className="custom-title">
-                {item.title.split("elegance")[0]} <br />
-                {item.title.split("elegance")[1]}
-              </div>
+    <div className="mainbanner">
+      <Slider {...settings} className="custom-banner">
+        {data?.map((item, index) => (
+          <div key={index}>
+            <div
+              className="custom-banner"
+              style={{
+                backgroundImage: `url(${item?.image})`,
+              }}
+            >
+              <div className="custom-headings">
+                <div className="custom-title">
+                  {item.title.split("elegance")[0]} <br />
+                  {item.title.split("elegance")[1]}
+                </div>
 
-              <div className="custom-description">{item?.description}</div>
+                <div className="custom-description">{item?.description}</div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </Slider>
+        ))}
+      </Slider>
+    </div>
   );
 };
 

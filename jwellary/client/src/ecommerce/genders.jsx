@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 import axios from "axios";
 import Slider from "react-slick";
 import { useState } from "react";
@@ -12,7 +13,7 @@ const Genders = () => {
     slidesToShow: 4,
     slidesToScroll: 2,
     autoplay: true,
-    arrows: false,
+    arrows: true,
     dots: false,
     responsive: [
       {
@@ -32,7 +33,14 @@ const Genders = () => {
       {
         breakpoint: 770,
         settings: {
-          slidesToShow: 1.6,
+          slidesToShow: 2.2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1.1,
           slidesToScroll: 2,
         },
       },
@@ -54,18 +62,20 @@ const Genders = () => {
   }, []);
 
   return (
-    <Slider {...settings} className="genders ">
-      {data.map((item, index) => (
-        <div className="genders1" key={index}>
-          <div
-            className="genders2"
-            style={{ backgroundImage: `url(${item.image})` }}
-          >
-            <div className="gendertitle">{item.text}</div>
+    <div className="gendersmain">
+      <Slider {...settings} className="genders h-100 mb-3  ">
+        {data.map((item, index) => (
+          <div className="genders1" key={index}>
+            <div
+              className="genders2 "
+              style={{ backgroundImage: `url(${item.image})` }}
+            >
+              <div className="gendertitle">{item.text}</div>
+            </div>
           </div>
-        </div>
-      ))}
-    </Slider>
+        ))}
+      </Slider>
+    </div>
   );
 };
 

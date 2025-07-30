@@ -9,6 +9,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TiDeleteOutline } from "react-icons/ti";
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import "../styles/newstyles.scss";
 
 // ✅ Redux imports
 import { useDispatch, useSelector } from "react-redux";
@@ -130,18 +131,21 @@ const CartPage = () => {
   return (
     <div>
       <Header />
-      <div style={{ padding: "0px 115px 0px 66px" }} className="my-5">
-        <div className="d-flex justify-content-between align-items-center mb-4 text-center">
-          <h4 className="fw-bold mb-0">
+      <div
+        style={{ padding: "0px 115px 0px 66px" }}
+        className="my-5 cartpagemain"
+      >
+        <div className="d-flex justify-content-between align-items-center mb-2 text-center carttxtrmv">
+          <h4 className="fw-bold mb-0 carttxt">
             <IoCartOutline
               size={40}
-              className="border shadow rounded p-2 mb-2 me-2"
+              className="border shadow rounded p-2 mb-2 me-2 cartimg"
             />
             CART – ({cartCount})
           </h4>
           <h4
             onClick={handledelete}
-            className="fw-bold mb-0 mx-auto text-danger bg-body-secondary px-4 py-1"
+            className="fw-bold mb-0 mx-auto text-danger bg-body-secondary px-4 py-1 cartrmv"
             style={{
               borderRadius: "50px",
               cursor: "pointer",
@@ -161,9 +165,9 @@ const CartPage = () => {
               cartItems.map((item) => (
                 <div
                   key={item._id}
-                  className="d-flex align-items-center justify-content-between border-bottom py-3"
+                  className="d-flex align-items-center justify-content-between border-bottom py-3 cart2"
                 >
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center ">
                     {item.productId ? (
                       <>
                         <img
@@ -190,7 +194,7 @@ const CartPage = () => {
                     )}
                   </div>
 
-                  <div className="d-flex align-items-center w-50 justify-content-end">
+                  <div className="d-flex align-items-center w-50 justify-content-end cart3">
                     <button
                       className="btn btn-outline-secondary btn-sm"
                       onClick={() => handleDecrement(item._id)}
@@ -223,7 +227,7 @@ const CartPage = () => {
                 </div>
               ))
             )}
-            <div className="pt-5">
+            <div className="pt-5 mb-4">
               The price and availability of items at luckystargold.com are
               subject to change. The Cart is a temporary place to store a list
               of your items and reflects each item's most recent price.
@@ -235,11 +239,11 @@ const CartPage = () => {
               Cart Summary – ({cartCount})
             </div>
             <div className="p-4 rounded">
-              <div className="d-flex justify-content-between mb-2">
-                <span className="fw-semibold" style={{ fontSize: "19px" }}>
+              <div className="d-flex justify-content-between mb-2 ">
+                <span className="fw-semibold " style={{ fontSize: "19px" }}>
                   Total Product Price
                 </span>
-                <span className="fw-bold" style={{ fontSize: "25px" }}>
+                <span className="fw-bold total1" style={{ fontSize: "25px" }}>
                   AED {totalPrice}
                 </span>
               </div>
@@ -267,7 +271,7 @@ const CartPage = () => {
                   Total:
                 </span>
                 <span
-                  className="text-black fw-bold"
+                  className="text-black fw-bold total"
                   style={{ fontSize: "35px" }}
                 >
                   AED {totalPrice}

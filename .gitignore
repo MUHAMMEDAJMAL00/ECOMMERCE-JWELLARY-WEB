@@ -5,3 +5,7 @@
 
 **/dist/
 **/build/
+# Ignore env files (security)
+**/.env
+
+images/

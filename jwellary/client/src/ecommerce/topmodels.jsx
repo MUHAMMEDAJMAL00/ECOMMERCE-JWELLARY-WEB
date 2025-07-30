@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../styles/newstyles.scss";
 import "../styles/styles.scss";
 import axios from "axios";
 import Slider from "react-slick";
@@ -24,10 +25,11 @@ const TopProducts = () => {
     arrows: true,
     dots: true,
     responsive: [
+      { breakpoint: 1400, settings: { slidesToShow: 4, slidesToScroll: 4 } },
       { breakpoint: 1200, settings: { slidesToShow: 3.5, slidesToScroll: 4 } },
-      { breakpoint: 950, settings: { slidesToShow: 3.2, slidesToScroll: 4 } },
+      { breakpoint: 950, settings: { slidesToShow: 4.2, slidesToScroll: 4 } },
       { breakpoint: 630, settings: { slidesToShow: 2.2, slidesToScroll: 4 } },
-      { breakpoint: 450, settings: { slidesToShow: 1.1, slidesToScroll: 4 } },
+      { breakpoint: 450, settings: { slidesToShow: 2.1, slidesToScroll: 4 } },
     ],
   };
 
@@ -63,12 +65,15 @@ const TopProducts = () => {
   };
 
   return (
-    <div className="stocks">
+    <div className="stocks  ">
       <div className="toptext">Top Products</div>
-      <Slider {...settings} className="stockslider">
+      <Slider {...settings} className="stockslider  ">
         {data?.map((item, index) => (
           <div key={index} className="mainstocks">
-            <div className="text-end" style={{ position: "relative" }}>
+            <div
+              className="text-end imageposition"
+              style={{ position: "relative" }}
+            >
               <IoIosHeartEmpty
                 size={25}
                 style={{

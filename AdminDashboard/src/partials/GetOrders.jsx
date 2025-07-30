@@ -22,6 +22,21 @@ const GetOrders = () => {
     fetchOrders();
   }, []);
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await axios.put(`http://localhost:3001/orders/${orderId}/status`, {
+        status: newStatus,
+      });
+
+      // ✅ Refetch all orders after update
+      const res = await axios.get("http://localhost:3001/orders");
+      setOrders(res.data);
+    } catch (error) {
+      console.error("Error updating status:", error);
+      alert("Failed to update order status");
+    }
+  };
+
   return (
     <div className="p-6 shadow-lg">
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">
@@ -124,8 +139,46 @@ const GetOrders = () => {
                           className="py-3 px-4 border"
                           rowSpan={order.items.length}
                         >
-                          {order.status || "Processing"}
+                          <select
+                            className="form-select form-select-sm fw-semibold"
+                            value={order.status}
+                            onChange={(e) =>
+                              handleStatusChange(order._id, e.target.value)
+                            }
+                            style={{
+                              backgroundColor:
+                                order.status === "Processing"
+                                  ? "#fff3cd"
+                                  : order.status === "Shipped"
+                                  ? "#cfe2ff"
+                                  : order.status === "Delivered"
+                                  ? "#d1e7dd"
+                                  : order.status === "Cancelled"
+                                  ? "#f8d7da"
+                                  : "#f8f9fa",
+                              color:
+                                order.status === "Processing"
+                                  ? "#856404"
+                                  : order.status === "Shipped"
+                                  ? "#084298"
+                                  : order.status === "Delivered"
+                                  ? "#0f5132"
+                                  : order.status === "Cancelled"
+                                  ? "#842029"
+                                  : "#495057",
+                              border: "1px solid #ced4da",
+                            }}
+                          >
+                            <option value="" disabled>
+                              -- Select Status --
+                            </option>
+                            <option value="Processing"> Processing</option>
+                            <option value="Shipped"> Shipped</option>
+                            <option value="Delivered"> Delivered</option>
+                            <option value="Cancelled"> Cancelled</option>
+                          </select>
                         </td>
+
                         <td
                           className="py-3 px-4 border"
                           rowSpan={order.items.length}

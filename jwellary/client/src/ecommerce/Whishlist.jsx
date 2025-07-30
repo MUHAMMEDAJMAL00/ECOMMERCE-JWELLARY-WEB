@@ -10,7 +10,11 @@ import { toast } from "react-toastify";
 
 // Redux actions
 import { fetchWishlist, removeFromWishlist } from "../redux/slices/Wishlist";
-import { addToCartAsync } from "../redux/slices/cartSlice";
+import {
+  fetchCart,
+  addToCartAsync,
+  deleteCartItem,
+} from "../redux/slices/cartSlice"; // ✅ ADD fetchCart
 
 const Whislist = () => {
   const dispatch = useDispatch();
@@ -20,10 +24,10 @@ const Whislist = () => {
   const { items: savedWishlist, loading } = useSelector(
     (state) => state.wishlist
   );
-
   useEffect(() => {
     if (user?._id) {
       dispatch(fetchWishlist(user._id));
+      dispatch(fetchCart(user._id)); // fetch cart on page load
     }
   }, [dispatch, user]);
 
@@ -32,7 +36,7 @@ const Whislist = () => {
     toast.info("Item removed from wishlist.");
   };
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = async (item) => {
     if (!user?._id) {
       toast.error("Please log in to add items to cart.");
       return;
@@ -41,20 +45,33 @@ const Whislist = () => {
     const alreadyInCart = cartItems.some(
       (cartItem) => cartItem.productId === item.productId._id
     );
+
     if (alreadyInCart) {
       toast.info("This item is already in your cart.");
       return;
     }
 
-    dispatch(
-      addToCartAsync({
-        userId: user._id,
-        productId: item.productId._id,
-        quantity: 1,
-        price: item.price,
-      })
-    );
-    toast.success("Item added to cart!");
+    try {
+      // Dispatch add to cart
+      await dispatch(
+        addToCartAsync({
+          userId: user._id,
+          productId: item.productId._id,
+          quantity: 1,
+          price: item.price,
+        })
+      ).unwrap(); // make sure the dispatch is completed
+
+      toast.success("Item added to cart!");
+
+      // Now remove from wishlist
+      dispatch(removeFromWishlist(item._id)); // item._id is the wishlist item ID
+
+      toast.info("Item removed from wishlist.");
+    } catch (error) {
+      console.error("Add to cart failed:", error);
+      toast.error("Failed to add to cart. Please try again.");
+    }
   };
 
   return (
@@ -72,14 +89,14 @@ const Whislist = () => {
           }}
         />
 
-        <div className="d-flex flex-wrap gap-4 justify-content-center">
+        <div className="d-flex flex-wrap gap-4 justify-content-center ">
           {savedWishlist.length === 0 ? (
             <p className="text-muted fs-5">Your wishlist is empty.</p>
           ) : (
             savedWishlist.map((item) => (
               <Card
                 key={item._id}
-                className="shadow rounded-4 border-0 d-flex flex-column"
+                className="shadow rounded-4  border-3 d-flex flex-column"
                 style={{
                   width: "18rem",
                   backgroundColor: "#fffaf5",
