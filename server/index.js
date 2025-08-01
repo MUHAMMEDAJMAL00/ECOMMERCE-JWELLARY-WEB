@@ -39,7 +39,10 @@ app.use("/api", locationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-mongoose.connect("mongodb://127.0.0.1:27017/employee");
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .catch((err) => console.error("❌ Connection error:", err));
 //---------------------------------------------------------------------------
 const razorpay = new Razorpay({
   key_id: "rzp_test_Wsj59hTGf0eyZo",
