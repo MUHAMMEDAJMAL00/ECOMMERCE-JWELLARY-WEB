@@ -2,7 +2,141 @@
   "hash": "e7a03dd0",
   "configHash": "d5fa1b12",
   "lockfileHash": "f7bd6b4f",
-  "browserHash": "27baf2ff",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "1f5648cf",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "109ad4ef",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "0100d792",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "66c97163",
+      "needsInterop": false
+    },
+    "react-redux": {
+      "src": "../../node_modules/react-redux/dist/react-redux.mjs",
+      "file": "react-redux.js",
+      "fileHash": "4eab871f",
+      "needsInterop": false
+    },
+    "@reduxjs/toolkit": {
+      "src": "../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs",
+      "file": "@reduxjs_toolkit.js",
+      "fileHash": "fe267323",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "af0197d1",
+      "needsInterop": false
+    },
+    "react-icons/fi": {
+      "src": "../../node_modules/react-icons/fi/index.mjs",
+      "file": "react-icons_fi.js",
+      "fileHash": "fad94896",
+      "needsInterop": false
+    },
+    "react-icons/md": {
+      "src": "../../node_modules/react-icons/md/index.mjs",
+      "file": "react-icons_md.js",
+      "fileHash": "b5b92966",
+      "needsInterop": false
+    },
+    "chart.js": {
+      "src": "../../node_modules/chart.js/dist/chart.js",
+      "file": "chart__js.js",
+      "fileHash": "66009ac9",
+      "needsInterop": false
+    },
+    "react-bootstrap": {
+      "src": "../../node_modules/react-bootstrap/esm/index.js",
+      "file": "react-bootstrap.js",
+      "fileHash": "7f93ad0b",
+      "needsInterop": false
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "2a1043ea",
+      "needsInterop": false
+    },
+    "date-fns": {
+      "src": "../../node_modules/date-fns/index.js",
+      "file": "date-fns.js",
+      "fileHash": "e46543cf",
+      "needsInterop": false
+    },
+    "react-day-picker": {
+      "src": "../../node_modules/react-day-picker/dist/esm/index.js",
+      "file": "react-day-picker.js",
+      "fileHash": "dce49b68",
+      "needsInterop": false
+    },
+    "chartjs-adapter-moment": {
+      "src": "../../node_modules/chartjs-adapter-moment/dist/chartjs-adapter-moment.esm.js",
+      "file": "chartjs-adapter-moment.js",
+      "fileHash": "db0d7bd3",
+      "needsInterop": false
+    },
+    "react-transition-group": {
+      "src": "../../node_modules/react-transition-group/esm/index.js",
+      "file": "react-transition-group.js",
+      "fileHash": "9f169dc4",
+      "needsInterop": false
+    },
+    "@radix-ui/react-popover": {
+      "src": "../../node_modules/@radix-ui/react-popover/dist/index.mjs",
+      "file": "@radix-ui_react-popover.js",
+      "fileHash": "378e7d3a",
+      "needsInterop": false
+    },
+    "clsx": {
+      "src": "../../node_modules/clsx/dist/clsx.mjs",
+      "file": "clsx.js",
+      "fileHash": "e9ab7a98",
+      "needsInterop": false
+    },
+    "tailwind-merge": {
+      "src": "../../node_modules/tailwind-merge/dist/bundle-mjs.mjs",
+      "file": "tailwind-merge.js",
+      "fileHash": "b238ffc3",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-NPCSLE26": {
+      "file": "chunk-NPCSLE26.js"
+    },
+    "chunk-TFC7LHLF": {
+      "file": "chunk-TFC7LHLF.js"
+    },
+    "chunk-NHII7TDY": {
+      "file": "chunk-NHII7TDY.js"
+    },
+    "chunk-PVMYWPFQ": {
+      "file": "chunk-PVMYWPFQ.js"
+    },
+    "chunk-RDVAJHY3": {
+      "file": "chunk-RDVAJHY3.js"
+    },
+    "chunk-W5VMUIAY": {
+      "file": "chunk-W5VMUIAY.js"
+    },
+    "chunk-4PRWLAJO": {
+      "file": "chunk-4PRWLAJO.js"
+    },
+    "chunk-2TUXWMP5": {
+      "file": "chunk-2TUXWMP5.js"
+    }
+  }
 }
