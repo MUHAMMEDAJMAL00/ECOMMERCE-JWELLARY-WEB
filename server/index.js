@@ -322,7 +322,8 @@ app.post("/banner", upload.single("image"), async (req, res) => {
     const baseUrl = process.env.BASE_URL || "http://localhost:3001";
 
     const banner = await Banner({
-      image: `${VITE_API_URL}/uploads/${req.file.filename}`,
+      image: `${process.env.BASE_URL}/uploads/${req.file.filename}`,
+
       title: req.body.title,
       description: req.body.description,
     });
