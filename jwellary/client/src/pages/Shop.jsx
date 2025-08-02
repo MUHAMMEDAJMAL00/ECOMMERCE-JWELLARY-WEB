@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Banner from "../ecommerce/Banner";
 import Categories from "../ecommerce/categories";
-import Genders from "../ecommerce/Genders";
+import Genders from "../ecommerce/genders";
 import GoldInformation from "../ecommerce/GoldInformation";
 import GoldPrice from "../ecommerce/GoldPrice";
 import Logos from "../ecommerce/Logos";
