@@ -318,20 +318,20 @@ app.delete("/category/:id", async (req, res) => {
 // -------------for banner
 
 app.post("/banner", upload.single("image"), async (req, res) => {
-  console.log("consoling dddthe bodyyy", req.body);
-  console.log("consoling the file", req.file);
-  console.log("consoling req", req);
   try {
-    const banner = await Banner({
-      image: `${process.env.VITE_API_URL}/uploads/${req.file.filename}`,
+    const baseUrl = process.env.BASE_URL || "http://localhost:3001";
 
+    const banner = await Banner({
+      image: `${VITE_API_URL}/uploads/${req.file.filename}`,
       title: req.body.title,
       description: req.body.description,
     });
+
     await banner.save();
     res.status(201).json(banner);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
