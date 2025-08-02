@@ -319,10 +319,10 @@ app.delete("/category/:id", async (req, res) => {
 
 app.post("/banner", upload.single("image"), async (req, res) => {
   try {
-    const baseUrl = process.env.BASE_URL || "http://localhost:3001";
+    const baseUrl = process.env.BASE_URL;
 
     const banner = await Banner({
-      image: `${process.env.BASE_URL}/uploads/${req.file.filename}`,
+      image: `${baseUrl}/uploads/${req.file.filename}`,
 
       title: req.body.title,
       description: req.body.description,
