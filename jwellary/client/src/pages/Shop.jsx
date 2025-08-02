@@ -3,11 +3,9 @@ import Banner from "../ecommerce/Banner";
 import Categories from "../ecommerce/categories";
 import Genders from "../ecommerce/genders";
 import GoldInformation from "../ecommerce/goldinformation";
-import GoldPrice from "../ecommerce/GoldPrice";
-import Logos from "../ecommerce/Logos";
-// import PhotoSection from "../ecommerce/PhotoSection";
-import TopModels from "../ecommerce/TopModels";
-import Trending from "../ecommerce/Trending";
+import Logos from "../ecommerce/logos";
+import TopModels from "../ecommerce/topmodels";
+import Trending from "../ecommerce/trending";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/styles.scss";
@@ -15,7 +13,7 @@ import Header from "../components/Header";
 import Footer from "../components/footer";
 import Photosection from "../ecommerce/photosection";
 import { ScrollContext } from "../context/ScrollContext";
-import Goldprice from "../ecommerce/GoldPrice";
+import Goldprice from "../ecommerce/goldprice";
 
 const Shop = () => {
   const {
