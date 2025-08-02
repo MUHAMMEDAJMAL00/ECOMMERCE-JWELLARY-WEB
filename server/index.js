@@ -323,7 +323,7 @@ app.post("/banner", upload.single("image"), async (req, res) => {
   console.log("consoling req", req);
   try {
     const banner = await Banner({
-      image: `${process.env.VITE_API_URL}/uploads/${req.file.filename}`,
+      image: `https://ecommerce-jwellary-backend.onrender.com/uploads/${req.file.filename}`,
       title: req.body.title,
       description: req.body.description,
     });
