@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import Trending from "../ecommerce/trending";
-import TopProducts from "../ecommerce/TopModels";
+import TopProducts from "../ecommerce/topmodels";
 import Genders from "../ecommerce/genders";
 import Goldprice from "../ecommerce/goldprice";
 import Categories from "../ecommerce/categories";
