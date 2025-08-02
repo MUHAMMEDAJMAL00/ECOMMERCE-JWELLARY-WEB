@@ -15,11 +15,16 @@ const BannerForm = () => {
     formData.append("image", image); // 'image' should match your backend field name
 
     try {
-      const res = await axios.post("http://localhost:3001/banner", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/banner`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       console.log("ressss", res);
 
       alert("Banner added successfully!");
