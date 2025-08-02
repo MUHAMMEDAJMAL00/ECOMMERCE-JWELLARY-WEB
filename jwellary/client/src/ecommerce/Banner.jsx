@@ -25,7 +25,7 @@ const Banner = () => {
 
   const fetchBanners = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/banner");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/banner`);
       // console.log("consoling the bannner data", res);
       setData(res.data);
     } catch (err) {
