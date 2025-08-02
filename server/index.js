@@ -323,7 +323,8 @@ app.post("/banner", upload.single("image"), async (req, res) => {
   console.log("consoling req", req);
   try {
     const banner = await Banner({
-      image: `${process.env.meta.VITE_API_URL}/uploads/${req.file.filename}`,
+      image: `${process.env.VITE_API_URL}/uploads/${req.file.filename}`,
+
       title: req.body.title,
       description: req.body.description,
     });
