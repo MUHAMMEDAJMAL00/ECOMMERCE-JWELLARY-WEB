@@ -18,11 +18,11 @@ const GoldPriceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3001/goldprice", formData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/goldprice`, formData);
       alert("Gold price added successfully!");
     } catch (error) {
       alert("Failed to post data");
-      console.error(error);
+      console.error("Gold price submission failed:", error);
     }
   };
 
