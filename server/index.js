@@ -241,14 +241,11 @@ app.put("/updateUser/:id", (req, res) => {
 // ------------  Category
 
 app.post("/category", upload.single("image"), async (req, res) => {
-  console.log("consoling the bodyyy", req.body);
-  console.log("consoling the file", req.file);
-  console.log("consoling req", req);
   try {
     const { name, description, masterCategoryId } = req.body;
     const category = await Category({
       name,
-      image: `http://localhost:3001/uploads/${req?.file.filename}`,
+      image: `https://ecommerce-jwellary-backend.onrender.com/uploads/${req?.file.filename}`,
       description,
       masterCategoryId,
     });
@@ -256,8 +253,10 @@ app.post("/category", upload.single("image"), async (req, res) => {
     res.status(201).json(category);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: "Failed to create category" });
   }
 });
+
 app.get("/category", async (req, res) => {
   try {
     const categories = await Category.find().populate(
