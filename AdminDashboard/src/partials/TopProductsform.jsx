@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Button, Container } from "react-bootstrap"; // ✅ Fixed import
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Form, Button, Container } from "react-bootstrap";
 
 const TopProducts = () => {
   const [title, setTitle] = useState("");
@@ -23,7 +22,7 @@ const TopProducts = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/topproducts",
+        `${import.meta.env.VITE_API_URL}/topproducts`,
         formData,
         {
           headers: {
@@ -46,49 +45,51 @@ const TopProducts = () => {
 
   return (
     <Container className="mt-4 w-25 border shadow p-3 rounded">
-      <h3 className="mb-3">Submit the topproducts</h3>
+      <h3 className="mb-3">Submit the Top Products</h3>
 
       <Form onSubmit={handleSubmit} encType="multipart/form-data">
-        <Form.Group controlId="textInput" className="mb-3">
-          <Form.Label>Tiele</Form.Label>
+        <Form.Group controlId="titleInput" className="mb-3">
+          <Form.Label>Title</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter some title"
+            placeholder="Enter title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="textInput" className="mb-3">
-          <Form.Label>stock</Form.Label>
+
+        <Form.Group controlId="stockInput" className="mb-3">
+          <Form.Label>Stock</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter some text"
+            placeholder="Stock text"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="textInput" className="mb-3">
-          <Form.Label>stocks</Form.Label>
+
+        <Form.Group controlId="stocksInput" className="mb-3">
+          <Form.Label>Stocks</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter some text"
+            placeholder="Stocks info"
             value={stocks}
             onChange={(e) => setStocks(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="textInput" className="mb-3">
-          <Form.Label>Aed</Form.Label>
+
+        <Form.Group controlId="aedInput" className="mb-3">
+          <Form.Label>AED</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter some text"
+            placeholder="AED price"
             value={aedData}
             onChange={(e) => setAeddata(e.target.value)}
           />
         </Form.Group>
 
-        {/* File Upload */}
-        <Form.Group controlId="fileInput" className="mb-3">
-          <Form.Label>Image</Form.Label>
+        <Form.Group controlId="imageInput" className="mb-3">
+          <Form.Label>Product Image</Form.Label>
           <Form.Control
             type="file"
             onChange={(e) => setImage(e.target.files[0])}
@@ -100,7 +101,6 @@ const TopProducts = () => {
           Submit
         </Button>
 
-        {/* Message */}
         {message && (
           <p
             className="mt-3 fw-semibold"
