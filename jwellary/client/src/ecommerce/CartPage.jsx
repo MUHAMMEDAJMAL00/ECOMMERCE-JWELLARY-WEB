@@ -1,5 +1,3 @@
-// ✅ CartPage.jsx using Redux
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../components/Header";
@@ -11,18 +9,16 @@ import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import "../styles/newstyles.scss";
 
-// ✅ Redux imports
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems, clearCart } from "../redux/slices/cartSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
-
-  // ✅ useSelector to read cart from Redux store
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartCount = useSelector((state) => state.cart.cartCount);
-
   const [totalPrice, setTotalPrice] = useState("0.00");
+
+  const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchCartItems();
@@ -33,8 +29,7 @@ const CartPage = () => {
     if (!userId) return alert("Please log in.");
 
     try {
-      const res = await axios.get(`http://localhost:3001/cart/${userId}`);
-      // ✅ Update Redux state
+      const res = await axios.get(`${API}/cart/${userId}`);
       dispatch(setCartItems(res.data));
       updateTotal(res.data);
     } catch (err) {
@@ -44,7 +39,7 @@ const CartPage = () => {
 
   const updateQuantityy = async (cartItemId, quantity) => {
     try {
-      await axios.put(`http://localhost:3001/cart/${cartItemId}`, { quantity });
+      await axios.put(`${API}/cart/${cartItemId}`, { quantity });
     } catch (err) {
       toast.error("Failed to update item");
     }
@@ -63,7 +58,7 @@ const CartPage = () => {
       }
       return item;
     });
-    dispatch(setCartItems(updatedItems)); // ✅ sync Redux
+    dispatch(setCartItems(updatedItems));
     updateTotal(updatedItems);
   };
 
@@ -80,7 +75,7 @@ const CartPage = () => {
       }
       return item;
     });
-    dispatch(setCartItems(updatedItems)); // ✅ sync Redux
+    dispatch(setCartItems(updatedItems));
     updateTotal(updatedItems);
   };
 
@@ -102,8 +97,8 @@ const CartPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3001/cart/user/${userId}`);
-      dispatch(clearCart()); // ✅ clear Redux cart
+      await axios.delete(`${API}/cart/user/${userId}`);
+      dispatch(clearCart());
       setTotalPrice("0.00");
       toast.success("Deleted");
     } catch (err) {
@@ -118,7 +113,7 @@ const CartPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3001/cart/${cartItemId}`);
+      await axios.delete(`${API}/cart/${cartItemId}`);
       const updatedItems = cartItems.filter((item) => item._id !== cartItemId);
       dispatch(setCartItems(updatedItems));
       updateTotal(updatedItems);
@@ -171,7 +166,7 @@ const CartPage = () => {
                     {item.productId ? (
                       <>
                         <img
-                          src={`http://localhost:3001${item.productId.image}`}
+                          src={`${API}${item.productId.image}`}
                           alt={item.productId.name}
                           className="rounded me-3"
                           style={{
