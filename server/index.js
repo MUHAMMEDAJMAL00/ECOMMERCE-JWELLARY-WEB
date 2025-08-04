@@ -10,6 +10,7 @@ const adminRoutes = require("./admin");
 const upload = require("./middleware/upload");
 const path = require("path");
 const Category = require("./models/Category");
+
 const GoldPrice = require("./models/Jwellaryprice");
 const adSection = require("./models/adSections");
 const jwt = require("jsonwebtoken");
