@@ -501,25 +501,31 @@ app.get("/genders", async (req, res) => {
 
 app.post("/trending", upload.single("image"), async (req, res) => {
   try {
-    const { title, stock, image, stocks, aed, rating } = req.body;
+    const { title, stock, stocks, aed, rating } = req.body;
+
     if (!req.file) {
       return res.status(400).json({ error: "Image file is missing" });
     }
-    const response = await Trending({
-      image: `http://localhost:3001/uploads/${req.file.filename}`,
-      stock: req.body.stock,
-      title: req.body.title,
-      stocks: req.body.stocks,
-      aed: req.body.aed,
-      rating: req.body.rating,
+
+    const imageUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+
+    const response = new Trending({
+      image: imageUrl,
+      stock,
+      title,
+      stocks,
+      aed,
+      rating,
     });
+
     await response.save();
     res.status(201).json(response);
   } catch (err) {
-    console.log("its an error", err);
+    console.error("🚨 Upload trending failed:", err);
     res.status(500).send("Upload failed");
   }
 });
+
 // -------------------------------------------------get of trending
 
 app.get("/trending", async (req, res) => {

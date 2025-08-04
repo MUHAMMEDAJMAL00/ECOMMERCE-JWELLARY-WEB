@@ -10,6 +10,7 @@ import { addToWishlist } from "../redux/slices/Wishlist";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaRegStar } from "react-icons/fa";
+
 const Trending = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
@@ -37,11 +38,11 @@ const Trending = () => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/products/trending"
+          `${import.meta.env.VITE_API_URL}/products/trending`
         );
         setData(response.data);
       } catch (err) {
-        console.log("Error fetching top products:", err);
+        console.error("Error fetching top products:", err);
       }
     };
     fetchTopProducts();
@@ -65,11 +66,11 @@ const Trending = () => {
         toast.error("Failed to add to wishlist.");
       });
   };
-  console.log("treding", data);
+
   return (
-    <div className="stocks  ">
+    <div className="stocks">
       <div className="toptext">Trending Products</div>
-      <Slider {...settings} className="stockslider  ">
+      <Slider {...settings} className="stockslider">
         {data?.map((item, index) => (
           <div key={index} className="mainstocks">
             <div className="text-end" style={{ position: "relative" }}>
@@ -82,7 +83,6 @@ const Trending = () => {
                   cursor: "pointer",
                   zIndex: 2,
                 }}
-                className="text-end"
                 onClick={(e) => {
                   e.stopPropagation(); // prevent link navigation
                   addToWishlists(item);
@@ -97,7 +97,11 @@ const Trending = () => {
             >
               <img
                 className="stockimages"
-                src={`http://localhost:3001${item.image}`}
+                src={`${
+                  item.image?.startsWith("http")
+                    ? item.image
+                    : `${import.meta.env.VITE_API_URL}${item.image}`
+                }`}
                 alt={item.name}
               />
               <div className="ps-3 productss">
@@ -109,11 +113,7 @@ const Trending = () => {
                 <div className="availablestocks">{item.stocks}</div>
                 {item.rating && (
                   <div className="availablerating d-flex align-items-center gap-1">
-                    <FaRegStar
-                      color="yellow"
-                      style={{ backgroundColor: "dark" }}
-                      size={18}
-                    />
+                    <FaRegStar color="yellow" size={18} />
                     <span>{item.rating}</span>
                   </div>
                 )}
