@@ -31,8 +31,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
+      // "http://localhost:5173",
+      // "http://localhost:5174",
       "https://goldora.vercel.app", // ✅ Vercel live site
     ],
     credentials: true,
@@ -794,7 +794,7 @@ app.post("/wishlist", async (req, res) => {
     });
     await wishItem.save();
     res.status(201).json(wishItem);
-    console.log("Request body received in /wishlist:", req.body);
+    // console.log("Request body received in /wishlist:", req.body);
   } catch (err) {
     console.log("error adding to wishlist", err);
     res.status(500).json({ error: "Failed to add to wishlist" });

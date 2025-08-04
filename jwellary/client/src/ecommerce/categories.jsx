@@ -99,7 +99,7 @@ function Categories() {
 
   const fetchcategory = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/category");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/category`);
       // console.log("consolinggg the ", res);
       setdata(res.data);
     } catch (err) {
@@ -117,15 +117,17 @@ function Categories() {
             className="category-link"
           >
             <div className="slidder">
-              <div className="cat2">
-                <div
-                  className="cat1"
-                  style={{
-                    backgroundImage: `url(${item?.image})`,
-                    backgroundSize: "contain",
-                  }}
-                ></div>
-              </div>
+              <div
+                className="cat1"
+                style={{
+                  backgroundImage: `url(${
+                    item?.image?.startsWith("http")
+                      ? item.image
+                      : `${import.meta.env.VITE_API_URL}/${item.image}`
+                  })`,
+                  backgroundSize: "contain",
+                }}
+              ></div>
 
               <div className="slider-title">
                 <div className="slider-title">{item?.name}</div>

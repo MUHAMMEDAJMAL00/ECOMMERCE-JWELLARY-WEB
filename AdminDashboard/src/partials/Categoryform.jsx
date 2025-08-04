@@ -12,7 +12,9 @@ const CategoryForm = () => {
   useEffect(() => {
     const fetchMasterCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/mastercategory");
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/mastercategory`
+        );
         setMasterCategories(res.data);
       } catch (error) {
         console.error("Failed to fetch master categories", error);
@@ -32,11 +34,15 @@ const CategoryForm = () => {
     formData.append("masterCategoryId", selectedMasterCategory);
 
     try {
-      const res = await axios.post("http://localhost:3001/category", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/category`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       alert("Category created successfully!");
       setName("");
@@ -44,14 +50,14 @@ const CategoryForm = () => {
       setImage(null);
       setSelectedMasterCategory("");
     } catch (err) {
-      console.error(err);
+      console.error("Failed to create category", err);
       alert("Failed to create category");
     }
   };
 
   return (
-    <div className="flex justify-center items-center dark:bg-gray-800  dark:rounded-xl h-full bg-white  p-8">
-      <div className="bg-white dark:bg-gray-900 shadow-lg rounded-xl w-full  max-w-2xl p-8">
+    <div className="flex justify-center items-center dark:bg-gray-800 h-full bg-white p-8">
+      <div className="bg-white dark:bg-gray-900 shadow-lg rounded-xl w-full max-w-2xl p-8">
         <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white text-center">
           Create New Category
         </h2>
