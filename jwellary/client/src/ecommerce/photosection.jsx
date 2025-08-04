@@ -9,10 +9,12 @@ const Photosection = () => {
   useEffect(() => {
     const fetchSection = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/adsection");
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/adsection`
+        );
         setData(response.data);
       } catch (err) {
-        console.log("the section is not getting", err);
+        console.error("❌ Error fetching ad section:", err);
       }
     };
     fetchSection();
@@ -31,7 +33,13 @@ const Photosection = () => {
             <div
               className="section1"
               style={{
-                backgroundImage: `url(${item.image})`,
+                backgroundImage: `url(${
+                  item?.image?.startsWith("http")
+                    ? item.image
+                    : `${import.meta.env.VITE_API_URL}/${item.image}`
+                })`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
               <div className="sectiontitle">

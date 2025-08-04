@@ -347,6 +347,7 @@ app.get("/banner", async (req, res) => {
 });
 // --------------------------------------gold Price
 app.post("/goldprice", async (req, res) => {
+  console.log("GET /goldprice hit ✅"); // Add this line
   try {
     const newPrice = new GoldPrice(req.body);
     const savedPrice = await newPrice.save();
@@ -382,7 +383,8 @@ app.post("/adsection", upload.single("image"), async (req, res) => {
   try {
     const { text, image } = req.body;
     const sections = await adSection({
-      image: `http://localhost:3001/uploads/${req.file.filename}`, // direct URL from body
+      image: `https://ecommerce-jwellary-backend.onrender.com/uploads/${req.file.filename}`,
+
       text: req.body.text,
     });
     await sections.save();
