@@ -472,17 +472,18 @@ app.get("/topproducts", async (req, res) => {
 // -------------------------------------------------genders post
 app.post("/genders", upload.single("image"), async (req, res) => {
   try {
-    const { image, text } = req.body;
+    const { text } = req.body;
 
     const response = await Gender({
-      image: `http://localhost:3001/uploads/${req.file.filename}`,
-      text: req.body.text,
+      image: `${process.env.BASE_URL}/uploads/${req.file.filename}`, // ✅ uses deployed URL
+      text,
     });
+
     await response.save();
     res.status(200).json(response);
   } catch (err) {
     console.log("its an error in genders", err);
-    res.status(500).send("Upload gendersfailed");
+    res.status(500).send("Upload genders failed");
   }
 });
 

@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/styles.scss";
 import "../styles/newstyles.scss";
 import axios from "axios";
 import Slider from "react-slick";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const Genders = () => {
-  var settings = {
+  const settings = {
     infinite: true,
     speed: 900,
     slidesToShow: 4,
@@ -48,14 +46,16 @@ const Genders = () => {
   };
 
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchGenders = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/genders");
-        const details = response.data;
-        setData(details);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/genders`
+        );
+        setData(response.data);
       } catch (err) {
-        console.log("the   genders api is not workingg", err);
+        console.log("the genders api is not working", err);
       }
     };
     fetchGenders();
@@ -63,12 +63,18 @@ const Genders = () => {
 
   return (
     <div className="gendersmain">
-      <Slider {...settings} className="genders h-100 mb-3  ">
+      <Slider {...settings} className="genders h-100 mb-3">
         {data.map((item, index) => (
           <div className="genders1" key={index}>
             <div
-              className="genders2 "
-              style={{ backgroundImage: `url(${item.image})` }}
+              className="genders2"
+              style={{
+                backgroundImage: `url(${
+                  item.image?.startsWith("http")
+                    ? item.image
+                    : `${import.meta.env.VITE_API_URL}/${item.image}`
+                })`,
+              }}
             >
               <div className="gendertitle">{item.text}</div>
             </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Button, Container } from "react-bootstrap"; // ✅ Fixed import
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Form, Button, Container } from "react-bootstrap";
 
 const GendersSection = () => {
   const [text, setText] = useState("");
@@ -17,7 +16,7 @@ const GendersSection = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/genders",
+        `${import.meta.env.VITE_API_URL}/genders`,
         formData,
         {
           headers: {
@@ -51,7 +50,6 @@ const GendersSection = () => {
           />
         </Form.Group>
 
-        {/* File Upload */}
         <Form.Group controlId="fileInput" className="mb-3">
           <Form.Label>Image</Form.Label>
           <Form.Control
@@ -66,7 +64,6 @@ const GendersSection = () => {
           Submit
         </Button>
 
-        {/* Message */}
         {message && (
           <p
             className="mt-3 fw-semibold"
