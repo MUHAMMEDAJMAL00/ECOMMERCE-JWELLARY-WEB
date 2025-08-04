@@ -53,6 +53,7 @@ const Genders = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/genders`
         );
+        console.log("✅ Genders API data:", response.data); // Add this
         setData(response.data);
       } catch (err) {
         console.log("the genders api is not working", err);
