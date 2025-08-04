@@ -18,13 +18,12 @@ const CategoryProducts = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  // Handle screen resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 800);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -32,14 +31,14 @@ const CategoryProducts = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/products/category/${categoryId}?page=${page}&limit=8&sort=${sortOrder}`
+        `${API_URL}/products/category/${categoryId}?page=${page}&limit=8&sort=${sortOrder}`
       )
       .then((res) => {
         setProducts(res.data.products);
         setTotalPages(res.data.totalPages);
       });
     axios
-      .get("http://localhost:3001/category")
+      .get(`${API_URL}/category`)
       .then((res) => setCategories(res.data))
       .catch((err) => console.log(err));
   }, [categoryId, page, sortOrder]);
@@ -50,7 +49,7 @@ const CategoryProducts = () => {
     try {
       if (!user?._id) return alert("Please log in first.");
 
-      const res = await axios.get(`http://localhost:3001/wishlist/${user._id}`);
+      const res = await axios.get(`${API_URL}/wishlist/${user._id}`);
       const alreadyInWishlist = res.data.some(
         (item) => item.productId._id === product._id
       );
@@ -60,7 +59,7 @@ const CategoryProducts = () => {
         return;
       }
 
-      await axios.post("http://localhost:3001/wishlist", {
+      await axios.post(`${API_URL}/wishlist`, {
         userId: user._id,
         productId: product._id,
         price: product.price,
@@ -85,7 +84,6 @@ const CategoryProducts = () => {
         style={{ backgroundColor: "#fff" }}
       >
         <div className="row">
-          {/* Mobile Menu Toggle Button - Only show below 800px */}
           {isMobile && (
             <div className="p-3">
               <button
@@ -116,7 +114,6 @@ const CategoryProducts = () => {
               boxShadow: isMobile ? "0 2px 10px rgba(0,0,0,0.1)" : "none",
             }}
           >
-            {/* Close button for mobile */}
             {isMobile && (
               <div className="d-flex justify-content-between align-items-center mb-3 ">
                 <h5 className="mb-0 ">Categories</h5>
@@ -129,14 +126,14 @@ const CategoryProducts = () => {
               </div>
             )}
 
-            {categories.map((item, index) => {
+            {categories.map((item) => {
               const isActive = item._id === categoryId;
               return (
                 <Link
                   key={item._id}
                   to={`/categorydetail/${item._id}`}
                   className="text-decoration-none text-dark"
-                  onClick={() => isMobile && setSidebarOpen(false)} // Close sidebar on mobile after selection
+                  onClick={() => isMobile && setSidebarOpen(false)}
                 >
                   <div
                     className={`mb-2 d-flex align-items-center ${
@@ -145,7 +142,11 @@ const CategoryProducts = () => {
                     style={{ cursor: "pointer" }}
                   >
                     <img
-                      src={item.image}
+                      src={
+                        item.image.startsWith("http")
+                          ? item.image
+                          : `${API_URL}/${item.image}`
+                      }
                       alt={item.name}
                       style={{
                         width: "40px",
@@ -172,7 +173,6 @@ const CategoryProducts = () => {
             })}
           </div>
 
-          {/* Overlay for mobile sidebar */}
           {isMobile && sidebarOpen && (
             <div
               className="position-fixed w-100 h-100"
@@ -188,7 +188,6 @@ const CategoryProducts = () => {
 
           {/* Products Section */}
           <div className={isMobile ? "py-3" : "col-md-9 py-3"}>
-            {/* Sort Dropdown */}
             <div className="mb-3 d-flex justify-content-end">
               <select
                 className="form-select w-auto"
@@ -201,7 +200,6 @@ const CategoryProducts = () => {
               </select>
             </div>
 
-            {/* Products Grid */}
             <div
               className="row justify-content-center"
               style={{
@@ -236,7 +234,11 @@ const CategoryProducts = () => {
                         className="text-decoration-none text-dark"
                       >
                         <img
-                          src={`http://localhost:3001${p.image}`}
+                          src={
+                            p.image.startsWith("http")
+                              ? p.image
+                              : `${API_URL}/${p.image}`
+                          }
                           alt={p.name}
                           className="card-img-top"
                           style={{
@@ -292,7 +294,6 @@ const CategoryProducts = () => {
               )}
             </div>
 
-            {/* Pagination */}
             <div className="d-flex justify-content-center mt-4">
               <nav>
                 <ul className="pagination">
