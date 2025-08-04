@@ -435,21 +435,26 @@ app.get("/goldad", async (req, res) => {
 
 app.post("/topproducts", upload.single("image"), async (req, res) => {
   try {
-    const { title, stock, image, stocks, aed } = req.body;
-    const response = await Topmodels({
-      image: `http://localhost:3001/uploads/${req.file.filename}`,
-      stock: req.body.stock,
-      title: req.body.title,
-      stocks: req.body.stocks,
-      aed: req.body.aed,
+    const { title, stock, stocks, aed } = req.body;
+
+    const imageUrl = `https://ecommerce-jwellary-backend.onrender.com/uploads/${req.file.filename}`;
+
+    const response = new Topmodels({
+      image: imageUrl,
+      stock,
+      title,
+      stocks,
+      aed,
     });
+
     await response.save();
     res.status(201).json(response);
   } catch (err) {
-    console.log("its an error", err);
+    console.log("❌ Upload error:", err);
     res.status(500).send("Upload failed");
   }
 });
+
 // -------------------------------------------------topmodels get
 app.get("/topproducts", async (req, res) => {
   try {
