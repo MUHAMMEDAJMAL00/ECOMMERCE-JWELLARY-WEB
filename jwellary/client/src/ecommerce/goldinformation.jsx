@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/styles.scss";
 import "../styles/newstyles.scss";
 import axios from "axios";
 import Slider from "react-slick";
-import { useEffect } from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Goldinformation = () => {
-  var settings = {
+  const [Data, setData] = useState([]);
+
+  const settings = {
     infinite: true,
     speed: 900,
     slidesToShow: 3.6,
@@ -59,29 +59,33 @@ const Goldinformation = () => {
     ],
   };
 
-  const [Data, setData] = useState([]);
   useEffect(() => {
     const fetchGoldad = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/goldad");
-        const details = response.data;
-        setData(details);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/goldad`
+        );
+        setData(response.data);
       } catch (err) {
-        console.log("the Goldadapi is not workingg", err);
+        console.log("Gold ad API error:", err);
       }
     };
     fetchGoldad();
   }, []);
-  // console.log("this goldad dataaaa", Data);
+
   return (
     <Slider {...settings} className="slick-sliders">
       {Data.map((item, index) => {
+        const imageUrl = item?.image?.startsWith("http")
+          ? item.image
+          : `${import.meta.env.VITE_API_URL}/${item.image}`;
+
         return (
           <div key={index} className="exclusiv1">
             <div
-              className="exclusivegold "
+              className="exclusivegold"
               style={{
-                backgroundImage: `url(${item.image})`,
+                backgroundImage: `url(${imageUrl})`,
                 textWrap: "nowrap",
               }}
             >

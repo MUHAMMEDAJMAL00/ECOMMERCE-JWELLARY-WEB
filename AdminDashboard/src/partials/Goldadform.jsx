@@ -11,7 +11,7 @@ const Goldad = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/category")
+      .get(`${import.meta.env.VITE_API_URL}/category`)
       .then((res) => setCategories(res.data))
       .catch((err) => console.error("❌ Failed to fetch categories", err));
   }, []);
@@ -26,7 +26,7 @@ const Goldad = () => {
     formData.append("categoryId", categoryId);
 
     try {
-      await axios.post("http://localhost:3001/goldad", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/goldad`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -46,7 +46,6 @@ const Goldad = () => {
       <h2 className="text-2xl font-semibold mb-4">Gold Ad Form</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {/* Text Field */}
         <div className="mb-4">
           <label className="block mb-1 font-medium">Text</label>
           <input
@@ -59,7 +58,6 @@ const Goldad = () => {
           />
         </div>
 
-        {/* Description Field */}
         <div className="mb-4">
           <label className="block mb-1 font-medium">Description</label>
           <input
@@ -72,7 +70,6 @@ const Goldad = () => {
           />
         </div>
 
-        {/* Category Dropdown */}
         <div className="mb-4">
           <label className="block mb-1 font-medium">Select Category</label>
           <select
@@ -90,7 +87,6 @@ const Goldad = () => {
           </select>
         </div>
 
-        {/* File Upload */}
         <div className="mb-4">
           <label className="block mb-1 font-medium">Upload Image</label>
           <input
@@ -102,7 +98,6 @@ const Goldad = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
@@ -110,7 +105,6 @@ const Goldad = () => {
           Submit
         </button>
 
-        {/* Status Message */}
         {message && (
           <p
             className={`mt-4 font-medium ${

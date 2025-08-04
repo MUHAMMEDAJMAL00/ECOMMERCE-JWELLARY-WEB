@@ -410,19 +410,22 @@ app.get("/adsection", async (req, res) => {
 app.post("/goldad", upload.single("image"), async (req, res) => {
   try {
     const { text, description, categoryId } = req.body;
-    const sections = await Goldad({
-      image: `http://localhost:3001/uploads/${req.file.filename}`, // direct URL from body
-      text: req.body.text,
-      description: req.body.description,
+
+    const sections = new Goldad({
+      image: `https://ecommerce-jwellary-backend.onrender.com/uploads/${req.file.filename}`, // ✅ Replaced localhost with deployed URL
+      text,
+      description,
       categoryId,
     });
+
     await sections.save();
     res.status(201).json(sections);
   } catch (err) {
-    console.log("its an error", err);
+    console.log("❌ Upload error:", err);
     res.status(500).send("Upload failed");
   }
 });
+
 // --------------------------------------------get of goldd
 app.get("/goldad", async (req, res) => {
   try {
