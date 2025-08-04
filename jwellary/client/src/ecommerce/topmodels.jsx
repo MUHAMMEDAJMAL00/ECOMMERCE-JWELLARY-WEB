@@ -36,7 +36,9 @@ const TopProducts = () => {
   useEffect(() => {
     const fetchTopProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/products/top");
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/products/top`
+        );
         setData(response.data);
       } catch (err) {
         console.log("Error fetching top products:", err);
@@ -65,9 +67,9 @@ const TopProducts = () => {
   };
 
   return (
-    <div className="stocks  ">
+    <div className="stocks">
       <div className="toptext">Top Products</div>
-      <Slider {...settings} className="stockslider  ">
+      <Slider {...settings} className="stockslider">
         {data?.map((item, index) => (
           <div key={index} className="mainstocks">
             <div
@@ -98,7 +100,11 @@ const TopProducts = () => {
             >
               <img
                 className="stockimages"
-                src={`http://localhost:3001${item.image}`}
+                src={`${
+                  item?.image?.startsWith("http")
+                    ? item.image
+                    : `${import.meta.env.VITE_API_URL}/${item.image}`
+                }`}
                 alt={item.name}
               />
               <div className="ps-3 productss">
@@ -114,7 +120,6 @@ const TopProducts = () => {
         ))}
       </Slider>
 
-      {/* Toast container */}
       <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
