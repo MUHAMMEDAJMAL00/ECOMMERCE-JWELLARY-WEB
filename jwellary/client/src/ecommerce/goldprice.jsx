@@ -20,7 +20,6 @@ const Goldprice = () => {
     };
     fetchPrice();
   }, []);
-
   return (
     <div className="gold-head">
       <div className="gold-title">TODAY'S RETAIL GOLD JEWELLERY PRICE</div>
