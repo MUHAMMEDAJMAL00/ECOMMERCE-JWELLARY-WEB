@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// ✅ Production base URL
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
 // ✅ GET Wishlist items
 export const fetchWishlist = createAsyncThunk(
   "wishlist/fetchWishlist",
   async (userId) => {
-    const res = await axios.get(`http://localhost:3001/wishlist/${userId}`);
+    const res = await axios.get(`${BASE_URL}/wishlist/${userId}`);
     return res.data;
   }
 );
@@ -14,7 +17,7 @@ export const fetchWishlist = createAsyncThunk(
 export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
   async ({ userId, productId, price, aed }) => {
-    const res = await axios.post("http://localhost:3001/wishlist", {
+    const res = await axios.post(`${BASE_URL}/wishlist`, {
       userId,
       productId,
       price,
@@ -28,7 +31,7 @@ export const addToWishlist = createAsyncThunk(
 export const removeFromWishlist = createAsyncThunk(
   "wishlist/removeFromWishlist",
   async (itemId) => {
-    await axios.delete(`http://localhost:3001/wishlist/lists/${itemId}`);
+    await axios.delete(`${BASE_URL}/wishlist/lists/${itemId}`);
     return itemId;
   }
 );

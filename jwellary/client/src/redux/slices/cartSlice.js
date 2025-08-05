@@ -2,28 +2,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// ✅ Async thunk for adding to cart (POST request)
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
+// ✅ Async thunk for adding to cart
 export const addToCartAsync = createAsyncThunk(
   "cart/addToCartAsync",
   async ({ userId, productId, quantity, price }) => {
-    const res = await axios.post("http://localhost:3001/cart", {
+    const res = await axios.post(`${BASE_URL}/cart`, {
       userId,
       productId,
       quantity,
       price,
     });
-    return res.data; // backend should return the cart item
+    return res.data; // cart item
   }
 );
+
+// ✅ Fetch cart
 export const fetchCart = createAsyncThunk("cart/fetchCart", async (userId) => {
-  const res = await axios.get(`http://localhost:3001/cart/${userId}`);
+  const res = await axios.get(`${BASE_URL}/cart/${userId}`);
   return res.data;
 });
+
+// ✅ Delete cart item
 export const deleteCartItem = createAsyncThunk(
   "cart/deleteItem",
-  async (userId) => {
-    const res = await axios.delete(`http://localhost:3001/cart/${cartItemId}`);
-    return res.data;
+  async ({ userId, cartItemId }) => {
+    const res = await axios.delete(`${BASE_URL}/cart/${cartItemId}`);
+    const updatedCart = await axios.get(`${BASE_URL}/cart/${userId}`);
+    return updatedCart.data;
   }
 );
 
@@ -47,22 +54,23 @@ const cartSlice = createSlice({
       state.cartItems = [];
       state.cartCount = 0;
     },
-    addToCart: (state, action) => {
-      const exists = state.cartItems.find(
-        (item) => item.productId === action.payload.productId
-      );
-      if (exists) {
-        exists.quantity += action.payload.quantity;
-      } else {
-        state.cartItems.push(action.payload);
-      }
-      state.cartCount = state.cartItems.length;
-    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(addToCartAsync.fulfilled, (state, action) => {
+        // Option 1: Push (may cause duplicate if backend doesn't dedupe)
         state.cartItems.push(action.payload);
+
+        // Option 2: Update if exists
+        // const index = state.cartItems.findIndex(
+        //   (item) => item.productId?._id === action.payload.productId?._id
+        // );
+        // if (index !== -1) {
+        //   state.cartItems[index] = action.payload;
+        // } else {
+        //   state.cartItems.push(action.payload);
+        // }
+
         state.cartCount = state.cartItems.length;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
@@ -76,7 +84,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setCartItems, updateCartCount, clearCart, addToCart } =
-  cartSlice.actions;
-
+export const { setCartItems, updateCartCount, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
