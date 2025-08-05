@@ -70,11 +70,7 @@ const Genders = () => {
             <div
               className="genders2"
               style={{
-                backgroundImage: `url(${
-                  item.image?.startsWith("http")
-                    ? item.image
-                    : `${import.meta.env.VITE_API_URL}/${item.image}`
-                })`,
+                backgroundImage: `url(${item.image})`,
               }}
             >
               <div className="gendertitle">{item.text}</div>
