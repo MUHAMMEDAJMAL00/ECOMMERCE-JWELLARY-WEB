@@ -615,20 +615,18 @@ body {
 
 
 
-// @media screen and (min-width:1500px) and (max-width:3070px) {
+@media screen and (min-width:1500px) and (max-width:3070px) {
 
-//     .footer {
-//         width: 100%;
-//         height: 100%;
-//         padding: 30px 66px;
-//         box-sizing: border-box;
-//         // background-color: rgba(217, 217, 217, 0.4);
-//     }
+    .footer {
+        width: 100%;
+        height: 100%;
+        padding: 30px 66px;
+        box-sizing: border-box;
+    }
 
 
-// }
+}
 
-// @media screen and (min-width:1700px) and (max-width:2560px) {}
 
 
 @media screen and (min-width:1450px) and (max-width:2560px) {
@@ -637,7 +635,6 @@ body {
     .header {
         width: 100%;
         padding: 0px 66px;
-        // background-color: red;
 
     }
 
@@ -687,9 +684,8 @@ body {
         background-color: #f9f9f9;
 
         .toptext {
-            font-size: 28.8px; // 1.8rem
+            font-size: 28.8px;
             font-weight: bold;
-            // margin-bottom: 16px; // 1rem
             text-align: center;
         }
 
@@ -701,7 +697,6 @@ body {
                 padding: 12.8px; // 0.8rem
                 border-radius: 10px;
                 background-color: #fff;
-                // background-color: red;
                 transition: transform 0.2s ease-in-out;
                 position: relative;
 
@@ -941,7 +936,7 @@ body {
     .custom-banner {
 
         .slick-dots {
-            bottom: -25px !important; // move up/down (increase value to move lower)
+            bottom: -25px !important;
             left: 50;
             width: 100%;
             text-align: center;
@@ -954,7 +949,6 @@ body {
     //----------------------------------------------
 
     .stocks {
-        // background-color: #d63b3b !important;
         height: auto !important;
         margin: 0px 60px 30px 60px !important;
 
@@ -1194,7 +1188,6 @@ body {
             flex-wrap: wrap;
             justify-content: end;
             align-items: end !important;
-            // background-color: #000;
         }
 
         .footer6 {
@@ -1213,7 +1206,6 @@ body {
 
         .footerlucky {
             width: 100px;
-            // background-color: #000;
             height: 50px;
         }
 
@@ -1225,7 +1217,6 @@ body {
         .lastfooter {
             display: flex;
             justify-content: space-between;
-            // flex-wrap: wrap;
             height: 2vh;
             padding-top: 20px;
 
@@ -1244,9 +1235,7 @@ body {
                     margin-bottom: 0;
                 }
 
-                .lastsecond {
-                    // text-align: right;
-                }
+
             }
         }
     }
@@ -1594,11 +1583,10 @@ body {
             top: 5px !important;
             cursor: pointer;
             width: 20px !important;
-            zIndex: 2
+            z-index: 2
         }
 
         .stockslider {
-            // background-color: #080707 !important;
             height: auto;
             padding: 0px 3px 0px 0px;
 
@@ -1770,9 +1758,7 @@ body {
                     margin-bottom: 0;
                 }
 
-                .lastsecond {
-                    // text-align: right;
-                }
+
             }
         }
     }
@@ -1935,62 +1921,7 @@ body {
         height: auto !important;
     }
 
-    /// 
-    /// 
-    /// 
-    // .cartpagemain {
-    //     padding: 40px 15px 10px 15px !important;
-    //     margin-top: 60px !important;
-    //     height: auto !important;
-    // }
 
-    // .cart2 {
-    //     display: flex;
-    //     flex-direction: column;
-    //     justify-content: center;
-    //     align-items: center;
-    //     width: auto !important;
-    // }
-
-    // .cart3 {
-    //     display: flex;
-    //     // flex-direction: ;
-    //     // justify-content: center;
-    //     align-items: center;
-    //     width: auto !important;
-
-    // }
-
-    // .cartimg {
-    //     size: 20px;
-    // }
-
-    // .carttxt {
-    //     font-size: 15px !important;
-    //     text-wrap: nowrap;
-
-    // }
-
-    // .cartrmv {
-    //     padding: 10px !important;
-    //     font-size: 12px !important;
-    //     margin: 0px !important;
-    // }
-
-    // .carttxtrmv {
-    //     display: flex !important;
-    //     justify-content: center !important;
-    //     align-items: center !important;
-    //     gap: 40px !important;
-    // }
-
-    // .cartsummary {
-    //     display: flex !important;
-    //     flex-direction: column;
-    //     align-items: center;
-    //     justify-content: space-between !important;
-    //     // background-color: #000 !important;
-    // }
 
     //---------------------------------
     .header-digital {
@@ -2297,7 +2228,7 @@ body {
             top: 5px !important;
             cursor: pointer;
             width: 20px !important;
-            zIndex: 2
+            z-index: 2
         }
 
         .toptext {
@@ -2307,7 +2238,6 @@ body {
         }
 
         .stockslider {
-            // background-color: #080707 !important;
             height: auto;
             padding: 0px 3px 0px 0px;
 
@@ -2387,14 +2317,12 @@ body {
     .genders2 {
         height: 350px !important; // Match `.mainstocks` height
         background-position: center;
-        // width: 300px;
         background-size: cover;
         background-repeat: no-repeat;
         object-fit: cover;
         border-radius: 10px;
         display: flex;
         margin-right: 10px; // spacing between slides like in stocks
-        // align-items: flex-end;
     }
 
     .gendertitle {
@@ -2403,7 +2331,6 @@ body {
         font-weight: 800;
         text-align: center;
         color: #ffffff;
-        // background-color: rgba(0, 0, 0, 0.4); // optional overlay for better text readability
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         width: 100%;
@@ -2452,7 +2379,6 @@ body {
 
     .mainproducthead {
         margin-top: 100px !important;
-        // src/styles/newstyles.scss
 
         .btn-responsive {
             width: 50%;
