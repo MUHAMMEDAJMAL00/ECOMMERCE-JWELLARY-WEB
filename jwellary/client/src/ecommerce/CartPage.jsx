@@ -166,15 +166,20 @@ const CartPage = () => {
                     {item.productId ? (
                       <>
                         <img
-                          src={`${API}${item.productId.image}`}
-                          alt={item.productId.name}
-                          className="rounded me-3"
+                          src={
+                            item.productId?.image?.startsWith("http")
+                              ? item.productId.image
+                              : `https://ecommerce-jwellary-backend.onrender.com${item.productId?.image}`
+                          }
+                          alt={item.productId?.name}
+                          className="rounded border me-3"
                           style={{
                             width: "80px",
                             height: "80px",
                             objectFit: "cover",
                           }}
                         />
+
                         <div>
                           <h6 className="mb-1 fw-bold">
                             {item.productId.name}
