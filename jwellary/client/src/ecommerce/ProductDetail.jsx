@@ -1,4 +1,3 @@
-// src/pages/ProductDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +7,8 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCartAsync } from "../redux/slices/cartSlice";
 import Footer from "../components/footer";
+
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -21,12 +22,10 @@ const ProductDetail = () => {
 
   const user = useSelector((state) => state.auth?.user);
 
-  // Handle screen resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -34,7 +33,7 @@ const ProductDetail = () => {
   const checkIfInCart = async () => {
     try {
       if (!user?._id) return;
-      const res = await axios.get(`http://localhost:3001/cart/${user._id}`);
+      const res = await axios.get(`${BASE_URL}/cart/${user._id}`);
       const isExist = res.data.some((item) => item.productId._id === id);
       setIsInCart(isExist);
     } catch (err) {
@@ -45,7 +44,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/products/${id}`);
+        const res = await axios.get(`${BASE_URL}/products/${id}`);
         setProduct(res.data);
         checkIfInCart();
       } catch (err) {
@@ -99,7 +98,6 @@ const ProductDetail = () => {
 
   if (!product) return <div className="text-center py-5">Loading...</div>;
 
-  // Button style based on screen size
   const buttonStyle = {
     width: isMobile ? "100%" : "auto",
     minWidth: isMobile ? "100%" : "150px",
@@ -117,7 +115,7 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col-md-5 text-center mb-4">
                 <img
-                  src={`http://localhost:3001${product.image}`}
+                  src={`${BASE_URL}${product.image}`}
                   alt={product.name}
                   className="rounded productimage"
                   style={{
@@ -187,7 +185,7 @@ const ProductDetail = () => {
                 <div className={isMobile ? "d-grid gap-2" : "d-flex gap-2"}>
                   {isInCart ? (
                     <button
-                      className="btn btn-warning "
+                      className="btn btn-warning"
                       style={buttonStyle}
                       onClick={() => navigate("/cartpage")}
                     >
@@ -195,7 +193,7 @@ const ProductDetail = () => {
                     </button>
                   ) : (
                     <button
-                      className="btn btn-warning "
+                      className="btn btn-warning"
                       style={buttonStyle}
                       onClick={cartsubmit}
                     >
