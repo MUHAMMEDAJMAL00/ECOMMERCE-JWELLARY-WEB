@@ -115,7 +115,11 @@ const ProductDetail = () => {
             <div className="row">
               <div className="col-md-5 text-center mb-4">
                 <img
-                  src={`${BASE_URL}${product.image}`}
+                  src={
+                    product.image?.startsWith("http")
+                      ? product.image
+                      : `${BASE_URL}${product.image}`
+                  }
                   alt={product.name}
                   className="rounded productimage"
                   style={{
