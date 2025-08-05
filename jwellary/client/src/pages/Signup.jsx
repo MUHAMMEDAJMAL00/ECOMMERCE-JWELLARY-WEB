@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
 const Signup = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState(""); // ✅ new
@@ -14,7 +16,7 @@ const Signup = () => {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:3001/register",
+        `${BASE_URL}/register`,
         { name, email, password, age, phone }, // ✅ send age too
         { withCredentials: true }
       )

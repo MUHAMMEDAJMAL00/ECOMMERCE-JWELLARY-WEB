@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateUserInfo } from "../redux/slices/authSlice";
 
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
 const MyOrders = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -27,8 +29,8 @@ const MyOrders = () => {
       try {
         if (user?._id) {
           const [orderRes, userRes] = await Promise.all([
-            axios.get(`http://localhost:3001/orders/${user._id}`),
-            axios.get(`http://localhost:3001/users/${user._id}`),
+            axios.get(`${BASE_URL}/orders/${user._id}`),
+            axios.get(`${BASE_URL}/users/${user._id}`),
           ]);
           setOrders(orderRes.data);
           setUserDetails(userRes.data);
@@ -58,7 +60,7 @@ const MyOrders = () => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:3001/updateUser/${user._id}`, formData);
+      await axios.put(`${BASE_URL}/updateUser/${user._id}`, formData);
       setUserDetails((prev) => ({ ...prev, ...formData }));
       dispatch(updateUserInfo(formData));
       setShowModal(false);
@@ -72,9 +74,7 @@ const MyOrders = () => {
       <Header />
       <div className="container py-4">
         <div className="row">
-          {/* Sidebar */}
           <div className="col-lg-3 col-md-4 mb-4">
-            {/* Desktop sticky, mobile normal */}
             <div
               className="d-none d-lg-block position-sticky"
               style={{ top: "90px" }}
@@ -86,7 +86,6 @@ const MyOrders = () => {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="col-lg-9 col-md-8">
             <div className="mb-4">
               <h3 className="fw-bold">My Account</h3>
@@ -131,7 +130,6 @@ const MyOrders = () => {
                   <p className="text-muted">No orders found.</p>
                 ) : (
                   <>
-                    {/* Desktop Table View */}
                     <div className="table-responsive d-none d-md-block">
                       <table className="table table-bordered table-hover">
                         <thead className="table-light">
@@ -184,7 +182,6 @@ const MyOrders = () => {
                       </table>
                     </div>
 
-                    {/* Mobile Card View */}
                     <div className="d-block d-md-none">
                       {orders.map((order, index) => (
                         <div className="card mb-3" key={index}>
@@ -230,7 +227,6 @@ const MyOrders = () => {
         </div>
       </div>
 
-      {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Update Your Info</Modal.Title>

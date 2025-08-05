@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { login } from "../redux/slices/authSlice";
 
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/login", {
+      const result = await axios.post(`${BASE_URL}/login`, {
         email,
         password,
       });
@@ -24,10 +26,8 @@ const Login = () => {
       localStorage.setItem("userId", userId);
 
       dispatch(login({ user: result.data.user, token: result.data.token }));
-
       toast.success("Login successful!");
 
-      // Delay navigate so toast has time to show
       setTimeout(() => {
         navigate("/");
       }, 500);
@@ -38,43 +38,47 @@ const Login = () => {
   };
 
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center bg-light">
-      <div className="bg-white p-4 rounded shadow w-25">
-        <h2 className="text-center mb-4">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label>Email</label>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+      <div className="row justify-content-center w-100">
+        <div className="col-11 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h2 className="text-center mb-4">Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label fw-semibold">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-success w-100 mb-2">
+                Login
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline-secondary w-100"
+                onClick={() => navigate("/signup")}
+              >
+                Register
+              </button>
+            </form>
           </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100 mb-2">
-            Login
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-secondary w-100"
-            onClick={() => navigate("/signup")}
-          >
-            Register
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

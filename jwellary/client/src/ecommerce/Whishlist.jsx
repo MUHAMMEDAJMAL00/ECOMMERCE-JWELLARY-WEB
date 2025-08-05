@@ -14,7 +14,9 @@ import {
   fetchCart,
   addToCartAsync,
   deleteCartItem,
-} from "../redux/slices/cartSlice"; // ✅ ADD fetchCart
+} from "../redux/slices/cartSlice";
+
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const Whislist = () => {
   const dispatch = useDispatch();
@@ -24,10 +26,11 @@ const Whislist = () => {
   const { items: savedWishlist, loading } = useSelector(
     (state) => state.wishlist
   );
+
   useEffect(() => {
     if (user?._id) {
       dispatch(fetchWishlist(user._id));
-      dispatch(fetchCart(user._id)); // fetch cart on page load
+      dispatch(fetchCart(user._id));
     }
   }, [dispatch, user]);
 
@@ -52,7 +55,6 @@ const Whislist = () => {
     }
 
     try {
-      // Dispatch add to cart
       await dispatch(
         addToCartAsync({
           userId: user._id,
@@ -60,13 +62,10 @@ const Whislist = () => {
           quantity: 1,
           price: item.price,
         })
-      ).unwrap(); // make sure the dispatch is completed
+      ).unwrap();
 
       toast.success("Item added to cart!");
-
-      // Now remove from wishlist
-      dispatch(removeFromWishlist(item._id)); // item._id is the wishlist item ID
-
+      dispatch(removeFromWishlist(item._id));
       toast.info("Item removed from wishlist.");
     } catch (error) {
       console.error("Add to cart failed:", error);
@@ -89,14 +88,14 @@ const Whislist = () => {
           }}
         />
 
-        <div className="d-flex flex-wrap gap-4 justify-content-center ">
+        <div className="d-flex flex-wrap gap-4 justify-content-center">
           {savedWishlist.length === 0 ? (
             <p className="text-muted fs-5">Your wishlist is empty.</p>
           ) : (
             savedWishlist.map((item) => (
               <Card
                 key={item._id}
-                className="shadow rounded-4  border-3 d-flex flex-column"
+                className="shadow rounded-4 border-3 d-flex flex-column"
                 style={{
                   width: "18rem",
                   backgroundColor: "#fffaf5",
@@ -108,7 +107,7 @@ const Whislist = () => {
               >
                 <Card.Img
                   variant="top"
-                  src={`http://localhost:3001${item.productId?.image}`}
+                  src={`${BASE_URL}${item.productId?.image}`}
                   alt={item.productId?.name}
                   style={{
                     height: "180px",
