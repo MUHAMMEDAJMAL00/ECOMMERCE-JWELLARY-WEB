@@ -48,13 +48,16 @@ const Header = () => {
 
   const { user } = useSelector((state) => state.auth);
 
+  // ✅ Get API URL from .env
+  const API_URL = import.meta.env.VITE_API_URL;
+
   // ✅ Fetch master and regular categories
   useEffect(() => {
-    axios.get("http://localhost:3001/mastercategory").then((res) => {
+    axios.get(`${API_URL}/mastercategory`).then((res) => {
       setMasterCategories(res.data);
     });
 
-    axios.get("http://localhost:3001/category").then((res) => {
+    axios.get(`${API_URL}/category`).then((res) => {
       setCategories(res.data);
     });
   }, []);
@@ -69,7 +72,7 @@ const Header = () => {
       if (!user?._id) return;
 
       try {
-        const res = await axios.get(`http://localhost:3001/cart/${user._id}`);
+        const res = await axios.get(`${API_URL}/cart/${user._id}`);
         setCartCount(res.data.length);
       } catch (err) {
         console.error("Failed to fetch cart count:", err);
@@ -77,23 +80,16 @@ const Header = () => {
     };
 
     fetchCartCount();
-  }, [user]); // ✅ triggers every time login/logout happens
+  }, [user]);
 
   // ✅ Ant Design Dropdown menu for logged-in user
   const userMenu = (
     <Menu>
-      <Menu.Item
-        className="fw-semibold"
-        // key=""
-        onClick={() => {
-          navigate("/myorders");
-        }}
-      >
+      <Menu.Item className="fw-semibold" onClick={() => navigate("/myorders")}>
         My Orders
       </Menu.Item>
       <Menu.Item
         className="fw-bold text-danger"
-        key="logout"
         onClick={() => {
           dispatch(logout());
           dispatch(clearCart());
@@ -108,9 +104,9 @@ const Header = () => {
   );
 
   return (
-    <div className="parentheader  shadow-sm">
+    <div className="parentheader shadow-sm">
       {/* Header Bar */}
-      <div className="header  ">
+      <div className="header">
         <div className="header-deskbox" style={{ gap: "8px" }}>
           <div className="header-desklogo">
             <HiOutlineViewList size={40} className="firstdisplayimage" />
@@ -122,18 +118,12 @@ const Header = () => {
             />
           </div>
 
-          <div
-            className="header-rate"
-            style={{ marginLeft: "8px", marginRight: "8px" }}
-          >
+          <div className="header-rate" style={{ margin: "0 8px" }}>
             <div className="textrate1">LIVE RATE</div>
             <div className="textrate2">TODAY'S PRICE</div>
           </div>
 
-          <div
-            className="header-searchbox"
-            style={{ marginLeft: "8px", marginRight: "8px" }}
-          >
+          <div className="header-searchbox" style={{ margin: "0 8px" }}>
             <div className="header-searchbar d-flex align-items-center gap-2">
               <select
                 className="form-select header-inputsearch"
@@ -156,24 +146,18 @@ const Header = () => {
             </div>
           </div>
 
-          <div
-            className="header-digital"
-            style={{ marginLeft: "8px", marginRight: "8px" }}
-          >
+          <div className="header-digital" style={{ margin: "0 8px" }}>
             <div className="header-digitaltext">Digital Gold</div>
             <ImParagraphRight />
           </div>
-          <div
-            className="header-digital"
-            style={{ marginLeft: "8px", marginRight: "8px" }}
-          >
+          <div className="header-digital" style={{ margin: "0 8px" }}>
             <div className="header-digitaltext">LSG Auction</div>
             <LuScale />
           </div>
 
           <div className="header-cartimage" style={{ marginLeft: "8px" }}>
             <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={30} className="" />
+              <IoIosHeartEmpty size={30} />
             </Link>
             <Link
               style={{ color: "black", position: "relative" }}
@@ -202,7 +186,6 @@ const Header = () => {
               )}
             </Link>
 
-            {/* ✅ Conditionally show user or login */}
             {user ? (
               <Dropdown overlay={userMenu} trigger={["click"]}>
                 <HiOutlineUser
@@ -222,7 +205,7 @@ const Header = () => {
       </div>
 
       {/* Master Categories Menu with Popover */}
-      <div className="header-categories ">
+      <div className="header-categories">
         {masterCategories.map((master) => {
           const relatedCategories = Categories.filter(
             (cat) => cat?.masterCategoryId?.name === master.name

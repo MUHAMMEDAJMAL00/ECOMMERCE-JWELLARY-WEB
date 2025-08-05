@@ -68,13 +68,14 @@ const CheckoutPage = () => {
   }, []);
 
   // const users = useSelector((state) => state.auth.userId);
+  const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
+
   const fetchCartItems = async () => {
-    // const userId = localStorage.getItem("userId");
     const userId = user?._id;
     if (!userId) return alert("Please log in.");
 
     try {
-      const res = await axios.get(`http://localhost:3001/cart/${userId}`);
+      const res = await axios.get(`${BASE_URL}/cart/${userId}`);
       // ✅ Update Redux state
       dispatch(setCartItems(res.data));
       updateTotal(res.data);
@@ -82,15 +83,16 @@ const CheckoutPage = () => {
       console.log("Failed to fetch cart items:", err);
     }
   };
-  //-------------------------------------------------------------------------
 
+  //-------------------------------------------------------------------------
   const user = useSelector((state) => state.auth.user);
+
   const fetchSavedAddresses = async () => {
     try {
       const userId = user?._id;
       if (!userId) return;
 
-      const res = await axios.get(`http://localhost:3001/address/${userId}`);
+      const res = await axios.get(`${BASE_URL}/address/${userId}`);
       setSavedAddresses(res.data); // store in state
     } catch (err) {
       console.error("Error fetching saved addresses", err);
@@ -111,7 +113,6 @@ const CheckoutPage = () => {
       return alert("Please select a delivery address.");
     }
 
-    // Prepare items array consistently for both flows
     let items = [];
     if (buyNowItem) {
       items = [
@@ -147,40 +148,32 @@ const CheckoutPage = () => {
       items,
     };
 
-    // 🟩 Razorpay flow for Pay Online
     if (formData.paymentMethod === "Pay Online") {
       try {
-        // ✅ 1. Create Razorpay order from backend
-        const res = await axios.post("http://localhost:3001/create-order", {
-          amount: totalPrice, // Pass amount in ₹
+        const res = await axios.post(`${BASE_URL}/create-order`, {
+          amount: totalPrice,
         });
 
         const { id: razorpayOrderId } = res.data;
 
-        // ✅ 2. Razorpay options
         const options = {
-          key: "rzp_test_Wsj59hTGf0eyZo", // Replace with actual key
-          amount: totalPrice * 100, // in paise
+          key: "rzp_test_Wsj59hTGf0eyZo", // Replace with production key for live
+          amount: totalPrice * 100,
           currency: "INR",
           name: "Your Store Name",
           description: "Order Payment",
           order_id: razorpayOrderId,
           handler: async function (response) {
             try {
-              // ✅ 3. Add Razorpay payment ID to orderData
               orderData.razorpayPaymentId = response.razorpay_payment_id;
 
-              // ✅ 4. Place the order
               const finalOrder = await axios.post(
-                "http://localhost:3001/orders",
+                `${BASE_URL}/orders`,
                 orderData
               );
 
-              // Debug: Log the order response to verify items
-              console.log("Order Response:", finalOrder.data);
-
               dispatch(setOrder(finalOrder.data));
-              await axios.delete(`http://localhost:3001/cart/user/${user._id}`);
+              await axios.delete(`${BASE_URL}/cart/user/${user._id}`);
               dispatch(clearCart());
               localStorage.removeItem("cartItems");
               toast.success("Order placed successfully!");
@@ -207,22 +200,16 @@ const CheckoutPage = () => {
         alert("Payment failed. Try again.");
       }
 
-      return; // Prevent further execution
+      return;
     }
 
-    // 🟥 COD or other non-online payment
+    // COD or Other Payment Methods
     try {
-      const response = await axios.post(
-        "http://localhost:3001/orders",
-        orderData
-      );
+      const response = await axios.post(`${BASE_URL}/orders`, orderData);
       const placedOrder = response.data;
 
-      // Debug: Log the order response to verify items
-      console.log("Order Response (COD):", placedOrder);
-
       dispatch(setOrder(placedOrder));
-      await axios.delete(`http://localhost:3001/cart/user/${user._id}`);
+      await axios.delete(`${BASE_URL}/cart/user/${user._id}`);
       dispatch(clearCart());
       localStorage.removeItem("cartItems");
       toast.success("Order placed successfully!");
@@ -232,6 +219,8 @@ const CheckoutPage = () => {
       alert("Failed to place order");
     }
   };
+
+  //------------------------------------------------------
   const updateTotal = (items) => {
     const totalAmt = items.reduce(
       (acc, item) => acc + parseFloat(item.price || 0),
@@ -273,21 +262,17 @@ const CheckoutPage = () => {
       user: user._id,
     };
 
-    // 🐞 DEBUGGING: Log the data being sent
     console.log("Sending address data:", addressData);
 
     try {
       setSaving(true);
-      const res = await axios.post(
-        "http://localhost:3001/address",
-        addressData
-      );
+      const res = await axios.post(`${BASE_URL}/address`, addressData);
       alert("Address saved successfully!");
       dispatch(setAddress(res.data));
-      setShowAddressForm(false); // ✅ Close the form after saving
+      setShowAddressForm(false);
       setIsAddingNew(false);
       setViewOnly(false);
-      fetchSavedAddresses(); // ✅ Refresh the list to show new address
+      fetchSavedAddresses();
     } catch (err) {
       console.error("Failed to save address:", err);
       alert("Error saving address.");
@@ -298,8 +283,9 @@ const CheckoutPage = () => {
 
   const handledelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/address/${id}`);
+      await axios.delete(`${BASE_URL}/address/${id}`);
       setSavedAddresses((prev) => prev.filter((addr) => addr._id !== id));
+
       // If the deleted address was selected, clear selection
       if (selectedAddressId === id) {
         setSelectedAddressId(null);
@@ -390,15 +376,12 @@ const CheckoutPage = () => {
         const { latitude, longitude } = position.coords;
 
         try {
-          const res = await axios.get(
-            "http://localhost:3001/api/reverse-geocode",
-            {
-              params: {
-                lat: latitude,
-                lon: longitude,
-              },
-            }
-          );
+          const res = await axios.get(`${BASE_URL}/api/reverse-geocode`, {
+            params: {
+              lat: latitude,
+              lon: longitude,
+            },
+          });
 
           const address = res.data.address;
 
@@ -530,7 +513,7 @@ const CheckoutPage = () => {
                   onClick={async () => {
                     try {
                       await axios.put(
-                        `http://localhost:3001/address/${editAddressData._id}`,
+                        `https://ecommerce-jwellary-backend.onrender.com/address/${editAddressData._id}`,
                         editAddressData
                       );
                       alert("Address updated!");
@@ -930,10 +913,8 @@ const CheckoutPage = () => {
               {buyNowItem ? (
                 <div className="d-flex align-items-center justify-content-between border-bottom py-3">
                   <div className="d-flex align-items-center">
-                    {" "}
-                    s
                     <img
-                      src={`http://localhost:3001${buyNowItem.image}`}
+                      src={`https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`}
                       alt={buyNowItem.name}
                       className="rounded border me-3"
                       style={{
@@ -972,7 +953,7 @@ const CheckoutPage = () => {
                       {item.productId ? (
                         <>
                           <img
-                            src={`http://localhost:3001${item.productId.image}`}
+                            src={`https://ecommerce-jwellary-backend.onrender.com${item.productId.image}`}
                             alt={item.productId.name}
                             className="rounded border me-3"
                             style={{
@@ -999,7 +980,7 @@ const CheckoutPage = () => {
                     </div>
                     <div
                       style={{ fontSize: "21px" }}
-                      className=" fw-bold aedsize "
+                      className="fw-bold aedsize"
                     >
                       <span
                         style={{ fontSize: "15px" }}
