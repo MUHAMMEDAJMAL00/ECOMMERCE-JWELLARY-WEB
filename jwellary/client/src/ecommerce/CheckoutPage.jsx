@@ -995,7 +995,6 @@ const CheckoutPage = () => {
                         <p className="text-danger">Product info missing</p>
                       )}
                     </div>
-
                     <div
                       style={{ fontSize: "21px" }}
                       className="fw-bold aedsize"
