@@ -141,24 +141,24 @@ const CheckoutPage = () => {
       address: {
         ...selectedAddress,
         email: user.email,
-        paymentMethod: formData.paymentMethod, // required by invoice & email
+        paymentMethod: formData.paymentMethod,
       },
-      paymentMethod: formData.paymentMethod, // ✅ top-level (required by backend)
-      totalPrice,
+      paymentMethod: formData.paymentMethod,
+      totalPrice: Number(totalPrice), // ✅ FIX HERE
       items: buyNowItem
         ? [
             {
               name: buyNowItem.name,
               productId: buyNowItem.productId,
-              qty: buyNowItem.qty,
-              price: buyNowItem.price,
+              qty: Number(buyNowItem.qty), // ✅ FIX HERE
+              price: Number(buyNowItem.price), // ✅ FIX HERE
             },
           ]
         : cartItems.map((item) => ({
             name: item.productId.name,
             productId: item.productId._id,
-            qty: item.quantity,
-            price: item.productId.price,
+            qty: Number(item.quantity), // ✅ FIX HERE
+            price: Number(item.productId.price), // ✅ FIX HERE
           })),
     };
 
