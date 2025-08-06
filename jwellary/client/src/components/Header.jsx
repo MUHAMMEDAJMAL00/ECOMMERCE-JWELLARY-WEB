@@ -1,7 +1,8 @@
+// components/Header.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown, Menu, Popover, Drawer } from "antd"; // 🧱 Added Drawer
+import { Dropdown, Menu, Popover, Drawer } from "antd";
 import { logout } from "../redux/slices/authSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -15,7 +16,6 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 // Icons
 import lucky from "../assets/images/lucky.png";
 import { HiOutlineUser, HiOutlineViewList } from "react-icons/hi";
-
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
 import { ImParagraphRight } from "react-icons/im";
@@ -44,9 +44,11 @@ const Header = () => {
   const [masterCategories, setMasterCategories] = useState([]);
   const [Categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ✅ SIDEBAR TOGGLE
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedMaster, setSelectedMaster] = useState(null);
 
   const { user } = useSelector((state) => state.auth);
+
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const Header = () => {
   }, []);
 
   const handleDropdownChange = (value) => scrollTo(value);
-  const toLogin = () => navigate("/");
+  const toLogin = () => navigate("/login");
   const goToHome = () => navigate("/");
 
   useEffect(() => {
@@ -103,15 +105,13 @@ const Header = () => {
       {/* Header Bar */}
       <div className="header">
         <div className="header-deskbox" style={{ gap: "8px" }}>
-          {/* ✅ Three-dot button for mobile */}
+          {/* 3-Dot Icon for drawer toggle */}
           <HiOutlineViewList
-            size={30}
-            className="firstdisplayimage d-block d-md-none"
-            onClick={() => setIsSidebarOpen(true)}
+            size={40}
+            className="firstdisplayimage"
+            onClick={() => setIsDrawerOpen(true)}
             style={{ cursor: "pointer" }}
           />
-
-          {/* ✅ Logo */}
           <img
             src={lucky}
             className="header-desklogos"
@@ -119,100 +119,94 @@ const Header = () => {
             alt="logo"
           />
 
-          {/* Desktop search dropdown */}
-          <div className="header-searchbox d-none d-md-block">
-            <select
-              className="form-select header-inputsearch"
-              onChange={(e) => handleDropdownChange(e.target.value)}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select a section...
-              </option>
-              <option value="trending">Trending</option>
-              <option value="banner">Banner</option>
-              <option value="companies">Companies</option>
-              <option value="categories">Categories</option>
-              <option value="ads">Advertisement</option>
-              <option value="top">Top Products</option>
-              <option value="genders">Genders</option>
-              <option value="goldbar">Gold Bar Offers</option>
-              <option value="rate">Today's Rate</option>
-            </select>
+          <div className="header-rate" style={{ margin: "0 8px" }}>
+            <div className="textrate1">LIVE RATE</div>
+            <div className="textrate2">TODAY'S PRICE</div>
           </div>
 
-          {/* Other icons */}
-          <Link to={"/wishlist"}>
-            <IoIosHeartEmpty size={25} />
-          </Link>
-          <Link
-            style={{ color: "black", position: "relative" }}
-            to={"/cartpage"}
-          >
-            <BsBag size={22} />
-            {cartCount > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: "-5px",
-                  right: "-10px",
-                  background: "red",
-                  color: "white",
-                  borderRadius: "50%",
-                  fontSize: "12px",
-                  width: "18px",
-                  height: "18px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+          <div className="header-searchbox" style={{ margin: "0 8px" }}>
+            <div className="header-searchbar d-flex align-items-center gap-2">
+              <select
+                className="form-select header-inputsearch"
+                onChange={(e) => handleDropdownChange(e.target.value)}
+                defaultValue=""
               >
-                {cartCount}
-              </span>
-            )}
-          </Link>
+                <option value="" disabled>
+                  Select a section...
+                </option>
+                <option value="trending">Trending</option>
+                <option value="banner">Banner</option>
+                <option value="companies">Companies</option>
+                <option value="categories">Categories</option>
+                <option value="ads">Advertisement</option>
+                <option value="top">Top Products</option>
+                <option value="genders">Genders</option>
+                <option value="goldbar">Gold Bar Offers</option>
+                <option value="rate">Today's Rate</option>
+              </select>
+            </div>
+          </div>
 
-          {user ? (
-            <Dropdown overlay={userMenu} trigger={["click"]}>
+          <div className="header-digital" style={{ margin: "0 8px" }}>
+            <div className="header-digitaltext">Digital Gold</div>
+            <ImParagraphRight />
+          </div>
+          <div className="header-digital" style={{ margin: "0 8px" }}>
+            <div className="header-digitaltext">LSG Auction</div>
+            <LuScale />
+          </div>
+
+          <div className="header-cartimage" style={{ marginLeft: "8px" }}>
+            <Link to={"/wishlist"}>
+              <IoIosHeartEmpty size={30} />
+            </Link>
+            <Link
+              style={{ color: "black", position: "relative" }}
+              to={"/cartpage"}
+            >
+              <BsBag size={25} />
+              {cartCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-5px",
+                    right: "-10px",
+                    background: "red",
+                    color: "white",
+                    borderRadius: "50%",
+                    fontSize: "12px",
+                    width: "18px",
+                    height: "18px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
+            {user ? (
+              <Dropdown overlay={userMenu} trigger={["click"]}>
+                <HiOutlineUser
+                  size={27}
+                  style={{ cursor: "pointer", marginLeft: "8px" }}
+                />
+              </Dropdown>
+            ) : (
               <HiOutlineUser
-                size={25}
+                size={27}
                 style={{ cursor: "pointer", marginLeft: "8px" }}
+                onClick={toLogin}
               />
-            </Dropdown>
-          ) : (
-            <HiOutlineUser
-              size={25}
-              style={{ cursor: "pointer", marginLeft: "8px" }}
-              onClick={toLogin}
-            />
-          )}
+            )}
+          </div>
         </div>
       </div>
 
-      {/* ✅ Mobile Sidebar Drawer for Master Categories */}
-      <Drawer
-        title="Categories"
-        placement="left"
-        onClose={() => setIsSidebarOpen(false)}
-        open={isSidebarOpen}
-      >
-        {masterCategories.map((master) => (
-          <div
-            key={master._id}
-            className="py-2 border-bottom"
-            style={{ fontWeight: "500", cursor: "pointer" }}
-            onClick={() => {
-              scrollTo(master.name.toLowerCase());
-              setIsSidebarOpen(false);
-            }}
-          >
-            {master.name}
-          </div>
-        ))}
-      </Drawer>
-
-      {/* ✅ Desktop Master Categories */}
-      <div className="header-categories d-none d-md-flex">
+      {/* Master Categories Menu with Popover (Desktop View) */}
+      <div className="header-categories">
         {masterCategories.map((master) => {
           const relatedCategories = Categories.filter(
             (cat) => cat?.masterCategoryId?.name === master.name
@@ -235,6 +229,7 @@ const Header = () => {
             </Popover>
           );
         })}
+
         <div className="header-sell">
           <div className="header-sellhead">
             <MdOutlineSell size={18} style={{ marginRight: "4px" }} />
@@ -246,6 +241,64 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* ✅ Drawer for Mobile View Master Categories */}
+      <Drawer
+        title="Categories"
+        placement="left"
+        onClose={() => {
+          setIsDrawerOpen(false);
+          setSelectedMaster(null);
+        }}
+        open={isDrawerOpen}
+      >
+        {!selectedMaster ? (
+          <div>
+            {masterCategories.map((master) => (
+              <div
+                key={master._id}
+                className="py-2 border-bottom"
+                style={{
+                  fontWeight: "500",
+                  cursor: "pointer",
+                  padding: "8px 0",
+                }}
+                onClick={() => setSelectedMaster(master)}
+              >
+                {master.name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <div
+              onClick={() => setSelectedMaster(null)}
+              style={{
+                marginBottom: "10px",
+                cursor: "pointer",
+                color: "#1890ff",
+              }}
+            >
+              ← Back to Master Categories
+            </div>
+
+            {Categories.filter(
+              (cat) => cat?.masterCategoryId?.name === selectedMaster.name
+            ).map((cat) => (
+              <div
+                key={cat._id}
+                style={{
+                  padding: "6px 0",
+                  borderBottom: "1px solid #eee",
+                  cursor: "pointer",
+                }}
+              >
+                {cat.name}
+              </div>
+            ))}
+          </div>
+        )}
+      </Drawer>
     </div>
   );
 };
