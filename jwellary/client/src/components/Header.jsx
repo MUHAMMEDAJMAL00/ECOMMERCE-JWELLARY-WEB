@@ -98,7 +98,7 @@ const Header = () => {
   // Handle category navigation
   const handleCategoryNavigation = (category) => {
     // Navigate to category page using category ID or slug
-    navigate(`/category/${category._id}`, {
+    navigate(`/categorydetail/${category._id}`, {
       state: {
         categoryName: category.name,
         categoryData: category,
