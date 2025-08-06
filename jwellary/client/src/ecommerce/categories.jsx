@@ -84,7 +84,7 @@ function Categories() {
       {
         breakpoint: 395,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 3,
           infinite: true,
           dots: false,
