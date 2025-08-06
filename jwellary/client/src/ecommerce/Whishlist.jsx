@@ -95,7 +95,7 @@ const Whislist = () => {
             savedWishlist.map((item) => (
               <Card
                 key={item._id}
-                className="shadow rounded-4 border-3 d-flex flex-column wish"
+                className="shadow rounded-4 border-3 d-flex flex-column "
                 style={{
                   width: "18rem",
                   backgroundColor: "#fffaf5",
