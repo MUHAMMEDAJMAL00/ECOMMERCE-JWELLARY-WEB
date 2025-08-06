@@ -14,7 +14,8 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
 import lucky from "../assets/images/lucky.png";
-import { HiOutlineUser, HiOutlineViewList } from "react-icons/hi2";
+import { HiOutlineUser, HiOutlineViewList } from "react-icons/hi";
+
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
 import { ImParagraphRight } from "react-icons/im";
