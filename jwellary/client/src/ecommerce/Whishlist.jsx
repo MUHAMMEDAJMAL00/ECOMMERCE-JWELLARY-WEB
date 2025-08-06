@@ -88,14 +88,14 @@ const Whislist = () => {
           }}
         />
 
-        <div className="d-flex flex-wrap gap-4 justify-content-center wish">
+        <div className="d-flex flex-wrap gap-4 justify-content-center ">
           {savedWishlist.length === 0 ? (
             <p className="text-muted fs-5">Your wishlist is empty.</p>
           ) : (
             savedWishlist.map((item) => (
               <Card
                 key={item._id}
-                className="shadow rounded-4 border-3 d-flex flex-column"
+                className="shadow rounded-4 border-3 d-flex flex-column wish"
                 style={{
                   width: "18rem",
                   backgroundColor: "#fffaf5",
