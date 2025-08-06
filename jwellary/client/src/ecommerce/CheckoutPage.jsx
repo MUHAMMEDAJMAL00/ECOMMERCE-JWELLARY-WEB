@@ -929,7 +929,7 @@ const CheckoutPage = () => {
                 <div className="d-flex align-items-center justify-content-between border-bottom py-3">
                   <div className="d-flex align-items-center">
                     <img
-                      src={`https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`}
+                      src={`https://ecommerce-jwellary-backend.onrender.com/uploads/${buyNowItem.image}`}
                       alt={buyNowItem.name}
                       className="rounded border me-3"
                       style={{
