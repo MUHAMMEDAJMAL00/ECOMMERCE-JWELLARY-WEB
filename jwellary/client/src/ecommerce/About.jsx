@@ -11,11 +11,10 @@ const About = () => {
         className="about-container"
         style={{
           padding: "2rem",
-          paddingTop: "70px",
+          //   paddingTop: "70px",
           maxWidth: "900px",
           margin: "auto",
           lineHeight: "1.8",
-          textWrap: "nowrap",
         }}
       >
         <h1
