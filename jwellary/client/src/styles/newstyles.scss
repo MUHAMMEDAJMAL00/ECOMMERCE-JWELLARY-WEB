@@ -1903,10 +1903,13 @@ body {
     //-------------------------------------------------
     .wishlist-container {
         margin: 80px 0px 30px 0px !important;
+        display: flex;
+        justify-content: center;
 
         .cardwish {
             height: 300px !important;
-            width: calc(100% - 12px) !important;
+            width: 300px !important;
+
         }
 
         .card-body {
