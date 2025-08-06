@@ -235,7 +235,7 @@ const Header = () => {
           <span>About Us</span>
         </div>
 
-        <div
+        {/* <div
           className="mobile-menu-item"
           style={{
             padding: "15px 20px",
@@ -248,7 +248,7 @@ const Header = () => {
         >
           <IoCallOutline size={18} />
           <span>+971 54 581 6161</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
