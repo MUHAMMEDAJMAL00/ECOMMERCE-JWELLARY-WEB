@@ -219,7 +219,7 @@ const Header = () => {
         <div
           className="mobile-menu-item"
           onClick={() => {
-            navigate("/sell");
+            navigate("/about");
             setMobileMenuVisible(false);
           }}
           style={{
@@ -232,7 +232,7 @@ const Header = () => {
           }}
         >
           <MdOutlineSell size={18} />
-          <span>Sell To US</span>
+          <span>About US</span>
         </div>
 
         <div
