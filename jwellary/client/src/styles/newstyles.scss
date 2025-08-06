@@ -1907,11 +1907,12 @@ body {
         display: flex !important;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
         gap: 8px;
 
         .cardwish {
             width: 200px !important;
-            height: 250px !important;
+            height: 100px !important;
         }
 
         .card-img-top {
