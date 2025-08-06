@@ -107,14 +107,11 @@ const Whislist = () => {
               >
                 <Card.Img
                   variant="top"
-                  src={`${BASE_URL}${item.productId?.image}`}
-                  alt={item.productId?.name}
-                  style={{
-                    height: "180px",
-                    objectFit: "cover",
-                    borderTopLeftRadius: "1rem",
-                    borderTopRightRadius: "1rem",
-                  }}
+                  src={
+                    item.productId?.image?.startsWith("http")
+                      ? item.productId?.image
+                      : `${BASE_URL}/${item.productId?.image}`
+                  }
                 />
 
                 <Card.Body className="d-flex flex-column justify-content-between">
