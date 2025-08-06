@@ -108,7 +108,7 @@ function Categories() {
   };
 
   return (
-    <div className="slider-container  h-100">
+    <div className="slider-container ">
       <Slider {...settings}>
         {data?.map((item, index) => (
           <Link
