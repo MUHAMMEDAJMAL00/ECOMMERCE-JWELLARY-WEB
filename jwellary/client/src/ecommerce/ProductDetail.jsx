@@ -82,6 +82,11 @@ const ProductDetail = () => {
   const handleBuyNow = () => {
     if (!user?._id) return alert("Please log in first.");
 
+    // Extract only the filename if a full URL is present
+    const fileName = product.image?.includes("/uploads/")
+      ? product.image.split("/uploads/")[1]
+      : product.image;
+
     navigate("/checkout", {
       state: {
         buyNowItem: {
@@ -89,9 +94,7 @@ const ProductDetail = () => {
           productId: product._id,
           qty: quantity,
           price: product.price,
-          image: product.image?.startsWith("/uploads/")
-            ? product.image
-            : `/uploads/${product.image}`, // ✅ fix path
+          image: fileName, // ✅ send only the file name
         },
         totalPrice: product.price * quantity,
       },
