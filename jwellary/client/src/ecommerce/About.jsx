@@ -17,6 +17,7 @@ const About = () => {
         }}
       >
         <h1
+          className="text-center"
           style={{ fontSize: "2rem", marginBottom: "1rem", color: "#b8860b" }}
         >
           Gold-Ora – Yes, Your Gold Destination!
