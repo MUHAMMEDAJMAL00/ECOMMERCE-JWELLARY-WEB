@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
-import "../styles/styles.scss";
+import "../styles/newstyles.scss";
 import Header from "../components/Header";
 import Footer from "../components/footer";
 import { toast } from "react-toastify";
@@ -88,7 +88,7 @@ const Whislist = () => {
           }}
         />
 
-        <div className="d-flex flex-wrap gap-4 justify-content-center">
+        <div className="d-flex flex-wrap gap-4 justify-content-center wish">
           {savedWishlist.length === 0 ? (
             <p className="text-muted fs-5">Your wishlist is empty.</p>
           ) : (

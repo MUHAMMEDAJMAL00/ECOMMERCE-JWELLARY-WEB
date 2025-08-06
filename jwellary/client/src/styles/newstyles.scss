@@ -1906,8 +1906,12 @@ body {
         margin: 80px 0px 30px 0px;
     }
 
+    .wish {
+        display: flex;
+        justify-content: center
+    }
+
     .cardwish {
-        width: 300px !important;
         width: 100% !important;
         height: 300px !important;
     }
@@ -1992,7 +1996,6 @@ body {
         flex-direction: column;
         height: auto !important;
 
-        // background-color: #000;
         margin: 0px 0px 20px 0px !important;
         padding: 70px 50px 20px 20px !important;
         text-align: start;
@@ -2034,7 +2037,6 @@ body {
     }
 
     .mainbanner {
-        // background-color: #a70202;
         background-position: center;
 
 
@@ -2049,15 +2051,12 @@ body {
     .slider-container {
         overflow: hidden;
         height: 37vh !important;
-        // background-color: #ce1a1a !important;
         padding: 0px 15px 0px 15px !important;
         gap: 20px;
         margin: 0px 0px 0px 0px !important;
         width: 100% !important;
 
         .slick-slider {
-            // background-color: #000 !important;
-            // margin-top: 20px;
             height: auto !important;
             margin: 100px 0px !important;
         }
@@ -2092,13 +2091,10 @@ body {
         text-align: center;
         margin-top: 5px;
         margin-left: 0px;
-        // background-color: red;
-        // padding-left: 10px !important;
         text-align: center !important;
         white-space: wrap !important; // ❗ Prevent line break
         text-overflow: ellipsis"" !important; // ❗ Add "..." if text is too long
         width: 80px !important;
-        // background-color: red !important;
 
     }
 
@@ -2107,29 +2103,24 @@ body {
 
     .gold-head {
         height: 100% !important;
-        // background-color: #000;
         margin: 0px 0px 0px 0px !important;
 
     }
 
     .goldbox {
-        // background-color: red;
 
         color: #2a5e47;
-        // border: 1px solid #131514;
         display: flex;
         border-radius: 4px;
         padding: 10px 0px 10px 0px;
         justify-content: center;
         align-items: center;
-        //   font-family: "DMSans-SemiBold";
         font-size: 15px;
         font-weight: 900;
         white-space: nowrap;
         text-align: center;
         text-wrap: nowrap;
         margin: 0px !important;
-        // width: 200px;
     }
 
 
@@ -2146,7 +2137,6 @@ body {
 
     .gold2 {
         gap: 30px;
-        // margin: 0px 60px 0px 60px !important;
         padding: 0px 15px 0px 15px;
         display: flex;
         justify-content: center;
@@ -2216,7 +2206,6 @@ body {
     //------------------------------------------------
     // ---------------- Stocks, Top Products, Trending
     .stocks {
-        // background-color: #d63b3b !important;
         height: auto !important;
         margin: 0px 15px 30px 15px !important;
 
@@ -2506,7 +2495,6 @@ body {
         flex-wrap: wrap;
         justify-content: start !important;
         align-items: start !important;
-        // background-color: #000;
     }
 
     .footer6 {
