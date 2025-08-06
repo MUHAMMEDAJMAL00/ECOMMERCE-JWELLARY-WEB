@@ -932,15 +932,8 @@ const CheckoutPage = () => {
                       src={
                         buyNowItem.image?.startsWith("http")
                           ? buyNowItem.image
-                          : `https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`
+                          : `https://ecommerce-jwellary-backend.onrender.com/uploads/${buyNowItem.image}`
                       }
-                      alt={buyNowItem.name}
-                      className="rounded border me-3"
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                      }}
                     />
 
                     <div>
@@ -973,7 +966,11 @@ const CheckoutPage = () => {
                       {item.productId ? (
                         <>
                           <img
-                            src={`https://ecommerce-jwellary-backend.onrender.com${item.productId.image}`}
+                            src={
+                              item.productId.image?.startsWith("http")
+                                ? item.productId.image
+                                : `https://ecommerce-jwellary-backend.onrender.com/uploads/${item.productId.image}`
+                            }
                             alt={item.productId.name}
                             className="rounded border me-3"
                             style={{
@@ -998,6 +995,7 @@ const CheckoutPage = () => {
                         <p className="text-danger">Product info missing</p>
                       )}
                     </div>
+
                     <div
                       style={{ fontSize: "21px" }}
                       className="fw-bold aedsize"
