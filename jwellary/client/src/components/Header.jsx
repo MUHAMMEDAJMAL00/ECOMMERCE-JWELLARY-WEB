@@ -1,8 +1,7 @@
-// components/Header.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown, Menu, Popover } from "antd";
+import { Dropdown, Menu, Popover, Drawer } from "antd"; // 🧱 Added Drawer
 import { logout } from "../redux/slices/authSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -15,10 +14,9 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
 import lucky from "../assets/images/lucky.png";
-import { HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineUser, HiOutlineViewList } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
-import { HiOutlineViewList } from "react-icons/hi";
 import { ImParagraphRight } from "react-icons/im";
 import { LuScale } from "react-icons/lu";
 import { MdOutlineSell } from "react-icons/md";
@@ -45,13 +43,11 @@ const Header = () => {
   const [masterCategories, setMasterCategories] = useState([]);
   const [Categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ✅ SIDEBAR TOGGLE
 
   const { user } = useSelector((state) => state.auth);
-
-  // ✅ Get API URL from .env
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // ✅ Fetch master and regular categories
   useEffect(() => {
     axios.get(`${API_URL}/mastercategory`).then((res) => {
       setMasterCategories(res.data);
@@ -63,10 +59,9 @@ const Header = () => {
   }, []);
 
   const handleDropdownChange = (value) => scrollTo(value);
-  const toLogin = () => navigate("/login");
+  const toLogin = () => navigate("/");
   const goToHome = () => navigate("/");
 
-  // ✅ Fetch cart count when user changes
   useEffect(() => {
     const fetchCartCount = async () => {
       if (!user?._id) return;
@@ -82,7 +77,6 @@ const Header = () => {
     fetchCartCount();
   }, [user]);
 
-  // ✅ Ant Design Dropdown menu for logged-in user
   const userMenu = (
     <Menu>
       <Menu.Item className="fw-semibold" onClick={() => navigate("/myorders")}>
@@ -108,104 +102,116 @@ const Header = () => {
       {/* Header Bar */}
       <div className="header">
         <div className="header-deskbox" style={{ gap: "8px" }}>
-          <div className="header-desklogo">
-            <HiOutlineViewList size={40} className="firstdisplayimage" />
-            <img
-              src={lucky}
-              className="header-desklogos"
-              onClick={goToHome}
-              alt="logo"
-            />
-          </div>
+          {/* ✅ Three-dot button for mobile */}
+          <HiOutlineViewList
+            size={30}
+            className="firstdisplayimage d-block d-md-none"
+            onClick={() => setIsSidebarOpen(true)}
+            style={{ cursor: "pointer" }}
+          />
 
-          <div className="header-rate" style={{ margin: "0 8px" }}>
-            <div className="textrate1">LIVE RATE</div>
-            <div className="textrate2">TODAY'S PRICE</div>
-          </div>
+          {/* ✅ Logo */}
+          <img
+            src={lucky}
+            className="header-desklogos"
+            onClick={goToHome}
+            alt="logo"
+          />
 
-          <div className="header-searchbox" style={{ margin: "0 8px" }}>
-            <div className="header-searchbar d-flex align-items-center gap-2">
-              <select
-                className="form-select header-inputsearch"
-                onChange={(e) => handleDropdownChange(e.target.value)}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select a section...
-                </option>
-                <option value="trending">Trending</option>
-                <option value="banner">Banner</option>
-                <option value="companies">Companies</option>
-                <option value="categories">Categories</option>
-                <option value="ads">Advertisement</option>
-                <option value="top">Top Products</option>
-                <option value="genders">Genders</option>
-                <option value="goldbar">Gold Bar Offers</option>
-                <option value="rate">Today's Rate</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="header-digital" style={{ margin: "0 8px" }}>
-            <div className="header-digitaltext">Digital Gold</div>
-            <ImParagraphRight />
-          </div>
-          <div className="header-digital" style={{ margin: "0 8px" }}>
-            <div className="header-digitaltext">LSG Auction</div>
-            <LuScale />
-          </div>
-
-          <div className="header-cartimage" style={{ marginLeft: "8px" }}>
-            <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={30} />
-            </Link>
-            <Link
-              style={{ color: "black", position: "relative" }}
-              to={"/cartpage"}
+          {/* Desktop search dropdown */}
+          <div className="header-searchbox d-none d-md-block">
+            <select
+              className="form-select header-inputsearch"
+              onChange={(e) => handleDropdownChange(e.target.value)}
+              defaultValue=""
             >
-              <BsBag size={25} />
-              {cartCount > 0 && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "-5px",
-                    right: "-10px",
-                    background: "red",
-                    color: "white",
-                    borderRadius: "50%",
-                    fontSize: "12px",
-                    width: "18px",
-                    height: "18px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            {user ? (
-              <Dropdown overlay={userMenu} trigger={["click"]}>
-                <HiOutlineUser
-                  size={27}
-                  style={{ cursor: "pointer", marginLeft: "8px" }}
-                />
-              </Dropdown>
-            ) : (
-              <HiOutlineUser
-                size={27}
-                style={{ cursor: "pointer", marginLeft: "8px" }}
-                onClick={toLogin}
-              />
-            )}
+              <option value="" disabled>
+                Select a section...
+              </option>
+              <option value="trending">Trending</option>
+              <option value="banner">Banner</option>
+              <option value="companies">Companies</option>
+              <option value="categories">Categories</option>
+              <option value="ads">Advertisement</option>
+              <option value="top">Top Products</option>
+              <option value="genders">Genders</option>
+              <option value="goldbar">Gold Bar Offers</option>
+              <option value="rate">Today's Rate</option>
+            </select>
           </div>
+
+          {/* Other icons */}
+          <Link to={"/wishlist"}>
+            <IoIosHeartEmpty size={25} />
+          </Link>
+          <Link
+            style={{ color: "black", position: "relative" }}
+            to={"/cartpage"}
+          >
+            <BsBag size={22} />
+            {cartCount > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-5px",
+                  right: "-10px",
+                  background: "red",
+                  color: "white",
+                  borderRadius: "50%",
+                  fontSize: "12px",
+                  width: "18px",
+                  height: "18px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          {user ? (
+            <Dropdown overlay={userMenu} trigger={["click"]}>
+              <HiOutlineUser
+                size={25}
+                style={{ cursor: "pointer", marginLeft: "8px" }}
+              />
+            </Dropdown>
+          ) : (
+            <HiOutlineUser
+              size={25}
+              style={{ cursor: "pointer", marginLeft: "8px" }}
+              onClick={toLogin}
+            />
+          )}
         </div>
       </div>
 
-      {/* Master Categories Menu with Popover */}
-      <div className="header-categories">
+      {/* ✅ Mobile Sidebar Drawer for Master Categories */}
+      <Drawer
+        title="Categories"
+        placement="left"
+        onClose={() => setIsSidebarOpen(false)}
+        open={isSidebarOpen}
+      >
+        {masterCategories.map((master) => (
+          <div
+            key={master._id}
+            className="py-2 border-bottom"
+            style={{ fontWeight: "500", cursor: "pointer" }}
+            onClick={() => {
+              scrollTo(master.name.toLowerCase());
+              setIsSidebarOpen(false);
+            }}
+          >
+            {master.name}
+          </div>
+        ))}
+      </Drawer>
+
+      {/* ✅ Desktop Master Categories */}
+      <div className="header-categories d-none d-md-flex">
         {masterCategories.map((master) => {
           const relatedCategories = Categories.filter(
             (cat) => cat?.masterCategoryId?.name === master.name
@@ -228,7 +234,6 @@ const Header = () => {
             </Popover>
           );
         })}
-
         <div className="header-sell">
           <div className="header-sellhead">
             <MdOutlineSell size={18} style={{ marginRight: "4px" }} />
