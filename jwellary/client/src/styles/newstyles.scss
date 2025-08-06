@@ -1902,15 +1902,12 @@ body {
 
     //-------------------------------------------------
     .wishlist-container {
-        height: 300px !important;
+        height: auto !important;
         margin: 80px 0px 30px 0px;
     }
 
-    // .wish {
-    //     height: 300px !important;
-    // }
-
     .cardwish {
+        width: 300px !important;
         width: 100% !important;
         height: 300px !important;
     }
