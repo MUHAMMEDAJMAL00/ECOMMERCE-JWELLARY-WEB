@@ -11,7 +11,7 @@ const About = () => {
         className="about-container"
         style={{
           padding: "2rem",
-          //   paddingTop: "70px",
+          marginTop: "70px",
           maxWidth: "900px",
           margin: "auto",
           lineHeight: "1.8",
