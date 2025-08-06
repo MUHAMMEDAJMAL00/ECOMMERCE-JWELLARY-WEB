@@ -5,13 +5,12 @@ import { GiWrappedHeart } from "react-icons/gi";
 
 const About = () => {
   return (
-    <div>
+    <div className="pt-5">
       <Header />
       <div
         className="about-container"
         style={{
           padding: "2rem",
-          marginTop: "70px",
           maxWidth: "900px",
           margin: "auto",
           lineHeight: "1.8",
