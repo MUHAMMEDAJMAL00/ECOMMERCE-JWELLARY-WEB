@@ -141,14 +141,15 @@ const CheckoutPage = () => {
       address: {
         ...selectedAddress,
         email: user.email,
-        paymentMethod: formData.paymentMethod, // ✅ this must go inside address
+        paymentMethod: formData.paymentMethod, // required by invoice & email
       },
+      paymentMethod: formData.paymentMethod, // ✅ top-level (required by backend)
       totalPrice,
       items: buyNowItem
         ? [
             {
               name: buyNowItem.name,
-              productId: buyNowItem.productId, // ✅ must be productId
+              productId: buyNowItem.productId,
               qty: buyNowItem.qty,
               price: buyNowItem.price,
             },
@@ -184,6 +185,7 @@ const CheckoutPage = () => {
                 `${BASE_URL}/orders`,
                 orderData
               );
+              console.log("Final orderData to be sent:", orderData);
 
               dispatch(setOrder(finalOrder.data));
               await axios.delete(`${BASE_URL}/cart/user/${user._id}`);
