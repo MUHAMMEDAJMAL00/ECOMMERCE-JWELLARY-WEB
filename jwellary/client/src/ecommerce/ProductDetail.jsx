@@ -89,7 +89,9 @@ const ProductDetail = () => {
           productId: product._id,
           qty: quantity,
           price: product.price,
-          image: product.image,
+          image: product.image?.startsWith("/uploads/")
+            ? product.image
+            : `/uploads/${product.image}`, // ✅ fix path
         },
         totalPrice: product.price * quantity,
       },

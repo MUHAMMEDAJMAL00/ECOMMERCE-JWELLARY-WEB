@@ -932,8 +932,15 @@ const CheckoutPage = () => {
                       src={
                         buyNowItem.image?.startsWith("http")
                           ? buyNowItem.image
-                          : `https://ecommerce-jwellary-backend.onrender.com/uploads/${buyNowItem.image}`
+                          : `https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`
                       }
+                      alt={buyNowItem.name}
+                      className="rounded border me-3"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                      }}
                     />
 
                     <div>
