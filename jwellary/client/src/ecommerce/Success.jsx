@@ -340,16 +340,6 @@ const ThankYouPage = () => {
       align: "center",
     });
 
-    // Subtle watermark
-    // doc.setTextColor(248, 248, 248);
-    // doc.setFontSize(30);
-    // doc.setFont("helvetica", "bold");
-    // doc.text("INVOICE", pageWidth / 2, pageHeight / 2, {
-    //   align: "center",
-    //   angle: 45,
-    //   renderingMode: "stroke",
-    // });
-
     // Save the PDF
     doc.save(`Invoice-${order._id}-${invoiceDate.replace(/\//g, "-")}.pdf`);
   };

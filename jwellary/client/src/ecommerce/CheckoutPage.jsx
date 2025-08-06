@@ -141,11 +141,24 @@ const CheckoutPage = () => {
       address: {
         ...selectedAddress,
         email: user.email,
-        paymentMethod: formData.paymentMethod,
+        paymentMethod: formData.paymentMethod, // ✅ this must go inside address
       },
       totalPrice,
-      paymentMethod: formData.paymentMethod,
-      items,
+      items: buyNowItem
+        ? [
+            {
+              name: buyNowItem.name,
+              productId: buyNowItem.productId, // ✅ must be productId
+              qty: buyNowItem.qty,
+              price: buyNowItem.price,
+            },
+          ]
+        : cartItems.map((item) => ({
+            name: item.productId.name,
+            productId: item.productId._id,
+            qty: item.quantity,
+            price: item.productId.price,
+          })),
     };
 
     if (formData.paymentMethod === "Pay Online") {
@@ -914,7 +927,7 @@ const CheckoutPage = () => {
                 <div className="d-flex align-items-center justify-content-between border-bottom py-3">
                   <div className="d-flex align-items-center">
                     <img
-                      src={`https://ecommerce-jwellary-backend.onrender.com${item.productId.image}`}
+                      src={`https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`}
                       alt={buyNowItem.name}
                       className="rounded border me-3"
                       style={{
