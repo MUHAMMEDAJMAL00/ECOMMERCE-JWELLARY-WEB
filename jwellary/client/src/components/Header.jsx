@@ -107,83 +107,61 @@ const Header = () => {
     <div className="parentheader shadow-sm">
       {/* Header Bar */}
       <div className="header">
-        <div className="header-deskbox d-flex align-items-center justify-content-between w-100">
-          {/* LOGO */}
-          <div className="d-flex align-items-center" style={{ gap: "12px" }}>
+        <div className="header-deskbox" style={{ gap: "8px" }}>
+          <div className="header-desklogo">
             <HiOutlineViewList size={40} className="firstdisplayimage" />
             <img
               src={lucky}
               className="header-desklogos"
               onClick={goToHome}
               alt="logo"
-              style={{ cursor: "pointer" }}
             />
           </div>
 
-          {/* LIVE RATE */}
-          <div
-            className="d-flex flex-column align-items-center text-center"
-            style={{ margin: "0 8px" }}
-          >
+          <div className="header-rate" style={{ margin: "0 8px" }}>
             <div className="textrate1">LIVE RATE</div>
             <div className="textrate2">TODAY'S PRICE</div>
           </div>
 
-          {/* DROPDOWN SEARCH */}
-          <div
-            className="header-searchbar d-flex align-items-center"
-            style={{ margin: "0 8px" }}
-          >
-            <select
-              className="form-select header-inputsearch"
-              onChange={(e) => handleDropdownChange(e.target.value)}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Select a section...
-              </option>
-              <option value="trending">Trending</option>
-              <option value="banner">Banner</option>
-              <option value="companies">Companies</option>
-              <option value="categories">Categories</option>
-              <option value="ads">Advertisement</option>
-              <option value="top">Top Products</option>
-              <option value="genders">Genders</option>
-              <option value="goldbar">Gold Bar Offers</option>
-              <option value="rate">Today's Rate</option>
-            </select>
+          <div className="header-searchbox" style={{ margin: "0 8px" }}>
+            <div className="header-searchbar d-flex align-items-center gap-2">
+              <select
+                className="form-select header-inputsearch"
+                onChange={(e) => handleDropdownChange(e.target.value)}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select a section...
+                </option>
+                <option value="trending">Trending</option>
+                <option value="banner">Banner</option>
+                <option value="companies">Companies</option>
+                <option value="categories">Categories</option>
+                <option value="ads">Advertisement</option>
+                <option value="top">Top Products</option>
+                <option value="genders">Genders</option>
+                <option value="goldbar">Gold Bar Offers</option>
+                <option value="rate">Today's Rate</option>
+              </select>
+            </div>
           </div>
 
-          {/* DIGITAL GOLD */}
-          <div
-            className="d-flex align-items-center gap-1"
-            style={{ margin: "0 8px" }}
-          >
+          <div className="header-digital" style={{ margin: "0 8px" }}>
             <div className="header-digitaltext">Digital Gold</div>
             <ImParagraphRight />
           </div>
-
-          {/* LSG AUCTION */}
-          <div
-            className="d-flex align-items-center gap-1"
-            style={{ margin: "0 8px" }}
-          >
+          <div className="header-digital" style={{ margin: "0 8px" }}>
             <div className="header-digitaltext">LSG Auction</div>
             <LuScale />
           </div>
 
-          {/* CART, WISHLIST, USER */}
-          <div
-            className="d-flex align-items-center"
-            style={{ gap: "12px", marginLeft: "8px" }}
-          >
+          <div className="header-cartimage" style={{ marginLeft: "8px" }}>
             <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={28} />
+              <IoIosHeartEmpty size={30} />
             </Link>
-
             <Link
-              to={"/cartpage"}
               style={{ color: "black", position: "relative" }}
+              to={"/cartpage"}
             >
               <BsBag size={25} />
               {cartCount > 0 && (
@@ -210,12 +188,15 @@ const Header = () => {
 
             {user ? (
               <Dropdown overlay={userMenu} trigger={["click"]}>
-                <HiOutlineUser size={27} style={{ cursor: "pointer" }} />
+                <HiOutlineUser
+                  size={27}
+                  style={{ cursor: "pointer", marginLeft: "8px" }}
+                />
               </Dropdown>
             ) : (
               <HiOutlineUser
                 size={27}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginLeft: "8px" }}
                 onClick={toLogin}
               />
             )}
