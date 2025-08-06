@@ -1902,17 +1902,23 @@ body {
 
     //-------------------------------------------------
     .wishlist-container {
-        height: 300px !important;
-        margin: 80px 0px 30px 0px;
-    }
+        margin: 80px 0px 30px 0px !important;
 
-    // .wish {
-    //     height: 300px !important;
-    // }
+        .cardwish {
+            height: 300px !important;
+        }
 
-    .cardwish {
-        width: 100% !important;
-        height: 300px !important;
+        .card-body {
+            height: 100% !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-img-top {
+            max-height: 130px !important;
+            object-fit: contain;
+        }
     }
 
     ///----------------------cartpage
