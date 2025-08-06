@@ -15,13 +15,15 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
 import lucky from "../assets/images/lucky.png";
-import { HiOutlineUser, HiOutlineViewList } from "react-icons/hi";
+import { HiOutlineUser } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
+import { HiOutlineViewList } from "react-icons/hi";
 import { ImParagraphRight } from "react-icons/im";
 import { LuScale } from "react-icons/lu";
 import { MdOutlineSell } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 const imageMap = {
   "ZERO % MAKING":
@@ -44,13 +46,15 @@ const Header = () => {
   const [masterCategories, setMasterCategories] = useState([]);
   const [Categories, setCategories] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedMaster, setSelectedMaster] = useState(null);
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const { user } = useSelector((state) => state.auth);
 
+  // ✅ Get API URL from .env
   const API_URL = import.meta.env.VITE_API_URL;
 
+  // ✅ Fetch master and regular categories
   useEffect(() => {
     axios.get(`${API_URL}/mastercategory`).then((res) => {
       setMasterCategories(res.data);
@@ -65,6 +69,7 @@ const Header = () => {
   const toLogin = () => navigate("/login");
   const goToHome = () => navigate("/");
 
+  // ✅ Fetch cart count when user changes
   useEffect(() => {
     const fetchCartCount = async () => {
       if (!user?._id) return;
@@ -80,6 +85,42 @@ const Header = () => {
     fetchCartCount();
   }, [user]);
 
+  // Handle mobile menu toggle
+  const toggleMobileMenu = () => {
+    setMobileMenuVisible(!mobileMenuVisible);
+  };
+
+  // Handle category expansion in mobile menu
+  const toggleCategoryExpansion = (categoryId) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+  };
+
+  // Handle category navigation
+  const handleCategoryNavigation = (category) => {
+    // Navigate to category page using category ID or slug
+    navigate(`/category/${category._id}`, {
+      state: {
+        categoryName: category.name,
+        categoryData: category,
+      },
+    });
+    setMobileMenuVisible(false);
+    setExpandedCategory(null);
+  };
+
+  // Handle master category navigation (if needed)
+  const handleMasterCategoryNavigation = (masterCategory) => {
+    navigate(`/mastercategory/${masterCategory._id}`, {
+      state: {
+        masterCategoryName: masterCategory.name,
+        masterCategoryData: masterCategory,
+      },
+    });
+    setMobileMenuVisible(false);
+    setExpandedCategory(null);
+  };
+
+  // ✅ Ant Design Dropdown menu for logged-in user
   const userMenu = (
     <Menu>
       <Menu.Item className="fw-semibold" onClick={() => navigate("/myorders")}>
@@ -100,24 +141,137 @@ const Header = () => {
     </Menu>
   );
 
+  // Mobile menu content
+  const mobileMenuContent = (
+    <div className="mobile-menu-content">
+      {masterCategories.map((master) => {
+        const relatedCategories = Categories.filter(
+          (cat) => cat?.masterCategoryId?.name === master.name
+        );
+        const isExpanded = expandedCategory === master._id;
+
+        return (
+          <div key={master._id} className="mobile-menu-category">
+            <div
+              className="mobile-menu-master-category"
+              onClick={() => {
+                if (relatedCategories.length > 0) {
+                  toggleCategoryExpansion(master._id);
+                } else {
+                  handleMasterCategoryNavigation(master);
+                }
+              }}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "15px 20px",
+                borderBottom: "1px solid #f0f0f0",
+                cursor: "pointer",
+                backgroundColor: isExpanded ? "#f9f9f9" : "white",
+                fontWeight: "600",
+                fontSize: "16px",
+              }}
+            >
+              <span>{master.name}</span>
+              {relatedCategories.length > 0 &&
+                (isExpanded ? (
+                  <RiArrowDropUpLine size={24} />
+                ) : (
+                  <RiArrowDropDownLine size={24} />
+                ))}
+            </div>
+
+            {isExpanded && relatedCategories.length > 0 && (
+              <div className="mobile-menu-subcategories">
+                {relatedCategories.map((category) => (
+                  <div
+                    key={category._id}
+                    className="mobile-menu-subcategory"
+                    onClick={() => handleCategoryNavigation(category)}
+                    style={{
+                      padding: "12px 40px",
+                      borderBottom: "1px solid #f5f5f5",
+                      cursor: "pointer",
+                      backgroundColor: "white",
+                      fontSize: "14px",
+                      color: "#666",
+                      transition: "background-color 0.2s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.target.style.backgroundColor = "#f9f9f9")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.target.style.backgroundColor = "white")
+                    }
+                  >
+                    {category.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* Additional menu items */}
+      <div className="mobile-menu-additional">
+        <div
+          className="mobile-menu-item"
+          onClick={() => {
+            navigate("/sell");
+            setMobileMenuVisible(false);
+          }}
+          style={{
+            padding: "15px 20px",
+            borderBottom: "1px solid #f0f0f0",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <MdOutlineSell size={18} />
+          <span>Sell To US</span>
+        </div>
+
+        <div
+          className="mobile-menu-item"
+          style={{
+            padding: "15px 20px",
+            borderBottom: "1px solid #f0f0f0",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            color: "#666",
+          }}
+        >
+          <IoCallOutline size={18} />
+          <span>+971 54 581 6161</span>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="parentheader shadow-sm">
       {/* Header Bar */}
       <div className="header">
         <div className="header-deskbox" style={{ gap: "8px" }}>
-          {/* 3-Dot Icon for drawer toggle */}
-          <HiOutlineViewList
-            size={40}
-            className="firstdisplayimage"
-            onClick={() => setIsDrawerOpen(true)}
-            style={{ cursor: "pointer" }}
-          />
-          <img
-            src={lucky}
-            className="header-desklogos"
-            onClick={goToHome}
-            alt="logo"
-          />
+          <div className="header-desklogo">
+            <HiOutlineViewList
+              size={40}
+              className="firstdisplayimage"
+              onClick={toggleMobileMenu}
+              style={{ cursor: "pointer" }}
+            />
+            <img
+              src={lucky}
+              className="header-desklogos"
+              onClick={goToHome}
+              alt="logo"
+            />
+          </div>
 
           <div className="header-rate" style={{ margin: "0 8px" }}>
             <div className="textrate1">LIVE RATE</div>
@@ -205,7 +359,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Master Categories Menu with Popover (Desktop View) */}
+      {/* Master Categories Menu with Popover */}
       <div className="header-categories">
         {masterCategories.map((master) => {
           const relatedCategories = Categories.filter(
@@ -242,62 +396,26 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ✅ Drawer for Mobile View Master Categories */}
+      {/* Mobile Menu Drawer */}
       <Drawer
         title="Categories"
         placement="left"
-        onClose={() => {
-          setIsDrawerOpen(false);
-          setSelectedMaster(null);
+        onClose={() => setMobileMenuVisible(false)}
+        open={mobileMenuVisible}
+        bodyStyle={{ padding: 0 }}
+        headerStyle={{
+          borderBottom: "1px solid #f0f0f0",
+          fontWeight: "600",
         }}
-        open={isDrawerOpen}
+        width="80vw"
+        style={{
+          maxWidth: "320px",
+        }}
+        maskStyle={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        }}
       >
-        {!selectedMaster ? (
-          <div>
-            {masterCategories.map((master) => (
-              <div
-                key={master._id}
-                className="py-2 border-bottom"
-                style={{
-                  fontWeight: "500",
-                  cursor: "pointer",
-                  padding: "8px 0",
-                }}
-                onClick={() => setSelectedMaster(master)}
-              >
-                {master.name}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div>
-            <div
-              onClick={() => setSelectedMaster(null)}
-              style={{
-                marginBottom: "10px",
-                cursor: "pointer",
-                color: "#1890ff",
-              }}
-            >
-              ← Back to Master Categories
-            </div>
-
-            {Categories.filter(
-              (cat) => cat?.masterCategoryId?.name === selectedMaster.name
-            ).map((cat) => (
-              <div
-                key={cat._id}
-                style={{
-                  padding: "6px 0",
-                  borderBottom: "1px solid #eee",
-                  cursor: "pointer",
-                }}
-              >
-                {cat.name}
-              </div>
-            ))}
-          </div>
-        )}
+        {mobileMenuContent}
       </Drawer>
     </div>
   );
