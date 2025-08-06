@@ -1904,27 +1904,39 @@ body {
     .wishlist-container {
         margin: 80px 0px 30px 0px !important;
 
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
 
         .cardwish {
-            height: 300px !important;
-            display: flex !important;
-            justify-content: center;
-            width: 300px !important;
-
-        }
-
-        .card-body {
-            height: 100% !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            width: 200px !important;
+            height: 250px !important;
         }
 
         .card-img-top {
-            max-height: 130px !important;
+            max-height: 100px;
             object-fit: contain;
         }
+
+        .card-body {
+            padding: 10px;
+        }
+
+        .card-title {
+            font-size: 14px;
+        }
+
+        .card-text {
+            font-size: 12px;
+        }
+
+        .btn {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
     }
+
 
     ///----------------------cartpage
     .cartpagemain {
