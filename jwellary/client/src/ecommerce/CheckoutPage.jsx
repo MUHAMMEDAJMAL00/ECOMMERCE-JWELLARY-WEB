@@ -928,10 +928,21 @@ const CheckoutPage = () => {
               {buyNowItem ? (
                 <div className="d-flex align-items-center justify-content-between border-bottom py-3">
                   <div className="d-flex align-items-center">
-                    src=
-                    {buyNowItem.image?.startsWith("http")
-                      ? buyNowItem.image
-                      : `https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`}
+                    <img
+                      src={
+                        buyNowItem.image?.startsWith("http")
+                          ? buyNowItem.image
+                          : `https://ecommerce-jwellary-backend.onrender.com${buyNowItem.image}`
+                      }
+                      alt={buyNowItem.name}
+                      className="rounded border me-3"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                      }}
+                    />
+
                     <div>
                       <h6 className="mb-1 fw-bold">{buyNowItem.name}</h6>
                       <p className="mb-0 text-secondary">
