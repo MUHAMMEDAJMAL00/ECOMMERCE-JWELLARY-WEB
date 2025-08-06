@@ -232,7 +232,7 @@ const Header = () => {
           }}
         >
           <MdOutlineSell size={18} />
-          <span>About US</span>
+          <span>About Us</span>
         </div>
 
         <div
