@@ -1906,6 +1906,7 @@ body {
 
         .cardwish {
             height: 300px !important;
+            width: calc(50% - 12px) !important;
         }
 
         .card-body {
