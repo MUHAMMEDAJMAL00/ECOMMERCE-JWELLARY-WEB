@@ -788,6 +788,11 @@ body {
 
     }
 
+    .header-desklogos {
+        height: 60px !important;
+        scale: 1.6 !important;
+    }
+
     .header-deskbox {
         display: flex !important;
         gap: 41px;
@@ -1322,7 +1327,9 @@ body {
     }
 
     .header-desklogos {
-        height: 41px;
+        height: 60px;
+        scale: 1.5 !important;
+
     }
 
     .header-deskbox {
@@ -2048,9 +2055,10 @@ body {
     }
 
     .header-desklogos {
-        height: 41px;
+        height: 60px;
+        scale: 1.1 !important;
+
         width: 100px;
-        // background-color: #234536;
     }
 
     .header-deskbox {
