@@ -261,7 +261,7 @@ const Header = () => {
         <div className="header-deskbox" style={{ gap: "8px" }}>
           <div className="header-desklogo">
             <HiOutlineBars3BottomLeft
-              size={40}
+              size={50}
               className="firstdisplayimage"
               onClick={toggleMobileMenu}
               style={{ cursor: "pointer" }}
@@ -313,7 +313,7 @@ const Header = () => {
 
           <div className="header-cartimage" style={{ marginLeft: "8px" }}>
             <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={40} color="black" />
+              <IoIosHeartEmpty size={30} color="black" />
             </Link>
             <Link
               style={{ color: "black", position: "relative" }}
