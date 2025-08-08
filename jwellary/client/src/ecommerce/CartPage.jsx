@@ -220,6 +220,7 @@ const CartPage = () => {
                     </div>
                     <div className="ms-3 fw-bold delete-btn">
                       <MdDeleteOutline
+                        className=" delete-btn"
                         style={{ fontWeight: "100" }} // Much lighter than 200
                         size={25}
                         onClick={() => clickdelete(item._id)}
