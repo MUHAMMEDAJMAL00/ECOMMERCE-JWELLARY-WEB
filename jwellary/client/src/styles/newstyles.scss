@@ -2001,10 +2001,16 @@ body {
         cursor: pointer;
     }
 
-    .cart3 .delete-btn svg {
-        width: 22px !important;
-        height: 22px !important;
-        color: red;
+    .cart3 .delete-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 5px;
+    }
+
+    /* Make the parent relative so delete button positions correctly */
+    .cart2 {
+        position: relative;
     }
 
     //---------------------------------
