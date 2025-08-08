@@ -269,6 +269,7 @@ const Header = () => {
             <img
               src={lucky}
               className="header-desklogos"
+              size={60}
               onClick={goToHome}
               alt="logo"
             />
