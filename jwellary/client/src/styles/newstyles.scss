@@ -1956,61 +1956,27 @@ body {
 
     //------------------------------------------------cart product,quantity aree
     .cart2 {
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        position: relative;
     }
 
-    /* Smaller product image */
-    .cart2 img {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    /* Layout for qty + price + delete button in one row */
-    .cart3 {
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        margin-top: 8px;
-        gap: 8px;
-    }
-
-    /* Quantity controls smaller */
-    .cart3 .btn,
-    .cart3 input {
-        padding: 4px !important;
-    }
-
-    .cart3 input {
-        width: 40px !important;
-        text-align: center;
-    }
-
-    /* Price smaller */
-    .cart3 .fw-bold span {
-        font-size: 16px !important;
-    }
-
-    /* Delete button fixed width & visible */
-    .cart3 .delete-btn {
-        min-width: 30px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        cursor: pointer;
-    }
-
+    /* Move delete button to top right without affecting other content */
     .cart3 .delete-btn {
         position: absolute;
-        top: 0;
-        right: 0;
-        margin: 5px;
+        top: 8px;
+        right: 8px;
+        margin: 0;
     }
 
-    /* Make the parent relative so delete button positions correctly */
-    .cart2 {
-        position: relative;
+    /* Make quantity + price row fill available width without shifting */
+    .cart3 {
+        justify-content: flex-start !important;
+        gap: 10px;
+    }
+
+    /* Price smaller and no push to far right */
+    .cart3 .fw-bold {
+        margin-left: auto;
+        /* keeps price to right of quantity */
     }
 
     //---------------------------------
