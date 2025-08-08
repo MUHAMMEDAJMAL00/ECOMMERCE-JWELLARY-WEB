@@ -313,7 +313,7 @@ const Header = () => {
 
           <div className="header-cartimage" style={{ marginLeft: "8px" }}>
             <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={30} color="black`" />
+              <IoIosHeartEmpty size={30} color="black" />
             </Link>
             <Link
               style={{ color: "black", position: "relative" }}
