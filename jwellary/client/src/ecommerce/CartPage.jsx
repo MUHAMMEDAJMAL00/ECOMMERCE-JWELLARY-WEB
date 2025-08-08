@@ -217,7 +217,7 @@ const CartPage = () => {
                     <div className="ms-3 fw-bold w-50 text-center">
                       AED <span style={{ fontSize: "20px" }}>{item.price}</span>
                     </div>
-                    <div className="ms-3 fw-bold">
+                    <div className="ms-3 fw-bold delete-btn">
                       <MdDeleteOutline
                         size={25}
                         onClick={() => clickdelete(item._id)}
