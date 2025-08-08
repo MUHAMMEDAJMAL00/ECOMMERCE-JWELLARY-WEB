@@ -1960,34 +1960,50 @@ body {
         align-items: flex-start !important;
     }
 
-    /* Reduce image size on mobile */
+    /* Reduce image size */
     .cart2 img {
         width: 60px !important;
         height: 60px !important;
     }
 
-    /* Place quantity controls, price, and delete in one clean row below product details */
+    /* Quantity, price, delete in one row */
     .cart3 {
         width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
         justify-content: space-between !important;
         margin-top: 8px;
+        gap: 8px;
     }
 
-    /* Quantity input smaller */
+    /* Quantity controls grouped */
+    .cart3 .btn,
+    .cart3 input {
+        padding: 4px !important;
+    }
+
     .cart3 input {
         width: 40px !important;
-        padding: 2px !important;
+        text-align: center;
     }
 
-    /* Price text smaller */
+    /* Price section smaller */
     .cart3 .fw-bold span {
         font-size: 16px !important;
     }
 
-    /* Delete icon size tweak */
-    .cart3 svg {
-        width: 20px !important;
-        height: 20px !important;
+    /* Delete button always visible */
+    .cart3 .delete-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 4px;
+        cursor: pointer;
+    }
+
+    .cart3 .delete-btn svg {
+        width: 22px !important;
+        height: 22px !important;
     }
 
     //---------------------------------
