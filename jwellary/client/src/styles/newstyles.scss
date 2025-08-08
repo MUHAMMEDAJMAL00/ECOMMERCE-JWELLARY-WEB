@@ -49,13 +49,9 @@ body {
     }
 
     &-desklogos {
-        // height: 60px;
-        // cursor: pointer;
-        height: 50px;
-        width: auto;
-        object-fit: contain;
-        cursor: pointer;
-
+        height: 45px !important;
+        scale: 2.2 !important;
+        margin-right: 30px;
     }
 
     &-desklogo {
@@ -2061,7 +2057,7 @@ body {
 
     .header-desklogos {
         height: 60px;
-        scale: 1.1 !important;
+        scale: 1.6 !important;
 
         width: 100px;
     }
