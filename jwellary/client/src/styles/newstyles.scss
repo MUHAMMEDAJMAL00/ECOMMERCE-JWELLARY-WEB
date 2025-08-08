@@ -1995,8 +1995,8 @@ body {
     /* Delete button always visible */
     .cart3 .delete-btn {
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        align-items: start !important;
+        justify-content: start !important;
         padding: 4px;
         cursor: pointer;
     }
