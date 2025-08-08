@@ -14,7 +14,7 @@ import { clearCart } from "../redux/slices/cartSlice";
 import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
-import goldoralogo from "../assets/images/goldora.png";
+import lucky from "../assets/images/lucky.png";
 import { HiOutlineUser } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
@@ -267,7 +267,7 @@ const Header = () => {
               style={{ cursor: "pointer" }}
             />
             <img
-              src={goldoralogo}
+              src={lucky}
               className="header-desklogos"
               onClick={goToHome}
               alt="logo"
