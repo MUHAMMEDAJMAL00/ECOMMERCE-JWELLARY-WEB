@@ -1851,6 +1851,26 @@ body {
 
     //-------------------------------------------------
     //-------------------------------------------------
+
+    .checkoutsummary .fw-bold[style*="font-size: 25px"] {
+        font-size: 18px !important;
+    }
+
+    /* Total Product Price label, Discount, Tax, Delivery text */
+    .checkoutsummary .fonttext {
+        font-size: 14px !important;
+    }
+
+    /* "Total:" label before final amount */
+    .totalorder span:first-child {
+        font-size: 14px !important;
+    }
+
+    /* Final total AED big number */
+    .totalorder .mainaed {
+        font-size: 22px !important;
+    }
+
     //-------------------------------------------------
     .checkoutmain {
         margin-top: 100px !important;
