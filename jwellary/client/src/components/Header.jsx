@@ -15,7 +15,8 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
 import lucky from "../assets/images/lucky.png";
-import { HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
+
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
 import { HiOutlineViewList } from "react-icons/hi";
@@ -259,7 +260,7 @@ const Header = () => {
       <div className="header">
         <div className="header-deskbox" style={{ gap: "8px" }}>
           <div className="header-desklogo">
-            <HiOutlineViewList
+            <HiOutlineBars3BottomLeft
               size={40}
               className="firstdisplayimage"
               onClick={toggleMobileMenu}
@@ -312,7 +313,7 @@ const Header = () => {
 
           <div className="header-cartimage" style={{ marginLeft: "8px" }}>
             <Link to={"/wishlist"}>
-              <IoIosHeartEmpty size={30} color="black" />
+              <IoIosHeartEmpty size={30} color="black`" />
             </Link>
             <Link
               style={{ color: "black", position: "relative" }}
