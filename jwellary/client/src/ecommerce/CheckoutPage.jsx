@@ -847,7 +847,7 @@ const CheckoutPage = () => {
                       <div className="col-md-6">
                         <button
                           type="button"
-                          className="btn border border-danger text-danger w-100 p-3 px-3"
+                          className="btn border border-danger text-danger w-100 p-3 mb-1"
                           onClick={handleCancel}
                         >
                           Cancel
