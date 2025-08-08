@@ -1955,29 +1955,42 @@ body {
 
 
     //------------------------------------------------cart product,quantity aree
-    .cart2 {
-        position: relative;
+    @media (max-width: 576px) {
+
+        /* Make cart item vertical */
+        .cart2 {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            position: relative;
+        }
+
+        /* Product image smaller */
+        .cart2 img {
+            width: 60px !important;
+            height: 60px !important;
+        }
+
+        /* Quantity + price row moves under product name */
+        .cart3 {
+            width: 100% !important;
+            justify-content: flex-start !important;
+            margin-top: 8px;
+            gap: 8px;
+        }
+
+        /* Price sits right after quantity buttons */
+        .cart3 .fw-bold {
+            margin-left: 12px !important;
+        }
+
+        /* Delete button stays top-right */
+        .cart3 .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
     }
 
-    /* Move delete button to top right without affecting other content */
-    .cart3 .delete-btn {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        margin: 0;
-    }
-
-    /* Make quantity + price row fill available width without shifting */
-    .cart3 {
-        justify-content: flex-start !important;
-        gap: 10px;
-    }
-
-    /* Price smaller and no push to far right */
-    .cart3 .fw-bold {
-        margin-left: auto;
-        /* keeps price to right of quantity */
-    }
 
     //---------------------------------
     .header-digital {
