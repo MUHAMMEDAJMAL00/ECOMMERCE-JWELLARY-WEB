@@ -6,7 +6,7 @@ const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const Signup = () => {
   const [name, setName] = useState("");
-  const [age, setAge] = useState(""); // ✅ new
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -17,7 +17,7 @@ const Signup = () => {
     axios
       .post(
         `${BASE_URL}/register`,
-        { name, email, password, age, phone }, // ✅ send age too
+        { name, email, password, age, phone },
         { withCredentials: true }
       )
       .then((result) => {
@@ -29,8 +29,8 @@ const Signup = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-      <div className="bg-white p-3 rounded w-25">
-        <h2>Register</h2>
+      <div className="bg-white p-4 rounded col-10 col-sm-8 col-md-6 col-lg-4 shadow">
+        <h2 className="text-center mb-4">Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <strong>Name</strong>
@@ -45,11 +45,11 @@ const Signup = () => {
           <div className="mb-3">
             <strong>Age</strong>
             <input
-              type="text"
+              type="number"
               placeholder="Enter Age"
               autoComplete="off"
               className="form-control rounded-0"
-              onChange={(e) => setAge(e.target.value)} // ✅ new
+              onChange={(e) => setAge(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -59,7 +59,7 @@ const Signup = () => {
               placeholder="Enter Number"
               autoComplete="off"
               className="form-control rounded-0"
-              onChange={(e) => setPhone(e.target.value)} // ✅ new
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -86,10 +86,10 @@ const Signup = () => {
             Register
           </button>
         </form>
-        <p className="mt-2">Already have an account?</p>
+        <p className="mt-3 text-center">Already have an account?</p>
         <Link
           to={"/login"}
-          className="btn btn-default border w-100 bg-light rounded-0"
+          className="btn btn-outline-secondary w-100 rounded-0"
         >
           Login
         </Link>
