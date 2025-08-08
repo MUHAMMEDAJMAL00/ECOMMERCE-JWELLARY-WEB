@@ -11,6 +11,7 @@ import "../styles/newstyles.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setCartItems, clearCart } from "../redux/slices/cartSlice";
+import { FaWeight } from "react-icons/fa";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -219,6 +220,7 @@ const CartPage = () => {
                     </div>
                     <div className="ms-3 fw-bold delete-btn">
                       <MdDeleteOutline
+                        style={{ fontWeight: "100" }} // Much lighter than 200
                         size={25}
                         onClick={() => clickdelete(item._id)}
                       />
