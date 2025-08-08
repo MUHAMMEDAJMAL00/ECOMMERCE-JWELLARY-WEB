@@ -1954,7 +1954,41 @@ body {
     }
 
 
+    //------------------------------------------------cart product,quantity aree
+    .cart2 {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
 
+    /* Reduce image size on mobile */
+    .cart2 img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    /* Place quantity controls, price, and delete in one clean row below product details */
+    .cart3 {
+        width: 100% !important;
+        justify-content: space-between !important;
+        margin-top: 8px;
+    }
+
+    /* Quantity input smaller */
+    .cart3 input {
+        width: 40px !important;
+        padding: 2px !important;
+    }
+
+    /* Price text smaller */
+    .cart3 .fw-bold span {
+        font-size: 16px !important;
+    }
+
+    /* Delete icon size tweak */
+    .cart3 svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
 
     //---------------------------------
     .header-digital {
