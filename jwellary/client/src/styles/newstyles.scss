@@ -49,8 +49,13 @@ body {
     }
 
     &-desklogos {
-        height: 60px;
+        // height: 60px;
+        // cursor: pointer;
+        height: 50px;
+        width: auto;
+        object-fit: contain;
         cursor: pointer;
+
     }
 
     &-desklogo {
