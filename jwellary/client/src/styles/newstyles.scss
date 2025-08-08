@@ -1972,9 +1972,9 @@ body {
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
-        margin-top: 8px;
+        margin-top: 12px !important;
         gap: 8px;
-        padding-left: 0px !important;
+        margin-left: 0px !important;
     }
 
     /* Quantity controls smaller */
@@ -2004,7 +2004,7 @@ body {
 
     .cart3 .delete-btn {
         position: absolute;
-        top: 0;
+        bottom: -4px !important;
         right: 0;
         margin: 5px;
     }
