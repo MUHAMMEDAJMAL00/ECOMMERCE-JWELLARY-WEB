@@ -88,7 +88,7 @@ const Whislist = () => {
           }}
         />
 
-        <div className="d-flex flex-wrap gap-4 justify-content-center wish">
+        <div className="d-flex flex-wrap gap-4 justify-content-center">
           {savedWishlist.length === 0 ? (
             <p className="text-muted fs-5">Your wishlist is empty.</p>
           ) : (
