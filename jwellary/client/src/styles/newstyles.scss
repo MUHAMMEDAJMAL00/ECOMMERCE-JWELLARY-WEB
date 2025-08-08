@@ -44,7 +44,8 @@ body {
         box-sizing: border-box;
         display: flex;
         gap: 8px;
-        // align-items: center;
+        align-items: center;
+        justify-content: center;
     }
 
     &-desklogos {
@@ -788,9 +789,10 @@ body {
     }
 
     .header-deskbox {
+        display: flex !important;
         gap: 41px;
         height: 10vh;
-        align-items: end;
+        align-items: end !important;
         justify-content: center;
     }
 
@@ -1328,8 +1330,8 @@ body {
         gap: 26px;
         display: flex;
         height: 10vh;
-        justify-content: center;
-        align-items: end;
+        justify-content: center !important;
+        align-items: end !important;
     }
 
     .header-cartimage {
