@@ -15,11 +15,11 @@ import { clearWishlist } from "../redux/slices/Wishlist";
 
 // Icons
 import lucky from "../assets/images/lucky.png";
-import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
-
+import { HiOutlineUser } from "react-icons/hi2";
 import { IoIosSearch } from "react-icons/io";
 import { BsBag } from "react-icons/bs";
-import { HiOutlineViewList } from "react-icons/hi";
+import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
+
 import { ImParagraphRight } from "react-icons/im";
 import { LuScale } from "react-icons/lu";
 import { MdOutlineSell } from "react-icons/md";
