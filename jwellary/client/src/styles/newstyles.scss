@@ -1968,13 +1968,11 @@ body {
 
     /* Layout for qty + price + delete button in one row */
     .cart3 {
-        width: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         margin-top: 12px !important;
-        gap: 8px;
-        margin-left: 0px !important;
+        margin: auto !important;
     }
 
     /* Quantity controls smaller */
@@ -2004,7 +2002,7 @@ body {
 
     .cart3 .delete-btn {
         position: absolute;
-        bottom: -4px !important;
+        top: 0px !important;
         right: 0;
         margin: 5px;
     }
