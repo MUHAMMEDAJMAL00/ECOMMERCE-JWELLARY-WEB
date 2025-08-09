@@ -139,42 +139,117 @@ const MyOrders = () => {
                 ) : orders.length === 0 ? (
                   <p className="text-muted">No orders found.</p>
                 ) : (
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-hover">
-                      <thead className="table-light">
-                        <tr>
-                          <th>#</th>
-                          <th>Image</th>
-                          <th>Product Name</th>
-                          <th className="text-center">Qty</th>
-                          <th>Price (₹)</th>
-                          <th>Total (₹)</th>
-                          <th>Status</th>
-                          <th>Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orders.map((order, index) =>
-                          order.items.map((item, i) => (
-                            <tr key={`${order._id}-${i}`}>
-                              <td>{index + 1}</td>
-                              <td>
+                  <>
+                    {/* Desktop Table View */}
+                    <div className="table-responsive d-none d-md-block">
+                      <table className="table table-bordered table-hover">
+                        <thead className="table-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th className="text-center">Qty</th>
+                            <th>Price (₹)</th>
+                            <th>Total (₹)</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {orders.map((order, index) =>
+                            order.items.map((item, i) => (
+                              <tr key={`${order._id}-${i}`}>
+                                <td>{index + 1}</td>
+                                <td>
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    style={{
+                                      width: "50px",
+                                      height: "50px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </td>
+                                <td>{item.name}</td>
+                                <td className="text-center">{item.qty}</td>
+                                <td>₹{item.price}</td>
+                                <td>₹{(item.qty * item.price).toFixed(2)}</td>
+                                <td>
+                                  <span
+                                    className={`badge ${
+                                      order.status === "Delivered"
+                                        ? "bg-success"
+                                        : "bg-secondary"
+                                    }`}
+                                  >
+                                    {order.status || "Processing"}
+                                  </span>
+                                </td>
+                                <td>
+                                  {new Date(
+                                    order.createdAt
+                                  ).toLocaleDateString()}
+                                </td>
+                                <td className="text-center">
+                                  <Button
+                                    variant="outline-info"
+                                    size="sm"
+                                    onClick={() =>
+                                      handleViewProduct(order._id, item)
+                                    }
+                                  >
+                                    <FaEye />
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="d-block d-md-none">
+                      {orders.map((order, index) =>
+                        order.items.map((item, i) => (
+                          <div
+                            className="card mb-3 shadow-sm"
+                            key={`${order._id}-${i}`}
+                          >
+                            <div className="card-body">
+                              <div className="d-flex align-items-center mb-2">
                                 <img
                                   src={item.image}
                                   alt={item.name}
                                   style={{
-                                    width: "50px",
-                                    height: "50px",
+                                    width: "60px",
+                                    height: "60px",
                                     objectFit: "cover",
+                                    marginRight: "10px",
                                   }}
                                 />
-                              </td>
-                              <td>{item.name}</td>
-                              <td className="text-center">{item.qty}</td>
-                              <td>₹{item.price}</td>
-                              <td>₹{(item.qty * item.price).toFixed(2)}</td>
-                              <td>
+                                <div>
+                                  <h6 className="mb-1">{item.name}</h6>
+                                  <small className="text-muted">
+                                    {new Date(
+                                      order.createdAt
+                                    ).toLocaleDateString()}
+                                  </small>
+                                </div>
+                              </div>
+                              <p className="mb-1">
+                                <strong>Qty:</strong> {item.qty}
+                              </p>
+                              <p className="mb-1">
+                                <strong>Price:</strong> ₹{item.price}
+                              </p>
+                              <p className="mb-1">
+                                <strong>Total:</strong> ₹
+                                {(item.qty * item.price).toFixed(2)}
+                              </p>
+                              <p className="mb-2">
                                 <span
                                   className={`badge ${
                                     order.status === "Delivered"
@@ -184,27 +259,22 @@ const MyOrders = () => {
                                 >
                                   {order.status || "Processing"}
                                 </span>
-                              </td>
-                              <td>
-                                {new Date(order.createdAt).toLocaleDateString()}
-                              </td>
-                              <td className="text-center">
-                                <Button
-                                  variant="outline-info"
-                                  size="sm"
-                                  onClick={() =>
-                                    handleViewProduct(order._id, item)
-                                  }
-                                >
-                                  <FaEye />
-                                </Button>
-                              </td>
-                            </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
+                              </p>
+                              <Button
+                                variant="outline-info"
+                                size="sm"
+                                onClick={() =>
+                                  handleViewProduct(order._id, item)
+                                }
+                              >
+                                <FaEye /> View
+                              </Button>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
