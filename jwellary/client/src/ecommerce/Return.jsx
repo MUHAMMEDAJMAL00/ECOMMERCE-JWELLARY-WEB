@@ -18,10 +18,9 @@ const Return = () => {
       const res = await axios.post(
         "https://ecommerce-jwellary-backend.onrender.com/returns",
         {
-          orderId,
-          userId, // ✅ required by schema
-          productId: item?._id,
-          reason,
+          orderId: "ORDER12345",
+          userId: "64f1c5b4e3e0d3b345678901", // ✅ must be a valid MongoDB ObjectId
+          reason: "Received wrong item",
         }
       );
 

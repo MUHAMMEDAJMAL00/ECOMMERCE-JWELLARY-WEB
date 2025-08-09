@@ -3,10 +3,10 @@ const { createReturn, getReturns } = require("../controllers/returnController");
 
 const router = express.Router();
 
-// POST request - create a return request
+// POST — Create a return
 router.post("/", createReturn);
 
-// GET request - get all return requests
+// GET — Get all returns
 router.get("/", getReturns);
 
 module.exports = router;
