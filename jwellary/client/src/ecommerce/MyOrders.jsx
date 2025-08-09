@@ -163,7 +163,7 @@ const MyOrders = () => {
                                 <td>{index + 1}</td>
                                 <td>
                                   <img
-                                    src={item.image}
+                                    src={`https://ecommerce-jwellary-backend.onrender.com/uploads/${item.image}`}
                                     alt={item.name}
                                     style={{
                                       width: "50px",
