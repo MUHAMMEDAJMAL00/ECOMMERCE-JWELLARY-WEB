@@ -14,6 +14,13 @@ const Return = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("📦 Sending return request:", {
+      orderId,
+      userId,
+      productId: item?._id,
+      reason,
+    });
+
     try {
       const res = await axios.post(
         "https://ecommerce-jwellary-backend.onrender.com/returns",
@@ -29,7 +36,7 @@ const Return = () => {
       setMessage("Return request submitted successfully!");
       setReason("");
     } catch (err) {
-      console.error("❌ Error submitting return:", err);
+      console.error("❌ Error submitting return:", err.response?.data || err);
       setMessage("Failed to submit return request.");
     }
   };
