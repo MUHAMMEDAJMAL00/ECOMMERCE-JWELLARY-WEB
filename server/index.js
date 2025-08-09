@@ -2,6 +2,8 @@ const fs = require("fs");
 require("dotenv").config();
 const express = require("express");
 
+const returnRoutes = require("./Routes/returnRoutes"); // adjust path if needed
+
 const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/employee");
@@ -10,7 +12,6 @@ const adminRoutes = require("./admin");
 const upload = require("./middleware/upload");
 const path = require("path");
 const Category = require("./models/Category");
-
 const GoldPrice = require("./models/Jwellaryprice");
 const adSection = require("./models/adSections");
 const jwt = require("jsonwebtoken");
@@ -32,13 +33,15 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      // "http://localhost:5173",
-      // "http://localhost:5174",
+      "http://localhost:5173",
+      "http://localhost:5174",
       "https://goldora.vercel.app", // ✅ Vercel live site
     ],
     credentials: true,
   })
 );
+
+app.use("/returns", returnRoutes);
 
 app.use("/api", locationRoutes);
 app.use("/api/admin", adminRoutes);

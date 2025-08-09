@@ -29,6 +29,7 @@ import ThankYouPage from "../ecommerce/Success";
 import Whishlist from "../ecommerce/Whishlist";
 import MyOrders from "../ecommerce/MyOrders";
 import About from "../ecommerce/About";
+import Return from "../ecommerce/Return";
 // import MapComponent from "../ecommerce/MapComponent";
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           element={<CategoryProducts />}
         />
         <Route path="/about" element={<About />}></Route>
+        <Route path="/return" element={<Return />} />
         <Route path="/productdetail/:id" element={<ProductDetail />} />
         <Route path="/signup" element={<Signup />} />
         <Route

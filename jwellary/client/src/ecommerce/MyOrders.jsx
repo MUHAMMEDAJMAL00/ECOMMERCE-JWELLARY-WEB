@@ -6,12 +6,14 @@ import UserSideBar from "../components/UseSideBar";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateUserInfo } from "../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +34,7 @@ const MyOrders = () => {
             axios.get(`${BASE_URL}/orders/${user._id}`),
             axios.get(`${BASE_URL}/users/${user._id}`),
           ]);
-          setOrders(orderRes.data);
+          setOrders(orderRes.data || []);
           setUserDetails(userRes.data);
           setFormData({
             name: userRes.data.name,
@@ -67,6 +69,11 @@ const MyOrders = () => {
     } catch (err) {
       console.error("Update failed:", err);
     }
+  };
+
+  // NEW: navigate to return page, pass the whole order in state (or you can pass order._id and fetch there)
+  const handleView = (order) => {
+    navigate("/return", { state: { order } });
   };
 
   return (
@@ -141,6 +148,7 @@ const MyOrders = () => {
                             <th>Total (₹)</th>
                             <th className="text-center">Status</th>
                             <th>Date</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -164,7 +172,13 @@ const MyOrders = () => {
                                       rowSpan={order.items.length}
                                       className="text-center"
                                     >
-                                      <span className="badge bg-success">
+                                      <span
+                                        className={`badge ${
+                                          order.status === "Delivered"
+                                            ? "bg-success"
+                                            : "bg-secondary"
+                                        }`}
+                                      >
                                         {order.status || "Processing"}
                                       </span>
                                     </td>
@@ -172,6 +186,18 @@ const MyOrders = () => {
                                       {new Date(
                                         order.createdAt
                                       ).toLocaleString()}
+                                    </td>
+                                    <td
+                                      rowSpan={order.items.length}
+                                      className="text-center"
+                                    >
+                                      <Button
+                                        variant="outline-primary"
+                                        size="sm"
+                                        onClick={() => handleView(order)}
+                                      >
+                                        Return
+                                      </Button>
                                     </td>
                                   </>
                                 )}
@@ -201,7 +227,7 @@ const MyOrders = () => {
                                 </div>
                               </div>
                             ))}
-                            <div>
+                            <div className="mt-2">
                               <strong>Total:</strong> ₹
                               {order.totalPrice.toFixed(2)}
                             </div>
@@ -214,6 +240,15 @@ const MyOrders = () => {
                             <div>
                               <strong>Date:</strong>{" "}
                               {new Date(order.createdAt).toLocaleString()}
+                            </div>
+
+                            <div className="mt-3 text-end">
+                              <Button
+                                onClick={() => handleView(order)}
+                                size="sm"
+                              >
+                                Return Items
+                              </Button>
                             </div>
                           </div>
                         </div>
