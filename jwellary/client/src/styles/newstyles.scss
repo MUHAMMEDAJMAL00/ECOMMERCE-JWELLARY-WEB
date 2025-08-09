@@ -40,7 +40,7 @@ body {
         height: 11vh !important;
         box-sizing: border-box;
         // background-color: hsl(0, 88%, 38%);
-        padding: 5px 8px 15px 0px;
+        padding: 5px 8px 15px 50px;
         box-sizing: border-box;
         display: flex;
         gap: 8px;
@@ -792,6 +792,7 @@ body {
     .header-desklogos {
         height: 60px !important;
         scale: 1.6 !important;
+        margin-right: 0px !important;
     }
 
     .header-desklogo {
