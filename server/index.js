@@ -29,7 +29,6 @@ const sendEmail = require("../server/Utilis/sendEmail");
 const generateInvoicePDF = require("../server/Utilis/invoiceGenerator");
 const app = express();
 app.use(express.json());
-// app.use(cors());
 app.use(
   cors({
     origin: [

@@ -1,7 +1,7 @@
-import Return from "../models/Return";
+const Return = require("../models/Return");
 
 // Create new return request
-export const createReturn = async (req, res) => {
+const createReturn = async (req, res) => {
   try {
     const newReturn = new Return(req.body);
     await newReturn.save();
@@ -17,7 +17,7 @@ export const createReturn = async (req, res) => {
 };
 
 // Get all return requests
-export const getReturns = async (req, res) => {
+const getReturns = async (req, res) => {
   try {
     const returns = await Return.find();
     res.status(200).json(returns);
@@ -28,3 +28,5 @@ export const getReturns = async (req, res) => {
     });
   }
 };
+
+module.exports = { createReturn, getReturns };

@@ -98,7 +98,7 @@ const MyOrders = () => {
               <h3 className="fw-bold">My Account</h3>
               <hr />
               <div
-                className="text-end text-primary fw-bold mb-3"
+                className="text-end text-warning fw-bold mb-3"
                 style={{ cursor: "pointer" }}
                 onClick={handleEditClick}
               >

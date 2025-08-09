@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const returnSchema = new mongoose.Schema({
   orderId: { type: String, required: true }, // Reference to the order
@@ -8,4 +8,4 @@ const returnSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Return", returnSchema);
+module.exports = mongoose.model("Return", returnSchema);

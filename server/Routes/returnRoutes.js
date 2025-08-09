@@ -1,5 +1,5 @@
-import express from "express";
-import { createReturn, getReturns } from "../controllers/returnController";
+const express = require("express");
+const { createReturn, getReturns } = require("../controllers/returnController");
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.post("/", createReturn);
 // GET request - get all return requests
 router.get("/", getReturns);
 
-export default router;
+module.exports = router;
