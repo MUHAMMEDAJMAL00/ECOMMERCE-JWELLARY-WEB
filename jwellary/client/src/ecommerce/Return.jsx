@@ -19,6 +19,7 @@ const Return = () => {
         "https://ecommerce-jwellary-backend.onrender.com/returns",
         {
           orderId,
+          userId, // ✅ required by schema
           productId: item?._id,
           reason,
         }
