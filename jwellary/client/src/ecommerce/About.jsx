@@ -5,7 +5,7 @@ import { GiWrappedHeart } from "react-icons/gi";
 
 const About = () => {
   return (
-    <div className="pt-5">
+    <div className="pt-5 mt-3">
       <Header />
       <div
         className="about-container"
