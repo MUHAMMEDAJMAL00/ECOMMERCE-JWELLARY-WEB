@@ -178,7 +178,11 @@ const MyOrders = () => {
                                 className="d-flex align-items-center mb-3 pb-3 border-bottom"
                               >
                                 <img
-                                  src={`${BASE_URL}/uploads/${item.image}`}
+                                  src={
+                                    item.image
+                                      ? `${BASE_URL}/uploads/${item.image}`
+                                      : "/default-product-image.png"
+                                  }
                                   alt={item.name}
                                   style={{
                                     width: 70,
@@ -188,6 +192,7 @@ const MyOrders = () => {
                                     boxShadow: "0 0 6px rgba(0,0,0,0.1)",
                                   }}
                                 />
+
                                 <div className="flex-grow-1 ms-3">
                                   <h6 className="mb-1">{item.name}</h6>
                                   <div>
