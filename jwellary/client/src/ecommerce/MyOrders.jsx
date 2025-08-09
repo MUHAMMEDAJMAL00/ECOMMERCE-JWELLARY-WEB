@@ -74,7 +74,13 @@ const MyOrders = () => {
 
   // Navigate to return page with product details
   const handleViewProduct = (orderId, item) => {
-    navigate("/return", { state: { orderId, item } });
+    navigate("/return", {
+      state: {
+        orderId: order._id,
+        item: product, // must have _id
+        userId: loggedInUser._id, // ✅ Pass the actual user ID
+      },
+    });
   };
 
   return (
