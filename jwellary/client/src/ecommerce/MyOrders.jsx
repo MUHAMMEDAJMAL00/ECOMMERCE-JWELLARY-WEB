@@ -76,9 +76,9 @@ const MyOrders = () => {
   const handleViewProduct = (orderId, item) => {
     navigate("/return", {
       state: {
-        orderId: order._id,
-        item: product, // must have _id
-        userId: loggedInUser._id, // ✅ Pass the actual user ID
+        orderId: orderId,
+        item: item,
+        userId: user?._id,
       },
     });
   };
