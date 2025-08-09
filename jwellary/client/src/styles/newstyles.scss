@@ -823,8 +823,9 @@ body {
 
     .header-rate {
         // width:192px;
-        width: 100%;
-        margin-left: 0px;
+        // width: 100%;
+        text-wrap: nowrap !important;
+        margin-left: 40px !important;
     }
 
     .textrate2 {
@@ -1319,10 +1320,11 @@ body {
     }
 
     .header-desklogo {
-        height: 60px !important;
-        scale: 2 !important;
+        // height: 60px !important;
+        scale: 1 !important;
+        width: 100%;
         padding: 0px 0px 10px 0px !important;
-        margin-left: 40px;
+        // margin-left: 40px;
     }
 
     .header-rate,
@@ -1338,9 +1340,9 @@ body {
     }
 
     .header-desklogos {
-        height: 60px;
         scale: 1.5 !important;
 
+        margin-left: 30px !important;
     }
 
     .header-deskbox {
@@ -1358,7 +1360,6 @@ body {
     }
 
     .header-searchbox {
-        width: 100%;
         margin-left: 0px;
     }
 
