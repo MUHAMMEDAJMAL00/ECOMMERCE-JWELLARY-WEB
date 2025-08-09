@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../components/footer";
 import Header from "../components/Header";
+import { useLocation } from "react-router-dom";
 
 const Return = () => {
-  const [orderId, setOrderId] = useState("");
+  const location = useLocation();
+  const { orderId, item } = location.state || {};
+
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
 
@@ -16,13 +19,13 @@ const Return = () => {
         "https://ecommerce-jwellary-backend.onrender.com/returns",
         {
           orderId,
+          productId: item?._id,
           reason,
         }
       );
 
       console.log("✅ Response from backend:", res.data);
       setMessage("Return request submitted successfully!");
-      setOrderId("");
       setReason("");
     } catch (err) {
       console.error("❌ Error submitting return:", err);
@@ -33,24 +36,36 @@ const Return = () => {
   return (
     <div>
       <Header />
-      <div className="container d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div
-          className="card shadow p-4"
-          style={{ maxWidth: "500px", width: "100%" }}
-        >
+      <div className="container py-5">
+        {item && (
+          <div className="card mb-4 shadow-sm">
+            <div className="row g-0">
+              <div className="col-md-4">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="img-fluid rounded-start"
+                  style={{ objectFit: "cover", height: "100%" }}
+                />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title">{item.name}</h5>
+                  <p className="card-text">
+                    <strong>Price:</strong> ₹{item.price}
+                  </p>
+                  <p className="card-text">
+                    <strong>Quantity:</strong> {item.qty}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="card shadow p-4">
           <h3 className="text-center mb-4">Return Product</h3>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Order ID</label>
-              <input
-                type="text"
-                className="form-control"
-                value={orderId}
-                onChange={(e) => setOrderId(e.target.value)}
-                placeholder="Enter your Order ID"
-                required
-              />
-            </div>
             <div className="mb-3">
               <label className="form-label">Reason for Return</label>
               <textarea

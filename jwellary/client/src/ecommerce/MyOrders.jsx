@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button, Form } from "react-bootstrap";
 import { updateUserInfo } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
@@ -71,9 +72,9 @@ const MyOrders = () => {
     }
   };
 
-  // NEW: navigate to return page, pass the whole order in state (or you can pass order._id and fetch there)
-  const handleView = (order) => {
-    navigate("/return", { state: { order } });
+  // Navigate to return page with product details
+  const handleViewProduct = (orderId, item) => {
+    navigate("/return", { state: { orderId, item } });
   };
 
   return (
@@ -81,6 +82,7 @@ const MyOrders = () => {
       <Header />
       <div className="container py-4">
         <div className="row">
+          {/* Sidebar */}
           <div className="col-lg-3 col-md-4 mb-4">
             <div
               className="d-none d-lg-block position-sticky"
@@ -93,6 +95,7 @@ const MyOrders = () => {
             </div>
           </div>
 
+          {/* Orders Section */}
           <div className="col-lg-9 col-md-8">
             <div className="mb-4">
               <h3 className="fw-bold">My Account</h3>
@@ -136,125 +139,72 @@ const MyOrders = () => {
                 ) : orders.length === 0 ? (
                   <p className="text-muted">No orders found.</p>
                 ) : (
-                  <>
-                    <div className="table-responsive d-none d-md-block">
-                      <table className="table table-bordered table-hover">
-                        <thead className="table-light">
-                          <tr>
-                            <th>#</th>
-                            <th>Product Name</th>
-                            <th className="text-center">Qty</th>
-                            <th>Price (₹)</th>
-                            <th>Total (₹)</th>
-                            <th className="text-center">Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {orders.map((order, index) =>
-                            order.items.map((item, i) => (
-                              <tr key={i}>
-                                {i === 0 && (
-                                  <td rowSpan={order.items.length}>
-                                    {index + 1}
-                                  </td>
-                                )}
-                                <td>{item.name}</td>
-                                <td className="text-center">{item.qty}</td>
-                                <td>₹{item.price}</td>
-                                {i === 0 && (
-                                  <>
-                                    <td rowSpan={order.items.length}>
-                                      ₹{order.totalPrice.toFixed(2)}
-                                    </td>
-                                    <td
-                                      rowSpan={order.items.length}
-                                      className="text-center"
-                                    >
-                                      <span
-                                        className={`badge ${
-                                          order.status === "Delivered"
-                                            ? "bg-success"
-                                            : "bg-secondary"
-                                        }`}
-                                      >
-                                        {order.status || "Processing"}
-                                      </span>
-                                    </td>
-                                    <td rowSpan={order.items.length}>
-                                      {new Date(
-                                        order.createdAt
-                                      ).toLocaleString()}
-                                    </td>
-                                    <td
-                                      rowSpan={order.items.length}
-                                      className="text-center"
-                                    >
-                                      <Button
-                                        variant="outline-primary"
-                                        size="sm"
-                                        onClick={() => handleView(order)}
-                                      >
-                                        Return
-                                      </Button>
-                                    </td>
-                                  </>
-                                )}
-                              </tr>
-                            ))
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="d-block d-md-none">
-                      {orders.map((order, index) => (
-                        <div className="card mb-3" key={index}>
-                          <div className="card-body">
-                            <h6 className="fw-bold">Order #{index + 1}</h6>
-                            <hr />
-                            {order.items.map((item, i) => (
-                              <div key={i} className="mb-2">
-                                <div>
-                                  <strong>Product:</strong> {item.name}
-                                </div>
-                                <div>
-                                  <strong>Qty:</strong> {item.qty}
-                                </div>
-                                <div>
-                                  <strong>Price:</strong> ₹{item.price}
-                                </div>
-                              </div>
-                            ))}
-                            <div className="mt-2">
-                              <strong>Total:</strong> ₹
-                              {order.totalPrice.toFixed(2)}
-                            </div>
-                            <div>
-                              <strong>Status:</strong>{" "}
-                              <span className="badge bg-success">
-                                {order.status || "Processing"}
-                              </span>
-                            </div>
-                            <div>
-                              <strong>Date:</strong>{" "}
-                              {new Date(order.createdAt).toLocaleString()}
-                            </div>
-
-                            <div className="mt-3 text-end">
-                              <Button
-                                onClick={() => handleView(order)}
-                                size="sm"
-                              >
-                                Return Items
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                  <div className="table-responsive">
+                    <table className="table table-bordered table-hover">
+                      <thead className="table-light">
+                        <tr>
+                          <th>#</th>
+                          <th>Image</th>
+                          <th>Product Name</th>
+                          <th className="text-center">Qty</th>
+                          <th>Price (₹)</th>
+                          <th>Total (₹)</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orders.map((order, index) =>
+                          order.items.map((item, i) => (
+                            <tr key={`${order._id}-${i}`}>
+                              <td>{index + 1}</td>
+                              <td>
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  style={{
+                                    width: "50px",
+                                    height: "50px",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              </td>
+                              <td>{item.name}</td>
+                              <td className="text-center">{item.qty}</td>
+                              <td>₹{item.price}</td>
+                              <td>₹{(item.qty * item.price).toFixed(2)}</td>
+                              <td>
+                                <span
+                                  className={`badge ${
+                                    order.status === "Delivered"
+                                      ? "bg-success"
+                                      : "bg-secondary"
+                                  }`}
+                                >
+                                  {order.status || "Processing"}
+                                </span>
+                              </td>
+                              <td>
+                                {new Date(order.createdAt).toLocaleDateString()}
+                              </td>
+                              <td className="text-center">
+                                <Button
+                                  variant="outline-info"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleViewProduct(order._id, item)
+                                  }
+                                >
+                                  <FaEye />
+                                </Button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </div>
             </div>
@@ -262,6 +212,7 @@ const MyOrders = () => {
         </div>
       </div>
 
+      {/* Edit Modal */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Update Your Info</Modal.Title>
