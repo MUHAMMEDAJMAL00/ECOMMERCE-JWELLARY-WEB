@@ -1021,27 +1021,40 @@ const CheckoutPage = () => {
 
             <div className="p-4 ">
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-sm fonttext total-text">
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
                   Total Product Price
                 </span>
-                <span className="fw-bold total-price">AED {totalPrice}</span>
+                <span className="fw-bold " style={{ fontSize: "25px" }}>
+                  AED {totalPrice}
+                </span>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-sm fonttext">Discount</span>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
+                  Discount
+                </span>
                 <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                <span className="fw-sm fonttext">Tax</span>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
+                  Tax
+                </span>
                 <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <div className="d-flex justify-content-between mb-3">
-                <span className="fw-sm fonttext">Delivery Charges</span>
+                <span className="fw-sm fonttext" style={{ fontSize: "19px" }}>
+                  Delivery Charges
+                </span>
                 <span className="fw-bold fonttext">AED 0.00</span>
               </div>
               <hr />
-              <div className="d-flex justify-content-between fw-bold align-items-center p-3 pb-3 totalorder">
-                <span className="fw-sm total-label">Total:</span>
-                <span className="text-black fw-bold mainaed">
+              <div className="d-flex justify-content-between fw-bold fs-5 align-items-center p-3 pb-3 totalorder">
+                <span className="fw-sm " style={{ fontSize: "19px" }}>
+                  Total:
+                </span>
+                <span
+                  className="text-black fw-bold mainaed"
+                  style={{ fontSize: "35px" }}
+                >
                   AED {totalPrice}
                 </span>
               </div>
