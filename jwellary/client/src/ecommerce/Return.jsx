@@ -12,10 +12,13 @@ const Return = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:3001/returns", {
-        orderId,
-        reason,
-      });
+      const res = await axios.post(
+        "https://ecommerce-jwellary-backend.onrender.com/returns",
+        {
+          orderId,
+          reason,
+        }
+      );
 
       console.log("✅ Response from backend:", res.data);
       setMessage("Return request submitted successfully!");
