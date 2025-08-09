@@ -652,7 +652,7 @@ body {
         display: flex;
         width: 100%;
         justify-content: space-between;
-        padding: 5px 0px 10px 0px;
+        padding: 5px 0px 10px 50px;
     }
 
 
@@ -805,6 +805,7 @@ body {
         display: flex !important;
         gap: 41px;
         height: 10vh;
+        padding: opx 0px 1px 50px !important;
         align-items: end !important;
         justify-content: center;
     }
