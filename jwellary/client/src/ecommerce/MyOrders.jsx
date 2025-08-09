@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/footer";
 import UserSideBar from "../components/UseSideBar";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Badge } from "react-bootstrap";
 import { updateUserInfo } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
@@ -50,7 +50,6 @@ const MyOrders = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [user]);
 
@@ -74,20 +73,17 @@ const MyOrders = () => {
 
   const handleViewProduct = (orderId, item) => {
     navigate("/return", {
-      state: {
-        orderId,
-        item, // We'll pass the whole item object
-      },
+      state: { orderId, item },
     });
   };
 
   return (
-    <div>
+    <>
       <Header />
       <div className="container py-4">
         <div className="row">
           {/* Sidebar */}
-          <div className="col-lg-3 col-md-4 mb-4">
+          <aside className="col-lg-3 col-md-4 mb-4">
             <div
               className="d-none d-lg-block position-sticky"
               style={{ top: "90px" }}
@@ -97,11 +93,11 @@ const MyOrders = () => {
             <div className="d-block d-lg-none">
               <UserSideBar />
             </div>
-          </div>
+          </aside>
 
           {/* Orders Section */}
-          <div className="col-lg-9 col-md-8">
-            <div className="mb-4">
+          <main className="col-lg-9 col-md-8">
+            <section className="mb-4">
               <h3 className="fw-bold">My Account</h3>
               <hr />
               <div
@@ -109,11 +105,11 @@ const MyOrders = () => {
                 style={{ cursor: "pointer" }}
                 onClick={handleEditClick}
               >
-                Edit
+                Edit Profile
               </div>
 
               {userDetails && (
-                <div className="bg-light rounded p-3 mb-4">
+                <div className="bg-light rounded p-4 shadow-sm mb-5">
                   <div className="mb-2">
                     <strong>Name:</strong>{" "}
                     <span className="text-muted">{userDetails.name}</span>
@@ -132,11 +128,11 @@ const MyOrders = () => {
                   </div>
                 </div>
               )}
-            </div>
+            </section>
 
-            <div className="card shadow-sm rounded">
+            <section className="card shadow-sm rounded">
               <div className="card-body">
-                <h4 className="card-title mb-3">My Orders</h4>
+                <h4 className="card-title mb-4">My Orders</h4>
 
                 {loading ? (
                   <p className="text-muted">Loading orders...</p>
@@ -144,145 +140,162 @@ const MyOrders = () => {
                   <p className="text-muted">No orders found.</p>
                 ) : (
                   <>
-                    {/* Desktop Table View */}
-                    <div className="table-responsive d-none d-md-block">
-                      <table className="table table-bordered table-hover">
-                        <thead className="table-light">
-                          <tr>
-                            <th>#</th>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th className="text-center">Qty</th>
-                            <th>Price (₹)</th>
-                            <th>Total (₹)</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {orders.map((order, index) =>
-                            order.items.map((item, i) => (
-                              <tr key={`${order._id}-${i}`}>
-                                <td>{index + 1}</td>
-                                <td>
-                                  <img
-                                    src={`https://ecommerce-jwellary-backend.onrender.com/uploads/${item.image}`}
-                                    alt={item.name}
-                                    style={{
-                                      width: "50px",
-                                      height: "50px",
-                                      objectFit: "cover",
-                                    }}
-                                  />
-                                </td>
-                                <td>{item.name}</td>
-                                <td className="text-center">{item.qty}</td>
-                                <td>₹{item.price}</td>
-                                <td>₹{(item.qty * item.price).toFixed(2)}</td>
-                                <td>
-                                  <span
-                                    className={`badge ${
-                                      order.status === "Delivered"
-                                        ? "bg-success"
-                                        : "bg-secondary"
-                                    }`}
-                                  >
-                                    {order.status || "Processing"}
-                                  </span>
-                                </td>
-                                <td>
-                                  {new Date(
-                                    order.createdAt
-                                  ).toLocaleDateString()}
-                                </td>
-                                <td className="text-center">
-                                  <Button
-                                    variant="outline-info"
-                                    size="sm"
-                                    onClick={() =>
-                                      handleViewProduct(order._id, item)
-                                    }
-                                  >
-                                    <FaEye />
-                                  </Button>
-                                </td>
-                              </tr>
-                            ))
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
+                    {/* Desktop: One card per order with multiple items inside */}
+                    <div className="d-none d-md-block">
+                      {orders.map((order, idx) => (
+                        <div
+                          key={order._id}
+                          className="card mb-4 shadow-sm"
+                          style={{ borderRadius: 12 }}
+                        >
+                          <div className="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                              <strong>Order #{idx + 1}</strong>{" "}
+                              <small className="text-muted">
+                                -{" "}
+                                {new Date(order.createdAt).toLocaleDateString()}
+                              </small>
+                            </div>
+                            <Badge
+                              bg={
+                                order.status === "Delivered"
+                                  ? "success"
+                                  : order.status === "Processing"
+                                  ? "warning"
+                                  : "secondary"
+                              }
+                              className="text-uppercase"
+                              style={{ fontSize: "0.9rem" }}
+                            >
+                              {order.status || "Processing"}
+                            </Badge>
+                          </div>
 
-                    {/* Mobile Card View */}
-                    <div className="d-block d-md-none">
-                      {orders.map((order, index) =>
-                        order.items.map((item, i) => (
-                          <div
-                            className="card mb-3 shadow-sm"
-                            key={`${order._id}-${i}`}
-                          >
-                            <div className="card-body">
-                              <div className="d-flex align-items-center mb-2">
+                          <div className="card-body">
+                            {order.items.map((item, i) => (
+                              <div
+                                key={`${order._id}-item-${i}`}
+                                className="d-flex align-items-center mb-3 pb-3 border-bottom"
+                              >
                                 <img
-                                  src={item.image}
+                                  src={`${BASE_URL}/uploads/${item.image}`}
                                   alt={item.name}
                                   style={{
-                                    width: "60px",
-                                    height: "60px",
+                                    width: 70,
+                                    height: 70,
                                     objectFit: "cover",
-                                    marginRight: "10px",
+                                    borderRadius: 8,
+                                    boxShadow: "0 0 6px rgba(0,0,0,0.1)",
                                   }}
                                 />
-                                <div>
+                                <div className="flex-grow-1 ms-3">
                                   <h6 className="mb-1">{item.name}</h6>
-                                  <small className="text-muted">
-                                    {new Date(
-                                      order.createdAt
-                                    ).toLocaleDateString()}
-                                  </small>
+                                  <div>
+                                    Qty: <strong>{item.qty}</strong> | Price:{" "}
+                                    <strong>₹{item.price.toFixed(2)}</strong> |
+                                    Total:{" "}
+                                    <strong>
+                                      ₹{(item.qty * item.price).toFixed(2)}
+                                    </strong>
+                                  </div>
                                 </div>
-                              </div>
-                              <p className="mb-1">
-                                <strong>Qty:</strong> {item.qty}
-                              </p>
-                              <p className="mb-1">
-                                <strong>Price:</strong> ₹{item.price}
-                              </p>
-                              <p className="mb-1">
-                                <strong>Total:</strong> ₹
-                                {(item.qty * item.price).toFixed(2)}
-                              </p>
-                              <p className="mb-2">
-                                <span
-                                  className={`badge ${
-                                    order.status === "Delivered"
-                                      ? "bg-success"
-                                      : "bg-secondary"
-                                  }`}
+                                <Button
+                                  variant="outline-info"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleViewProduct(order._id, item)
+                                  }
+                                  title="Return or View Details"
                                 >
-                                  {order.status || "Processing"}
-                                </span>
-                              </p>
-                              <Button
-                                variant="outline-info"
-                                size="sm"
-                                onClick={() =>
-                                  handleViewProduct(order._id, item)
-                                }
-                              >
-                                <FaEye /> View
-                              </Button>
-                            </div>
+                                  <FaEye />
+                                </Button>
+                              </div>
+                            ))}
                           </div>
-                        ))
-                      )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Mobile: Similar structure but stacked */}
+                    <div className="d-block d-md-none">
+                      {orders.map((order, idx) => (
+                        <div
+                          key={order._id}
+                          className="card mb-4 shadow-sm"
+                          style={{ borderRadius: 12 }}
+                        >
+                          <div className="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                              <strong>Order #{idx + 1}</strong>{" "}
+                              <small className="text-muted">
+                                -{" "}
+                                {new Date(order.createdAt).toLocaleDateString()}
+                              </small>
+                            </div>
+                            <Badge
+                              bg={
+                                order.status === "Delivered"
+                                  ? "success"
+                                  : order.status === "Processing"
+                                  ? "warning"
+                                  : "secondary"
+                              }
+                              className="text-uppercase"
+                              style={{ fontSize: "0.9rem" }}
+                            >
+                              {order.status || "Processing"}
+                            </Badge>
+                          </div>
+
+                          <div className="card-body">
+                            {order.items.map((item, i) => (
+                              <div
+                                key={`${order._id}-item-mobile-${i}`}
+                                className="d-flex align-items-center mb-3 pb-3 border-bottom"
+                              >
+                                <img
+                                  src={`${BASE_URL}/uploads/${item.image}`}
+                                  alt={item.name}
+                                  style={{
+                                    width: 70,
+                                    height: 70,
+                                    objectFit: "cover",
+                                    borderRadius: 8,
+                                    boxShadow: "0 0 6px rgba(0,0,0,0.1)",
+                                  }}
+                                />
+                                <div className="flex-grow-1 ms-3">
+                                  <h6 className="mb-1">{item.name}</h6>
+                                  <div>
+                                    Qty: <strong>{item.qty}</strong> | Price:{" "}
+                                    <strong>₹{item.price.toFixed(2)}</strong> |
+                                    Total:{" "}
+                                    <strong>
+                                      ₹{(item.qty * item.price).toFixed(2)}
+                                    </strong>
+                                  </div>
+                                </div>
+                                <Button
+                                  variant="outline-info"
+                                  size="sm"
+                                  onClick={() =>
+                                    handleViewProduct(order._id, item)
+                                  }
+                                  title="Return or View Details"
+                                >
+                                  <FaEye />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </>
                 )}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
         </div>
       </div>
 
@@ -300,6 +313,7 @@ const MyOrders = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                placeholder="Your name"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -309,15 +323,17 @@ const MyOrders = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="Your email"
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Phone Number</Form.Label>
               <Form.Control
-                type="number"
+                type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                placeholder="Your phone number"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -327,6 +343,7 @@ const MyOrders = () => {
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
+                placeholder="Your age"
               />
             </Form.Group>
           </Form>
@@ -342,7 +359,7 @@ const MyOrders = () => {
       </Modal>
 
       <Footer />
-    </div>
+    </>
   );
 };
 

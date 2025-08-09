@@ -121,6 +121,7 @@ const CheckoutPage = () => {
           productId: buyNowItem.productId,
           qty: buyNowItem.qty,
           price: buyNowItem.price,
+          image: buyNowItem.image,
         },
       ];
     } else if (cartItems && cartItems.length > 0) {
@@ -129,6 +130,7 @@ const CheckoutPage = () => {
         productId: item.productId._id,
         qty: item.quantity,
         price: item.productId.price,
+        image: item.productId.image,
       }));
     } else {
       return alert(
@@ -144,21 +146,23 @@ const CheckoutPage = () => {
         paymentMethod: formData.paymentMethod,
       },
       paymentMethod: formData.paymentMethod,
-      totalPrice: Number(totalPrice), // ✅ FIX HERE
+      totalPrice: Number(totalPrice),
       items: buyNowItem
         ? [
             {
               name: buyNowItem.name,
               productId: buyNowItem.productId,
-              qty: Number(buyNowItem.qty), // ✅ FIX HERE
-              price: Number(buyNowItem.price), // ✅ FIX HERE
+              qty: Number(buyNowItem.qty),
+              price: Number(buyNowItem.price),
+              image: buyNowItem.image, // added image here
             },
           ]
         : cartItems.map((item) => ({
             name: item.productId.name,
             productId: item.productId._id,
-            qty: Number(item.quantity), // ✅ FIX HERE
-            price: Number(item.productId.price), // ✅ FIX HERE
+            qty: Number(item.quantity),
+            price: Number(item.productId.price),
+            image: item.productId.image, // added image here
           })),
     };
 

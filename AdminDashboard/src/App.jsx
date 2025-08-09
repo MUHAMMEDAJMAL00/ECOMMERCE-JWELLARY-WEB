@@ -23,6 +23,7 @@ import CategoryEdit from "./partials/CategoryEdit";
 import EditMasterCategory from "./partials/EditMasterCategory";
 import EditProduct from "./partials/EditProduct";
 import GetOrders from "./partials/GetOrders";
+import Returns from "./partials/Return";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="Categoryform" element={<CategoryForm />} />
         <Route path="getorders" element={<GetOrders />} />
+        <Route path="returnn" element={<Returns />} />
         <Route path="Bannerform" element={<BannerForm />} />
         <Route path="goldprice" element={<GoldPriceForm />} />
         <Route path="adsections" element={<AdSectionForm />} />
