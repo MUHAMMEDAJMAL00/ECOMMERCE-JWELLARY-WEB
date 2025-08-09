@@ -3,10 +3,15 @@ import axios from "axios";
 import Footer from "../components/footer";
 import Header from "../components/Header";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux"; // <-- Import from Redux
+
+const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const Return = () => {
   const location = useLocation();
-  const { orderId, item, userId } = location.state || {};
+  const { orderId, item } = location.state || {};
+
+  const { user } = useSelector((state) => state.auth); // <-- Get userId from Redux
 
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
@@ -14,23 +19,25 @@ const Return = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user?._id) {
+      setMessage("User not logged in.");
+      return;
+    }
+
     console.log("📦 Sending return request:", {
       orderId,
-      userId,
+      userId: user._id,
       productId: item?._id,
       reason,
     });
 
     try {
-      const res = await axios.post(
-        "https://ecommerce-jwellary-backend.onrender.com/returns",
-        {
-          orderId,
-          userId,
-          productId: item?._id,
-          reason,
-        }
-      );
+      const res = await axios.post(`${BASE_URL}/returns`, {
+        orderId,
+        userId: user._id,
+        productId: item?._id,
+        reason,
+      });
 
       console.log("✅ Response from backend:", res.data);
       setMessage("Return request submitted successfully!");
@@ -50,7 +57,7 @@ const Return = () => {
             <div className="row g-0">
               <div className="col-md-4">
                 <img
-                  src={item.image}
+                  src={`${BASE_URL}/uploads/${item.image}`} // ✅ Correct image path
                   alt={item.name}
                   className="img-fluid rounded-start"
                   style={{ objectFit: "cover", height: "100%" }}
