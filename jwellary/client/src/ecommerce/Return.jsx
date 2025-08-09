@@ -16,7 +16,7 @@ const Return = () => {
 
     console.log("📦 Sending return request:", {
       orderId,
-      userId,
+      userId: user?._id,
       productId: item?._id,
       reason,
     });
