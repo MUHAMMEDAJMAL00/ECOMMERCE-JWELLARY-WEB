@@ -1336,7 +1336,7 @@ body {
     .header {
         display: flex;
         padding: 0px 10px;
-        height: 11vh;
+        height: 7vh !important;
     }
 
     .header-desklogos {
@@ -1349,7 +1349,7 @@ body {
         padding: 10px 0px 10px 30px;
         gap: 26px;
         display: flex;
-        height: 10vh;
+        height: 7vh !important;
         justify-content: center !important;
         align-items: end !important;
     }
