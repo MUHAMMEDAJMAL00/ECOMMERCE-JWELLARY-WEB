@@ -65,14 +65,13 @@ const ProductDetails = ({ product, orderId }) => {
 
       <div className="container py-5">
         <div className="card shadow-sm">
-          {/* First Image */}
+          {/* First Image
           <img
             src={`${BASE_URL}/uploads/${product.image}`}
             alt={product.name}
             className="card-img-top"
             style={{ objectFit: "cover", height: "400px", width: "100%" }}
-          />
-
+          /> */}
           {/* Details */}
           <div className="card-body">
             <h3>{product.name}</h3>
