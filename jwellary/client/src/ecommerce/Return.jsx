@@ -6,21 +6,27 @@ import { useSelector } from "react-redux";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
-const ProductDetails = ({ product, orderId }) => {
-  // product = item object passed as prop
-  // orderId = order id for return request
-
+const Return = ({ product, orderId }) => {
   const { user } = useSelector((state) => state.auth);
 
-  // Modal state
   const [showModal, setShowModal] = useState(false);
-
-  // Return form state
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // const totalPrice = product.price * product.qty;
+  if (!product) {
+    return (
+      <>
+        <Header />
+        <div className="container py-5">
+          <h3>Product data not available.</h3>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const totalPrice = (product.price || 0) * (product.qty || 1);
 
   const openModal = () => {
     setMessage("");
@@ -43,7 +49,7 @@ const ProductDetails = ({ product, orderId }) => {
 
     setLoading(true);
     try {
-      const res = await axios.post(`${BASE_URL}/returns`, {
+      await axios.post(`${BASE_URL}/returns`, {
         orderId,
         userId: user._id,
         productId: product._id,
@@ -65,23 +71,26 @@ const ProductDetails = ({ product, orderId }) => {
 
       <div className="container py-5">
         <div className="card shadow-sm">
-          {/* First Image
+          {/* Product Image */}
           <img
             src={`${BASE_URL}/uploads/${product.image}`}
             alt={product.name}
             className="card-img-top"
             style={{ objectFit: "cover", height: "400px", width: "100%" }}
-          /> */}
+          />
+
           {/* Details */}
           <div className="card-body">
             <h3>{product.name}</h3>
             <p>
-              <strong>Price:</strong> ₹{product.price}
+              <strong>Price:</strong> ₹{product.price?.toFixed(2)}
             </p>
             <p>
               <strong>Quantity:</strong> {product.qty}
             </p>
-            <p>{/* <strong>Total Price:</strong> ₹{totalPrice} */}</p>
+            <p>
+              <strong>Total Price:</strong> ₹{totalPrice.toFixed(2)}
+            </p>
 
             {/* Return Icon/Button */}
             <button
@@ -109,7 +118,7 @@ const ProductDetails = ({ product, orderId }) => {
           <div
             className="modal-dialog"
             role="document"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal content
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-content">
               <div className="modal-header">
@@ -182,4 +191,4 @@ const ProductDetails = ({ product, orderId }) => {
   );
 };
 
-export default ProductDetails;
+export default Return;
