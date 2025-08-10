@@ -147,7 +147,67 @@ const Return = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="modal-content">
-                {/* modal header, form, footer as before */}
+                <div className="modal-header">
+                  <h5 className="modal-title">Return Product</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    aria-label="Close"
+                    onClick={closeModal}
+                    disabled={loading}
+                  ></button>
+                </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="modal-body">
+                    <p>
+                      <strong>Product:</strong> {item.name}
+                    </p>
+                    <div className="mb-3">
+                      <label htmlFor="reason" className="form-label">
+                        Reason for Return
+                      </label>
+                      <textarea
+                        id="reason"
+                        className="form-control"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                        rows="4"
+                        placeholder="Enter your reason for returning"
+                        required
+                        disabled={loading}
+                      ></textarea>
+                    </div>
+                    {message && (
+                      <div
+                        className={`alert ${
+                          message.includes("successfully")
+                            ? "alert-success"
+                            : "alert-danger"
+                        }`}
+                        role="alert"
+                      >
+                        {message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={closeModal}
+                      disabled={loading}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={loading}
+                    >
+                      {loading ? "Submitting..." : "Submit Return"}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
