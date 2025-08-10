@@ -11,18 +11,18 @@ const Return = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // get product and orderId from location.state
+  // Get product and orderId from route state
   const { product, orderId } = location.state || {};
 
   const { user } = useSelector((state) => state.auth);
 
-  const [showModal, setShowModal] = useState(true); // Open modal directly on page load (optional)
+  const [showModal, setShowModal] = useState(false); // Initially modal closed
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!product) {
-    // Redirect back or show message if no product data found
+    // If no product data, show message and button to go back
     return (
       <>
         <Header />
