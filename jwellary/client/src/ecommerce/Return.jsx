@@ -60,44 +60,71 @@ const Return = () => {
     setLoading(false);
   };
 
+  if (!item) {
+    return (
+      <>
+        <Header />
+        <div className="container py-5 text-center">
+          <h3>Product data not available.</h3>
+          <button
+            className="btn btn-primary"
+            onClick={() => window.history.back()}
+          >
+            Go Back
+          </button>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <div>
       <Header />
-      <div className="container py-5">
-        {item && (
-          <div className="card mb-4 shadow-sm">
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img
-                  src={`${BASE_URL}/uploads/${item.image}`}
-                  alt={item.name}
-                  className="img-fluid rounded-start"
-                  style={{ objectFit: "cover", height: "100%" }}
-                />
-              </div>
-              <div className="col-md-8 d-flex flex-column justify-content-between">
-                <div className="card-body">
-                  <h5 className="card-title">{item.name}</h5>
-                  <p className="card-text">
-                    <strong>Price:</strong> ₹{item.price}
-                  </p>
-                  <p className="card-text">
-                    <strong>Quantity:</strong> {item.qty}
-                  </p>
-                </div>
-                <div className="card-footer bg-white border-0">
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={openModal}
-                    aria-label="Return Product"
-                  >
-                    <i className="bi bi-arrow-return-left"></i> Return Product
-                  </button>
-                </div>
-              </div>
-            </div>
+      <div className="container py-5 pt-5 mt-5">
+        <div
+          className="row mx-auto p-3 shadow rounded"
+          style={{ maxWidth: "900px", backgroundColor: "#fff" }}
+        >
+          {/* Left side - product image */}
+          <div className="col-md-5 text-center mb-4">
+            <img
+              src={`${BASE_URL}/uploads/${item.image}`}
+              alt={item.name}
+              className="rounded"
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                maxHeight: "460px",
+                maxWidth: "460px",
+              }}
+            />
           </div>
-        )}
+
+          {/* Right side - product details */}
+          <div className="col-md-7 d-flex flex-column justify-content-center px-4">
+            <h2 className="fw-bold mb-3">{item.name}</h2>
+
+            {/* You can add more details here if available */}
+            <p className="mb-2">
+              <strong>Price: </strong>₹{item.price}
+            </p>
+            <p className="mb-2">
+              <strong>Quantity: </strong>
+              {item.qty}
+            </p>
+
+            {/* Return button */}
+            <button
+              className="btn btn-outline-danger mt-4 py-3"
+              onClick={openModal}
+              aria-label="Return Product"
+              style={{ maxWidth: "300px" }}
+            >
+              <i className="bi bi-arrow-return-left me-2"></i> Return Product
+            </button>
+          </div>
+        </div>
 
         {/* Modal */}
         {showModal && (
