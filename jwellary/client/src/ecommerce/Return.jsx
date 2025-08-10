@@ -2,118 +2,187 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../components/footer";
 import Header from "../components/Header";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux"; // <-- Import from Redux
+import { useSelector } from "react-redux";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
-const Return = () => {
-  const location = useLocation();
-  const { orderId, item } = location.state || {};
+const ProductDetails = ({ product, orderId }) => {
+  // product = item object passed as prop
+  // orderId = order id for return request
 
-  const { user } = useSelector((state) => state.auth); // <-- Get userId from Redux
+  const { user } = useSelector((state) => state.auth);
 
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+
+  // Return form state
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const totalPrice = product.price * product.qty;
+
+  const openModal = () => {
+    setMessage("");
+    setReason("");
+    setShowModal(true);
+  };
+  const closeModal = () => setShowModal(false);
+
+  const handleReturnSubmit = async (e) => {
     e.preventDefault();
 
     if (!user?._id) {
       setMessage("User not logged in.");
       return;
     }
+    if (!reason.trim()) {
+      setMessage("Please enter a reason.");
+      return;
+    }
 
-    console.log("📦 Sending return request:", {
-      orderId,
-      userId: user._id,
-      productId: item?._id,
-      reason,
-    });
-
+    setLoading(true);
     try {
       const res = await axios.post(`${BASE_URL}/returns`, {
         orderId,
         userId: user._id,
-        productId: item?._id,
+        productId: product._id,
         reason,
       });
-
-      console.log("✅ Response from backend:", res.data);
       setMessage("Return request submitted successfully!");
       setReason("");
-    } catch (err) {
-      console.error("❌ Error submitting return:", err.response?.data || err);
-      setMessage("Failed to submit return request.");
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message || "Failed to submit return request."
+      );
     }
+    setLoading(false);
   };
 
   return (
-    <div>
+    <>
       <Header />
+
       <div className="container py-5">
-        {item && (
-          <div className="card mb-4 shadow-sm">
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img
-                  src={`${BASE_URL}/uploads/${item.image}`} // ✅ Correct image path
-                  alt={item.name}
-                  className="img-fluid rounded-start"
-                  style={{ objectFit: "cover", height: "100%" }}
-                />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">{item.name}</h5>
-                  <p className="card-text">
-                    <strong>Price:</strong> ₹{item.price}
-                  </p>
-                  <p className="card-text">
-                    <strong>Quantity:</strong> {item.qty}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <div className="card shadow-sm">
+          {/* First Image */}
+          <img
+            src={`${BASE_URL}/uploads/${product.image}`}
+            alt={product.name}
+            className="card-img-top"
+            style={{ objectFit: "cover", height: "400px", width: "100%" }}
+          />
 
-        <div className="card shadow p-4">
-          <h3 className="text-center mb-4">Return Product</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Reason for Return</label>
-              <textarea
-                className="form-control"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                placeholder="Enter your reason for returning"
-                rows="4"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Submit Return
-            </button>
-          </form>
+          {/* Details */}
+          <div className="card-body">
+            <h3>{product.name}</h3>
+            <p>
+              <strong>Price:</strong> ₹{product.price}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {product.qty}
+            </p>
+            <p>
+              <strong>Total Price:</strong> ₹{totalPrice}
+            </p>
 
-          {message && (
-            <div
-              className={`alert mt-3 ${
-                message.includes("successfully")
-                  ? "alert-success"
-                  : "alert-danger"
-              }`}
-              role="alert"
+            {/* Return Icon/Button */}
+            <button
+              className="btn btn-outline-danger"
+              onClick={openModal}
+              aria-label="Return Product"
+              style={{ fontSize: "1.2rem" }}
             >
-              {message}
-            </div>
-          )}
+              <i className="bi bi-arrow-return-left"></i> Return Product
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div
+          className="modal fade show"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          tabIndex="-1"
+          aria-modal="true"
+          role="dialog"
+          onClick={closeModal}
+        >
+          <div
+            className="modal-dialog"
+            role="document"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal content
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Return Product</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={closeModal}
+                ></button>
+              </div>
+              <form onSubmit={handleReturnSubmit}>
+                <div className="modal-body">
+                  <p>
+                    <strong>Product:</strong> {product.name}
+                  </p>
+                  <div className="mb-3">
+                    <label htmlFor="reason" className="form-label">
+                      Reason for Return
+                    </label>
+                    <textarea
+                      id="reason"
+                      className="form-control"
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}
+                      rows="4"
+                      placeholder="Enter your reason for returning"
+                      required
+                      disabled={loading}
+                    ></textarea>
+                  </div>
+                  {message && (
+                    <div
+                      className={`alert ${
+                        message.includes("successfully")
+                          ? "alert-success"
+                          : "alert-danger"
+                      }`}
+                      role="alert"
+                    >
+                      {message}
+                    </div>
+                  )}
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeModal}
+                    disabled={loading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? "Submitting..." : "Submit Return"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
-    </div>
+    </>
   );
 };
 
-export default Return;
+export default ProductDetails;
