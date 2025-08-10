@@ -1,35 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../components/footer";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
 const Return = () => {
-  const location = useLocation();
+  const { orderId, productId } = useParams();
   const navigate = useNavigate();
-
-  // Get product and orderId from route state
-  const { product, orderId } = location.state || {};
 
   const { user } = useSelector((state) => state.auth);
 
-  const [showModal, setShowModal] = useState(false); // Initially modal closed
+  const [product, setProduct] = useState(null);
+  const [loadingProduct, setLoadingProduct] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  if (!product) {
-    // If no product data, show message and button to go back
+  useEffect(() => {
+    if (!orderId || !productId) {
+      setMessage("Invalid order or product ID.");
+      setLoadingProduct(false);
+      return;
+    }
+
+    setLoadingProduct(true);
+    axios
+      .get(`${BASE_URL}/orders/${orderId}`)
+      .then((res) => {
+        // Assuming res.data.items is an array of products in the order
+        const found = res.data.items.find((item) => item._id === productId);
+        if (!found) {
+          setMessage("Product not found in this order.");
+        }
+        setProduct(found);
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage("Failed to fetch product details.");
+      })
+      .finally(() => {
+        setLoadingProduct(false);
+      });
+  }, [orderId, productId]);
+
+  if (loadingProduct) {
     return (
       <>
         <Header />
         <div className="container py-5">
-          <h3>
-            Product data not available. Please go back and select a product.
-          </h3>
+          <p>Loading product info...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!product) {
+    return (
+      <>
+        <Header />
+        <div className="container py-5">
+          <h3>{message || "Product data not available."}</h3>
           <button className="btn btn-primary" onClick={() => navigate(-1)}>
             Go Back
           </button>
@@ -46,6 +81,7 @@ const Return = () => {
     setReason("");
     setShowModal(true);
   };
+
   const closeModal = () => setShowModal(false);
 
   const handleReturnSubmit = async (e) => {
@@ -70,6 +106,11 @@ const Return = () => {
       });
       setMessage("Return request submitted successfully!");
       setReason("");
+      // Optional: close modal after success
+      setTimeout(() => {
+        setShowModal(false);
+        setMessage("");
+      }, 2000);
     } catch (error) {
       setMessage(
         error.response?.data?.message || "Failed to submit return request."
