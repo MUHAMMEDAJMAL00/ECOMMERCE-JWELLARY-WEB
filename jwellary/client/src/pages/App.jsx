@@ -60,7 +60,7 @@ function App() {
           element={<CategoryProducts />}
         />
         <Route path="/about" element={<About />}></Route>
-        <Route path="/return/:orderId/:productId" element={<Return />} />
+        <Route path="/return" element={<Return />} />
         <Route path="/productdetail/:id" element={<ProductDetail />} />
         <Route path="/signup" element={<Signup />} />
         <Route

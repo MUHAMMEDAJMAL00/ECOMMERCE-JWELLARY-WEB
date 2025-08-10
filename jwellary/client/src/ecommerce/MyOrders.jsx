@@ -71,10 +71,10 @@ const MyOrders = () => {
     }
   };
 
-  // This function sends product & orderId as props in route state
-  const handleViewProduct = (orderId, product) => {
-    // Pass orderId and productId in the URL params
-    navigate(`/return/${orderId}/${product._id}`);
+  const handleViewProduct = (orderId, item) => {
+    navigate("/return", {
+      state: { orderId, item },
+    });
   };
 
   return (
@@ -140,6 +140,7 @@ const MyOrders = () => {
                   <p className="text-muted">No orders found.</p>
                 ) : (
                   <>
+                    {/* Desktop: One card per order with multiple items inside */}
                     <div className="d-none d-md-block">
                       {orders.map((order, idx) => (
                         <div
@@ -220,7 +221,7 @@ const MyOrders = () => {
                       ))}
                     </div>
 
-                    {/* Mobile layout */}
+                    {/* Mobile: Similar structure but stacked */}
                     <div className="d-block d-md-none">
                       {orders.map((order, idx) => (
                         <div
