@@ -3,23 +3,36 @@ import axios from "axios";
 import Footer from "../components/footer";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 
-const Return = ({ product, orderId }) => {
+const Return = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // get product and orderId from location.state
+  const { product, orderId } = location.state || {};
+
   const { user } = useSelector((state) => state.auth);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true); // Open modal directly on page load (optional)
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!product) {
+    // Redirect back or show message if no product data found
     return (
       <>
         <Header />
         <div className="container py-5">
-          <h3>Product data not available.</h3>
+          <h3>
+            Product data not available. Please go back and select a product.
+          </h3>
+          <button className="btn btn-primary" onClick={() => navigate(-1)}>
+            Go Back
+          </button>
         </div>
         <Footer />
       </>
@@ -92,7 +105,6 @@ const Return = ({ product, orderId }) => {
               <strong>Total Price:</strong> ₹{totalPrice.toFixed(2)}
             </p>
 
-            {/* Return Icon/Button */}
             <button
               className="btn btn-outline-danger"
               onClick={openModal}
