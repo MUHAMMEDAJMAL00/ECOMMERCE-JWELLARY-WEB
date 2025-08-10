@@ -20,7 +20,7 @@ const ProductDetails = ({ product, orderId }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const totalPrice = product.price * product.qty;
+  // const totalPrice = product.price * product.qty;
 
   const openModal = () => {
     setMessage("");
@@ -82,9 +82,7 @@ const ProductDetails = ({ product, orderId }) => {
             <p>
               <strong>Quantity:</strong> {product.qty}
             </p>
-            <p>
-              <strong>Total Price:</strong> ₹{totalPrice}
-            </p>
+            <p>{/* <strong>Total Price:</strong> ₹{totalPrice} */}</p>
 
             {/* Return Icon/Button */}
             <button
