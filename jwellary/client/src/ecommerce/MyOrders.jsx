@@ -29,15 +29,18 @@ const MyOrders = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const [orderRes, userRes] = await Promise.all([
+        axios.get(`${BASE_URL}/orders/${user._id}`),
+        axios.get(`${BASE_URL}/users/${user._id}`),
+      ]);
+      console.log(orderRes.data); // 👈 See what item.image contains
+
       try {
         if (user?._id) {
           const [orderRes, userRes] = await Promise.all([
             axios.get(`${BASE_URL}/orders/${user._id}`),
             axios.get(`${BASE_URL}/users/${user._id}`),
           ]);
-
-          console.log("Orders API Response:", orderRes.data); // 👈 See full order object
-
           setOrders(orderRes.data || []);
           setUserDetails(userRes.data);
           setFormData({
