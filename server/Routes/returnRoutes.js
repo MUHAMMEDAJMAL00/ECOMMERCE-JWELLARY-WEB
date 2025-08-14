@@ -8,5 +8,6 @@ router.post("/", createReturn);
 
 // GET — Get all returns
 router.get("/", getReturns);
+router.put("/:id/status", updateReturnStatus);
 
 module.exports = router;
