@@ -37,7 +37,7 @@ const Returns = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className="max-w-7xl mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Returned Products</h2>
 
       {loading ? (
@@ -53,7 +53,9 @@ const Returns = () => {
                 <th className="p-3 text-left">Return ID</th>
                 <th className="p-3 text-left">Order ID</th>
                 <th className="p-3 text-left">Product</th>
+                <th className="p-3 text-left">Image</th>
                 <th className="p-3 text-left">User Email</th>
+                <th className="p-3 text-left">Address</th>
                 <th className="p-3 text-left">Reason</th>
                 <th className="p-3 text-left">Status</th>
                 <th className="p-3 text-left">Date</th>
@@ -65,9 +67,50 @@ const Returns = () => {
                   <td className="p-3">{idx + 1}</td>
                   <td className="p-3">{ret._id}</td>
                   <td className="p-3">{ret.orderId}</td>
-                  <td className="p-3">{ret.product?.name || "N/A"}</td>
+
+                  {/* Product Name & Details */}
+                  <td className="p-3">
+                    <div>
+                      <p className="font-semibold">
+                        {ret.product?.name || "N/A"}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {ret.product?.description || ""}
+                      </p>
+                    </div>
+                  </td>
+
+                  {/* Product Image */}
+                  <td className="p-3">
+                    {ret.product?.image ? (
+                      <img
+                        src={ret.product.image}
+                        alt={ret.product.name}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    ) : (
+                      <span className="text-gray-400">No Image</span>
+                    )}
+                  </td>
+
+                  {/* User Email */}
                   <td className="p-3">{ret.user?.email || "N/A"}</td>
+
+                  {/* User Address */}
+                  <td className="p-3 text-sm text-gray-600">
+                    {ret.user?.address
+                      ? `${ret.user.address.street || ""}, ${
+                          ret.user.address.city || ""
+                        }, ${ret.user.address.state || ""}, ${
+                          ret.user.address.zip || ""
+                        }`
+                      : "N/A"}
+                  </td>
+
+                  {/* Reason */}
                   <td className="p-3">{ret.reason}</td>
+
+                  {/* Status Dropdown */}
                   <td className="p-3">
                     <select
                       value={ret.status}
@@ -81,6 +124,8 @@ const Returns = () => {
                       <option value="Rejected">Rejected</option>
                     </select>
                   </td>
+
+                  {/* Date */}
                   <td className="p-3 text-gray-500">
                     {new Date(ret.createdAt).toLocaleString()}
                   </td>

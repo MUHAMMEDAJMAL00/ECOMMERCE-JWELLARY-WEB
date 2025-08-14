@@ -17,6 +17,7 @@ const MyOrders = () => {
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
+  const [returns, setReturns] = useState([]); // ✅ store returns data
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -29,20 +30,18 @@ const MyOrders = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [orderRes, userRes] = await Promise.all([
-        axios.get(`${BASE_URL}/orders/${user._id}`),
-        axios.get(`${BASE_URL}/users/${user._id}`),
-      ]);
-      console.log(orderRes.data); // 👈 See what item.image contains
-
       try {
         if (user?._id) {
-          const [orderRes, userRes] = await Promise.all([
+          const [orderRes, userRes, returnRes] = await Promise.all([
             axios.get(`${BASE_URL}/orders/${user._id}`),
             axios.get(`${BASE_URL}/users/${user._id}`),
+            axios.get(`${BASE_URL}/returns/user/${user._id}`), // ✅ fetch returns for this user
           ]);
+
           setOrders(orderRes.data || []);
           setUserDetails(userRes.data);
+          setReturns(returnRes.data || []); // ✅ store return requests
+
           setFormData({
             name: userRes.data.name,
             email: userRes.data.email,
@@ -81,6 +80,14 @@ const MyOrders = () => {
     navigate("/return", {
       state: { orderId, item },
     });
+  };
+
+  // ✅ Helper to get return status for an order item
+  const getReturnStatus = (orderId, productId) => {
+    const ret = returns.find(
+      (r) => r.orderId === orderId && r.product?._id === productId
+    );
+    return ret ? ret.status : null;
   };
 
   return (
@@ -146,39 +153,41 @@ const MyOrders = () => {
                   <p className="text-muted">No orders found.</p>
                 ) : (
                   <>
-                    {/* Desktop: One card per order with multiple items inside */}
-                    <div className="d-none d-md-block">
-                      {orders.map((order, idx) => (
-                        <div
-                          key={order._id}
-                          className="card mb-4 shadow-sm"
-                          style={{ borderRadius: 12 }}
-                        >
-                          <div className="card-header d-flex justify-content-between align-items-center">
-                            <div>
-                              <strong>Order #{idx + 1}</strong>{" "}
-                              <small className="text-muted">
-                                -{" "}
-                                {new Date(order.createdAt).toLocaleDateString()}
-                              </small>
-                            </div>
-                            <Badge
-                              bg={
-                                order.status === "Delivered"
-                                  ? "success"
-                                  : order.status === "Processing"
-                                  ? "warning"
-                                  : "secondary"
-                              }
-                              className="text-uppercase"
-                              style={{ fontSize: "0.9rem" }}
-                            >
-                              {order.status || "Processing"}
-                            </Badge>
+                    {orders.map((order, idx) => (
+                      <div
+                        key={order._id}
+                        className="card mb-4 shadow-sm"
+                        style={{ borderRadius: 12 }}
+                      >
+                        <div className="card-header d-flex justify-content-between align-items-center">
+                          <div>
+                            <strong>Order #{idx + 1}</strong>{" "}
+                            <small className="text-muted">
+                              - {new Date(order.createdAt).toLocaleDateString()}
+                            </small>
                           </div>
+                          <Badge
+                            bg={
+                              order.status === "Delivered"
+                                ? "success"
+                                : order.status === "Processing"
+                                ? "warning"
+                                : "secondary"
+                            }
+                            className="text-uppercase"
+                            style={{ fontSize: "0.9rem" }}
+                          >
+                            {order.status || "Processing"}
+                          </Badge>
+                        </div>
 
-                          <div className="card-body">
-                            {order.items.map((item, i) => (
+                        <div className="card-body">
+                          {order.items.map((item, i) => {
+                            const returnStatus = getReturnStatus(
+                              order._id,
+                              item.productId || item._id
+                            );
+                            return (
                               <div
                                 key={`${order._id}-item-${i}`}
                                 className="d-flex align-items-center mb-3 pb-3 border-bottom"
@@ -209,6 +218,21 @@ const MyOrders = () => {
                                       ₹{(item.qty * item.price).toFixed(2)}
                                     </strong>
                                   </div>
+                                  {returnStatus && (
+                                    <div className="mt-1">
+                                      <Badge
+                                        bg={
+                                          returnStatus === "Approved"
+                                            ? "success"
+                                            : returnStatus === "Rejected"
+                                            ? "danger"
+                                            : "warning"
+                                        }
+                                      >
+                                        Return {returnStatus}
+                                      </Badge>
+                                    </div>
+                                  )}
                                 </div>
                                 <Button
                                   variant="outline-info"
@@ -221,87 +245,11 @@ const MyOrders = () => {
                                   <FaEye />
                                 </Button>
                               </div>
-                            ))}
-                          </div>
+                            );
+                          })}
                         </div>
-                      ))}
-                    </div>
-
-                    {/* Mobile: Similar structure but stacked */}
-                    <div className="d-block d-md-none">
-                      {orders.map((order, idx) => (
-                        <div
-                          key={order._id}
-                          className="card mb-4 shadow-sm"
-                          style={{ borderRadius: 12 }}
-                        >
-                          <div className="card-header d-flex justify-content-between align-items-center">
-                            <div>
-                              <strong>Order #{idx + 1}</strong>{" "}
-                              <small className="text-muted">
-                                -{" "}
-                                {new Date(order.createdAt).toLocaleDateString()}
-                              </small>
-                            </div>
-                            <Badge
-                              bg={
-                                order.status === "Delivered"
-                                  ? "success"
-                                  : order.status === "Processing"
-                                  ? "warning"
-                                  : "secondary"
-                              }
-                              className="text-uppercase"
-                              style={{ fontSize: "0.9rem" }}
-                            >
-                              {order.status || "Processing"}
-                            </Badge>
-                          </div>
-
-                          <div className="card-body">
-                            {order.items.map((item, i) => (
-                              <div
-                                key={`${order._id}-item-mobile-${i}`}
-                                className="d-flex align-items-center mb-3 pb-3 border-bottom"
-                              >
-                                <img
-                                  src={`${BASE_URL}/uploads/${item.image}`}
-                                  alt={item.name}
-                                  style={{
-                                    width: 70,
-                                    height: 70,
-                                    objectFit: "cover",
-                                    borderRadius: 8,
-                                    boxShadow: "0 0 6px rgba(0,0,0,0.1)",
-                                  }}
-                                />
-                                <div className="flex-grow-1 ms-3">
-                                  <h6 className="mb-1">{item.name}</h6>
-                                  <div>
-                                    Qty: <strong>{item.qty}</strong> | Price:{" "}
-                                    <strong>₹{item.price.toFixed(2)}</strong> |
-                                    Total:{" "}
-                                    <strong>
-                                      ₹{(item.qty * item.price).toFixed(2)}
-                                    </strong>
-                                  </div>
-                                </div>
-                                <Button
-                                  variant="outline-info"
-                                  size="sm"
-                                  onClick={() =>
-                                    handleViewProduct(order._id, item)
-                                  }
-                                  title="Return or View Details"
-                                >
-                                  <FaEye />
-                                </Button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </>
                 )}
               </div>
