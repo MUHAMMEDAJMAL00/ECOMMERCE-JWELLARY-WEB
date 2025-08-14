@@ -37,51 +37,53 @@ const Returns = () => {
   };
 
   return (
-    <div className="container p-4">
-      <h2 className="mb-4">Returned Products</h2>
+    <div className="max-w-6xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Returned Products</h2>
 
       {loading ? (
-        <p>Loading return orders...</p>
+        <p className="text-gray-500">Loading return orders...</p>
       ) : returns.length === 0 ? (
-        <p>No return orders found.</p>
+        <p className="text-gray-500">No return orders found.</p>
       ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover">
-            <thead className="table-light">
+        <div className="overflow-x-auto">
+          <table className="w-full border border-gray-200 rounded-lg shadow-sm">
+            <thead className="bg-gray-100">
               <tr>
-                <th>#</th>
-                <th>Return ID</th>
-                <th>Order ID</th>
-                <th>Product</th>
-                <th>User Email</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th className="p-3 text-left">#</th>
+                <th className="p-3 text-left">Return ID</th>
+                <th className="p-3 text-left">Order ID</th>
+                <th className="p-3 text-left">Product</th>
+                <th className="p-3 text-left">User Email</th>
+                <th className="p-3 text-left">Reason</th>
+                <th className="p-3 text-left">Status</th>
+                <th className="p-3 text-left">Date</th>
               </tr>
             </thead>
             <tbody>
               {returns.map((ret, idx) => (
-                <tr key={ret._id}>
-                  <td>{idx + 1}</td>
-                  <td>{ret._id}</td>
-                  <td>{ret.orderId}</td>
-                  <td>{ret.product?.name || "N/A"}</td>
-                  <td>{ret.user?.email || "N/A"}</td>
-                  <td>{ret.reason}</td>
-                  <td>
+                <tr key={ret._id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{idx + 1}</td>
+                  <td className="p-3">{ret._id}</td>
+                  <td className="p-3">{ret.orderId}</td>
+                  <td className="p-3">{ret.product?.name || "N/A"}</td>
+                  <td className="p-3">{ret.user?.email || "N/A"}</td>
+                  <td className="p-3">{ret.reason}</td>
+                  <td className="p-3">
                     <select
                       value={ret.status}
                       onChange={(e) =>
                         handleStatusChange(ret._id, e.target.value)
                       }
-                      className="form-select form-select-sm"
+                      className="border border-gray-300 rounded-md p-1 text-sm focus:ring-2 focus:ring-indigo-500"
                     >
                       <option value="Pending">Pending</option>
                       <option value="Approved">Approved</option>
                       <option value="Rejected">Rejected</option>
                     </select>
                   </td>
-                  <td>{new Date(ret.createdAt).toLocaleString()}</td>
+                  <td className="p-3 text-gray-500">
+                    {new Date(ret.createdAt).toLocaleString()}
+                  </td>
                 </tr>
               ))}
             </tbody>
