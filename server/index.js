@@ -1018,9 +1018,18 @@ app.post("/orders", async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // Explicit mapping so all required fields are stored, including image
+    const orderItems = items.map((item) => ({
+      name: item.name,
+      productId: item.productId,
+      qty: item.qty,
+      price: item.price,
+      image: item.image || "", // ✅ ensure image gets stored
+    }));
+
     const newOrder = new Order({
       user,
-      items,
+      items: orderItems,
       address: {
         ...address,
         paymentMethod,
@@ -1030,10 +1039,10 @@ app.post("/orders", async (req, res) => {
 
     const savedOrder = await newOrder.save();
 
-    // ✅ Generate PDF Invoice
+    // Generate PDF Invoice
     const pdfPath = await generateInvoicePDF(savedOrder);
 
-    // ✅ Send email with PDF attachment
+    // Send email if possible
     if (address.email) {
       const emailHtml = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -1051,10 +1060,12 @@ app.post("/orders", async (req, res) => {
         emailHtml,
         pdfPath
       );
+
       if (!fs.existsSync(pdfPath)) {
         console.error("❌ PDF file not found:", pdfPath);
         return res.status(500).json({ message: "Invoice PDF not found." });
       }
+
       // Optional: Delete PDF after sending
       fs.unlink(pdfPath, (err) => {
         if (err) console.error("Error deleting invoice PDF:", err);
@@ -1067,6 +1078,7 @@ app.post("/orders", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 // -------------------------------------------------
 app.get("/orders", async (req, res) => {
   try {
