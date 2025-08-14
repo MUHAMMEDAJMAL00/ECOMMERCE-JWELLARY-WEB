@@ -35,6 +35,9 @@ const MyOrders = () => {
             axios.get(`${BASE_URL}/orders/${user._id}`),
             axios.get(`${BASE_URL}/users/${user._id}`),
           ]);
+
+          console.log("Orders API Response:", orderRes.data); // 👈 See full order object
+
           setOrders(orderRes.data || []);
           setUserDetails(userRes.data);
           setFormData({
