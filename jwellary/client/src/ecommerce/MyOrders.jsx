@@ -261,7 +261,11 @@ const MyOrders = () => {
                                 className="d-flex align-items-center mb-3 pb-3 border-bottom"
                               >
                                 <img
-                                  src={`${BASE_URL}/uploads/${item.image}`}
+                                  src={
+                                    item.image?.startsWith("http")
+                                      ? item.image
+                                      : `${BASE_URL}/uploads/${item.image}`
+                                  }
                                   alt={item.name}
                                   style={{
                                     width: 70,
