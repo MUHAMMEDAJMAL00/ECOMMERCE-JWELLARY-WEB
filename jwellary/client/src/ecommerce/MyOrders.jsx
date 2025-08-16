@@ -208,7 +208,7 @@ const MyOrders = () => {
                                   variant="outline-info"
                                   size="sm"
                                   onClick={() => {
-                                    console.log("👀 item data:", item); // ✅ check what fields are inside item
+                                    console.log("✅ Button clicked!");
                                     handleViewProduct(order._id, item);
                                   }}
                                   title="Return or View Details"
