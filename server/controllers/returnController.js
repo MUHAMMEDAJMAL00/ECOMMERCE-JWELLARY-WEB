@@ -5,7 +5,7 @@ const createReturn = async (req, res) => {
   try {
     console.log("📥 Incoming return request body:", req.body);
 
-    const { orderId, userId, productId, reason } = req.body;
+    const { orderId, userId, productId, reason, description } = req.body;
 
     // ✅ Validate required fields
     if (!orderId || !userId || !productId || !reason) {
@@ -28,6 +28,8 @@ const createReturn = async (req, res) => {
       userId,
       productId,
       reason,
+      description, // save description too
+      status: "Pending", // default status
     });
 
     await newReturn.save();
@@ -62,4 +64,39 @@ const getReturns = async (req, res) => {
   }
 };
 
-module.exports = { createReturn, getReturns };
+// ✅ Update return status (Admin action)
+const updateReturnStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ message: "Status is required" });
+    }
+
+    const updatedReturn = await Return.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    )
+      .populate("userId", "name email")
+      .populate("productId", "name price image");
+
+    if (!updatedReturn) {
+      return res.status(404).json({ message: "Return request not found" });
+    }
+
+    res.json({
+      message: "✅ Return status updated successfully",
+      data: updatedReturn,
+    });
+  } catch (error) {
+    console.error("❌ Error updating return status:", error);
+    res.status(500).json({
+      message: "Error updating return status",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createReturn, getReturns, updateReturnStatus };
