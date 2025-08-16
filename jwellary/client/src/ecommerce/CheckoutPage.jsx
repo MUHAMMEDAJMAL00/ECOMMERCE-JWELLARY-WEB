@@ -162,7 +162,7 @@ const CheckoutPage = () => {
             productId: item.productId._id,
             qty: Number(item.quantity),
             price: Number(item.productId.price),
-            image: item.productId.image, // added image here
+            image: item.productId?.image, // added image here
           })),
     };
 
