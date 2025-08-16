@@ -51,7 +51,6 @@ const MyOrders = () => {
       }
     };
     fetchData();
-    console.log("getting myorders", orders);
   }, [user]);
 
   const handleEditClick = () => setShowModal(true);
