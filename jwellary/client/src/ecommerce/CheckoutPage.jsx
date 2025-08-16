@@ -109,35 +109,37 @@ const CheckoutPage = () => {
     const selectedAddress = savedAddresses.find(
       (addr) => addr._id === selectedAddressId
     );
+
     if (!selectedAddress) {
       return alert("Please select a delivery address.");
     }
 
-    let items = [];
-    if (buyNowItem) {
-      items = [
-        {
-          name: buyNowItem.name,
-          productId: buyNowItem.productId,
-          qty: buyNowItem.qty,
-          price: buyNowItem.price,
-          image: buyNowItem.image,
-        },
-      ];
-    } else if (cartItems && cartItems.length > 0) {
-      items = cartItems.map((item) => ({
-        name: item.productId.name,
-        productId: item.productId._id,
-        qty: item.quantity,
-        price: item.productId.price,
-        image: item.productId.image,
-      }));
-    } else {
+    // 🔹 Prepare order items (buyNow or cart)
+    const items = buyNowItem
+      ? [
+          {
+            name: buyNowItem.name,
+            productId: buyNowItem.productId,
+            qty: Number(buyNowItem.qty),
+            price: Number(buyNowItem.price),
+            image: buyNowItem.image, // ✅ image included
+          },
+        ]
+      : cartItems.map((item) => ({
+          name: item.productId?.name || "Unknown",
+          productId: item.productId?._id,
+          qty: Number(item.quantity),
+          price: Number(item.productId?.price || 0),
+          image: item.productId?.image || "", // ✅ image included
+        }));
+
+    if (!items || items.length === 0) {
       return alert(
         "No items to order. Please add items to your cart or use Buy Now."
       );
     }
 
+    // 🔹 Build order payload
     const orderData = {
       user: user._id,
       address: {
@@ -147,25 +149,10 @@ const CheckoutPage = () => {
       },
       paymentMethod: formData.paymentMethod,
       totalPrice: Number(totalPrice),
-      items: buyNowItem
-        ? [
-            {
-              name: buyNowItem.name,
-              productId: buyNowItem.productId,
-              qty: Number(buyNowItem.qty),
-              price: Number(buyNowItem.price),
-              image: buyNowItem.image, // added image here
-            },
-          ]
-        : cartItems.map((item) => ({
-            name: item.productId.name,
-            productId: item.productId._id,
-            qty: Number(item.quantity),
-            price: Number(item.productId.price),
-            image: item.productId?.image, // added image here
-          })),
+      items,
     };
 
+    // 🔹 Online Payment (Razorpay)
     if (formData.paymentMethod === "Pay Online") {
       try {
         const res = await axios.post(`${BASE_URL}/create-order`, {
@@ -175,7 +162,7 @@ const CheckoutPage = () => {
         const { id: razorpayOrderId } = res.data;
 
         const options = {
-          key: "rzp_test_Wsj59hTGf0eyZo", // Replace with production key for live
+          key: "rzp_test_Wsj59hTGf0eyZo", // 🔴 Replace with Live key later
           amount: totalPrice * 100,
           currency: "INR",
           name: "Your Store Name",
@@ -189,16 +176,18 @@ const CheckoutPage = () => {
                 `${BASE_URL}/orders`,
                 orderData
               );
-              console.log("Final orderData to be sent:", orderData);
+
+              console.log("✅ Final order sent:", orderData);
 
               dispatch(setOrder(finalOrder.data));
               await axios.delete(`${BASE_URL}/cart/user/${user._id}`);
               dispatch(clearCart());
               localStorage.removeItem("cartItems");
+
               toast.success("Order placed successfully!");
               navigate("/success", { state: { order: finalOrder.data } });
             } catch (err) {
-              console.error("Order placement failed:", err);
+              console.error("❌ Order placement failed:", err);
               alert("Failed to save order after payment");
             }
           },
@@ -215,14 +204,13 @@ const CheckoutPage = () => {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } catch (err) {
-        console.error("Razorpay order creation failed:", err);
+        console.error("❌ Razorpay order creation failed:", err);
         alert("Payment failed. Try again.");
       }
-
       return;
     }
 
-    // COD or Other Payment Methods
+    // 🔹 COD / Other Payment Methods
     try {
       const response = await axios.post(`${BASE_URL}/orders`, orderData);
       const placedOrder = response.data;
@@ -231,10 +219,11 @@ const CheckoutPage = () => {
       await axios.delete(`${BASE_URL}/cart/user/${user._id}`);
       dispatch(clearCart());
       localStorage.removeItem("cartItems");
+
       toast.success("Order placed successfully!");
       navigate("/success", { state: { order: placedOrder } });
     } catch (err) {
-      console.error("Order placement failed:", err);
+      console.error("❌ COD Order placement failed:", err);
       alert("Failed to place order");
     }
   };
