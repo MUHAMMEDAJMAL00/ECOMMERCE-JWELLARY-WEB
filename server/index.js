@@ -878,11 +878,7 @@ app.get("/cart/:userId", async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const userCart = await Cartt.find({ userId }).populate(
-      "productId",
-      "name price image"
-    );
-
+    const userCart = await Cartt.find({ userId }).populate("productId");
     res.status(200).json(userCart);
   } catch (err) {
     console.error("Error fetching cart:", err);
