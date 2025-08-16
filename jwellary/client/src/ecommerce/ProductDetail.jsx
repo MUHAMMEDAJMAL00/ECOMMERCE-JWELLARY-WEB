@@ -82,11 +82,6 @@ const ProductDetail = () => {
   const handleBuyNow = () => {
     if (!user?._id) return alert("Please log in first.");
 
-    // Extract only the filename if a full URL is present
-    const fileName = product.image?.includes("/uploads/")
-      ? product.image.split("/uploads/")[1]
-      : product.image;
-
     navigate("/checkout", {
       state: {
         buyNowItem: {
@@ -94,7 +89,13 @@ const ProductDetail = () => {
           productId: product._id,
           qty: quantity,
           price: product.price,
-          image: fileName, // ✅ send only the file name
+          image: product.image?.startsWith("http")
+            ? product.image
+            : `${BASE_URL}${
+                product.image.startsWith("/")
+                  ? product.image
+                  : "/" + product.image
+              }`,
         },
         totalPrice: product.price * quantity,
       },
@@ -123,7 +124,11 @@ const ProductDetail = () => {
                   src={
                     product.image?.startsWith("http")
                       ? product.image
-                      : `${BASE_URL}${product.image}`
+                      : `${BASE_URL}${
+                          product.image.startsWith("/")
+                            ? product.image
+                            : "/" + product.image
+                        }`
                   }
                   alt={product.name}
                   className="rounded productimage"
