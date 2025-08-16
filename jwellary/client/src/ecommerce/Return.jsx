@@ -107,6 +107,9 @@ const Return = () => {
 
             {/* You can add more details here if available */}
             <p className="mb-2">
+              <strong> </strong>₹{item.description}
+            </p>
+            <p className="mb-2">
               <strong>Price: </strong>₹{item.price}
             </p>
             <p className="mb-2">
