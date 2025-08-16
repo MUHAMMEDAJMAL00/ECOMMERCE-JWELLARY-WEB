@@ -1,5 +1,9 @@
 const express = require("express");
-const { createReturn, getReturns } = require("../controllers/returnController");
+const {
+  createReturn,
+  getReturns,
+  updateReturnStatus,
+} = require("../controllers/returnController");
 
 const router = express.Router();
 
@@ -8,6 +12,8 @@ router.post("/", createReturn);
 
 // GET — Get all returns
 router.get("/", getReturns);
+
+// PUT — Update return status (Approved / Rejected)
 router.put("/:id/status", updateReturnStatus);
 
 module.exports = router;
