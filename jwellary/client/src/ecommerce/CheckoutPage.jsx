@@ -130,7 +130,7 @@ const CheckoutPage = () => {
           productId: item.productId?._id,
           qty: Number(item.quantity),
           price: Number(item.productId?.price || 0),
-          image: item.productId?.image || "", // ✅ image included
+          image: item.productId?.image || item.image, // ✅ image included
         }));
 
     if (!items || items.length === 0) {
