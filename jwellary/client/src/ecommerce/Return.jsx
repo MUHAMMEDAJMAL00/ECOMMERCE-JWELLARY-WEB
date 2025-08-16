@@ -112,6 +112,12 @@ const Return = () => {
           {/* Right side - product details */}
           <div className="col-md-7 d-flex flex-column justify-content-center px-4">
             <h2 className="fw-bold mb-3">{item.name}</h2>
+            <h3 className="fw-bold mb-3">{item.description}</h3>
+
+            <p>
+              <strong>Order ID:</strong> {orderId}
+            </p>
+
             <p className="mb-2">
               <strong>Price: </strong>₹{item.price}
             </p>
@@ -187,6 +193,21 @@ const Return = () => {
                         />
                         <label htmlFor="damaged" className="form-check-label">
                           Damaged Product
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="damaged"
+                          name="reason"
+                          value="Damaged Product"
+                          checked={reasonType === "Damaged Product"}
+                          onChange={(e) => setReasonType(e.target.value)}
+                          className="form-check-input"
+                          disabled={loading}
+                        />
+                        <label htmlFor="damaged" className="form-check-label">
+                          Qualiry is poor
                         </label>
                       </div>
                       <div className="form-check">
