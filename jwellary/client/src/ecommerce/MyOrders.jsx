@@ -180,11 +180,18 @@ const MyOrders = () => {
                               >
                                 <img
                                   src={
-                                    item.image?.startsWith("http")
-                                      ? item.image
-                                      : `${API}${item.image}`
+                                    item.image
+                                      ? `${BASE_URL}/uploads/${item.image}`
+                                      : "/default-product-image.png"
                                   }
                                   alt={item.name}
+                                  style={{
+                                    width: 70,
+                                    height: 70,
+                                    objectFit: "cover",
+                                    borderRadius: 8,
+                                    boxShadow: "0 0 6px rgba(0,0,0,0.1)",
+                                  }}
                                 />
 
                                 <div className="flex-grow-1 ms-3">
