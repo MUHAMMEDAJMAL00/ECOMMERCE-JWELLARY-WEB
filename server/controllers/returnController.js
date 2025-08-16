@@ -53,6 +53,7 @@ const getReturns = async (req, res) => {
     const returns = await Return.find()
       .populate("userId", "name email")
       .populate("productId", "name price image");
+    console.log("📦 All return items:", returns);
 
     res.status(200).json(returns);
   } catch (error) {
