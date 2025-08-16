@@ -52,6 +52,7 @@ const MyOrders = () => {
     };
     fetchData();
   }, [user]);
+  console.log("getting orders", orders);
 
   const handleEditClick = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -180,9 +181,9 @@ const MyOrders = () => {
                               >
                                 <img
                                   src={
-                                    item.image
-                                      ? `${BASE_URL}/uploads/${item.image}`
-                                      : "/default-product-image.png"
+                                    item.image?.startsWith("http")
+                                      ? item.image
+                                      : `${BASE_URL}/uploads/${item.image}`
                                   }
                                   alt={item.name}
                                   style={{
