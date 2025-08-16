@@ -112,7 +112,7 @@ const Return = () => {
           {/* Right side - product details */}
           <div className="col-md-7 d-flex flex-column justify-content-center px-4">
             <h2 className="fw-bold mb-3">{item.name}</h2>
-            <h3 className="fw-bold mb-3">{item.description}</h3>
+            <h3 className="fw-bold mb-3">{item.productId.description}</h3>
 
             <p>
               <strong>Order ID:</strong> {orderId}

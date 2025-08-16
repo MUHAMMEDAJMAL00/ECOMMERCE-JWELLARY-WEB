@@ -74,7 +74,7 @@ const MyOrders = () => {
   const handleViewProduct = (orderId, item) => {
     console.log("📦 handleViewProduct called with:", { orderId, item });
     navigate("/return", {
-      state: { orderId, item },
+      state: { orderId, item, productId },
     });
   };
 
