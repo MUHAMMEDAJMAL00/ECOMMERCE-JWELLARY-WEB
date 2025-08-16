@@ -207,7 +207,7 @@ const Return = () => {
                           disabled={loading}
                         />
                         <label htmlFor="damaged" className="form-check-label">
-                          Qualiry is poor
+                          Quality is poor
                         </label>
                       </div>
                       <div className="form-check">

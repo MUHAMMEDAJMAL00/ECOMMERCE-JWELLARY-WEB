@@ -207,9 +207,10 @@ const MyOrders = () => {
                                 <Button
                                   variant="outline-info"
                                   size="sm"
-                                  onClick={() =>
-                                    handleViewProduct(order._id, item)
-                                  }
+                                  onClick={() => {
+                                    console.log("👀 item data:", item); // ✅ check what fields are inside item
+                                    handleViewProduct(order._id, item);
+                                  }}
                                   title="Return or View Details"
                                 >
                                   <FaEye />
