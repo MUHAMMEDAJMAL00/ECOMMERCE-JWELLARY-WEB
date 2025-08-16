@@ -10,17 +10,18 @@ const BASE_URL = "https://ecommerce-jwellary-backend.onrender.com";
 const Return = () => {
   const location = useLocation();
   const { orderId, item } = location.state || {};
-
   const { user } = useSelector((state) => state.auth);
 
   const [showModal, setShowModal] = useState(false);
-  const [reason, setReason] = useState("");
+  const [reasonType, setReasonType] = useState(""); // radio selection
+  const [description, setDescription] = useState(""); // textarea
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const openModal = () => {
     setMessage("");
-    setReason("");
+    setReasonType("");
+    setDescription("");
     setShowModal(true);
   };
   const closeModal = () => setShowModal(false);
@@ -32,8 +33,12 @@ const Return = () => {
       setMessage("User not logged in.");
       return;
     }
-    if (!reason.trim()) {
-      setMessage("Please enter a reason.");
+    if (!reasonType) {
+      setMessage("Please select a reason.");
+      return;
+    }
+    if (reasonType === "other" && !description.trim()) {
+      setMessage("Please enter a description for your return.");
       return;
     }
 
@@ -44,10 +49,13 @@ const Return = () => {
         orderId,
         userId: user._id,
         productId: item?._id,
-        reason,
+        reason: reasonType,
+        description,
       });
+
       setMessage("Return request submitted successfully!");
-      setReason("");
+      setReasonType("");
+      setDescription("");
       setTimeout(() => {
         closeModal();
         setMessage("");
@@ -104,11 +112,6 @@ const Return = () => {
           {/* Right side - product details */}
           <div className="col-md-7 d-flex flex-column justify-content-center px-4">
             <h2 className="fw-bold mb-3">{item.name}</h2>
-
-            {/* You can add more details here if available */}
-            <p className="mb-2">
-              <strong> </strong>₹{item.description}
-            </p>
             <p className="mb-2">
               <strong>Price: </strong>₹{item.price}
             </p>
@@ -117,12 +120,11 @@ const Return = () => {
               {item.qty}
             </p>
 
-            {/* Return button */}
             <button
-              className="btn btn-outline-danger mt-4 py-1 px-3 fs-6" // smaller padding and font size
+              className="btn btn-outline-danger mt-4 py-1 px-3 fs-6"
               onClick={openModal}
               aria-label="Return Product"
-              style={{ maxWidth: "150px" }} // smaller width
+              style={{ maxWidth: "150px" }}
             >
               <i className="bi bi-arrow-return-left me-2"></i> Return
             </button>
@@ -165,21 +167,64 @@ const Return = () => {
                     <p>
                       <strong>Product:</strong> {item.name}
                     </p>
+                    <p>
+                      <strong>Order ID:</strong> {orderId}
+                    </p>
+
+                    {/* Radio buttons */}
                     <div className="mb-3">
-                      <label htmlFor="reason" className="form-label">
-                        Reason for Return
-                      </label>
-                      <textarea
-                        id="reason"
-                        className="form-control"
-                        value={reason}
-                        onChange={(e) => setReason(e.target.value)}
-                        rows="4"
-                        placeholder="Enter your reason for returning"
-                        required
-                        disabled={loading}
-                      ></textarea>
+                      <label className="form-label">Select Reason</label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="damaged"
+                          name="reason"
+                          value="Damaged Product"
+                          checked={reasonType === "Damaged Product"}
+                          onChange={(e) => setReasonType(e.target.value)}
+                          className="form-check-input"
+                          disabled={loading}
+                        />
+                        <label htmlFor="damaged" className="form-check-label">
+                          Damaged Product
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="other"
+                          name="reason"
+                          value="other"
+                          checked={reasonType === "other"}
+                          onChange={(e) => setReasonType(e.target.value)}
+                          className="form-check-input"
+                          disabled={loading}
+                        />
+                        <label htmlFor="other" className="form-check-label">
+                          Other Reason
+                        </label>
+                      </div>
                     </div>
+
+                    {/* Show textarea only if "Other Reason" selected */}
+                    {reasonType === "other" && (
+                      <div className="mb-3">
+                        <label htmlFor="description" className="form-label">
+                          Description
+                        </label>
+                        <textarea
+                          id="description"
+                          className="form-control"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          rows="4"
+                          placeholder="Enter your reason for returning"
+                          required
+                          disabled={loading}
+                        ></textarea>
+                      </div>
+                    )}
+
                     {message && (
                       <div
                         className={`alert ${
