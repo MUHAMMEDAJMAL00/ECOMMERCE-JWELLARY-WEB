@@ -182,8 +182,8 @@ const MyOrders = () => {
                                 <img
                                   src={
                                     item.image
-                                    // ? `${BASE_URL}/uploads/${item.image}`
-                                    // : "/default-product-image.png"
+                                      ? `${BASE_URL}/uploads/${item.image}`
+                                      : "/default-product-image.png"
                                   }
                                   alt={item.name}
                                   style={{
