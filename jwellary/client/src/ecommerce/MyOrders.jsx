@@ -72,6 +72,7 @@ const MyOrders = () => {
   };
 
   const handleViewProduct = (orderId, item) => {
+    console.log("📦 handleViewProduct called with:", { orderId, item });
     navigate("/return", {
       state: { orderId, item },
     });
@@ -207,10 +208,9 @@ const MyOrders = () => {
                                 <Button
                                   variant="outline-info"
                                   size="sm"
-                                  onClick={() => {
-                                    console.log("✅ Button clicked!");
-                                    handleViewProduct(order._id, item);
-                                  }}
+                                  onClick={() =>
+                                    handleViewProduct(order._id, item)
+                                  }
                                   title="Return or View Details"
                                 >
                                   <FaEye />
