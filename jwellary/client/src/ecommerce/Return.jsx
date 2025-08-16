@@ -97,7 +97,11 @@ const Return = () => {
           {/* Left side - product image */}
           <div className="col-md-5 text-center mb-4">
             <img
-              src={`${BASE_URL}/uploads/${item.image}`}
+              src={
+                item.image?.startsWith("http")
+                  ? item.image
+                  : `${BASE_URL}/uploads/${item.image}`
+              }
               alt={item.name}
               className="rounded"
               style={{
