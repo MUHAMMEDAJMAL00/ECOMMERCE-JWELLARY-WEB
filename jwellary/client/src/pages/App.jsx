@@ -45,7 +45,7 @@ function App() {
     <BrowserRouter>
       <ToastContainer position="top-right" autoClose={3000} />
 
-      {/* ✅ Wrap all routes with Suspense */}
+      {/* ✅ Wrap lazy components with Suspense */}
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* Public routes */}
@@ -93,16 +93,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Outlet />
-                <Routes>
-                  <Route path="/homee" element={<Users />} />
-                  <Route path="/create" element={<CreateUser />} />
-                  <Route path="/update/:id" element={<UpdateUser />} />
-                  <Route path="/view/:id" element={<View />} />
-                  <Route path="/admin/home" element={<AdminDashboard />} />
-                </Routes>
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="homee" element={<Users />} />
+            <Route path="create" element={<CreateUser />} />
+            <Route path="update/:id" element={<UpdateUser />} />
+            <Route path="view/:id" element={<View />} />
+            <Route path="admin/home" element={<AdminDashboard />} />
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>
